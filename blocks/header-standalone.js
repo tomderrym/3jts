@@ -1,488 +1,368 @@
 /**
- * Header Component
-
+ * Smart Context Selector
+ *
+ * Analyzes the project files and the user prompt to determine the most relevant set of files
+ * to send to the LLM. This helps in:
+ * 1. Reducing token usage (cost & latency).
+ * 2. Improving model focus by removing irrelevant noise.
+ * 3. Fitting larger projects into context windows.
  */
 
 // Note: This component uses Tailwind CSS utility classes only.
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
-import React, {  useState, useMemo  } from 'https://esm.sh/react@18';
-import { Zap, Box, Smartphone, BugPlay, FileSearch, X, DownloadCloud, Download as DownloadIcon, FlaskConical } from 'lucide-react';
 
-interface SmartContextRunSummary {
-  id: string;
-  timestamp: string;
-  model: string;
-  charLimit: number;
-  totalChars: number;
-  fileCount: number;
-  source: 'manual' | 'test-harness';
-}
+// Files that are critical for understanding the project structure and build environment
+const INFRA_FILES = [
+  'package.json',
+  'tsconfig.json',
+  'vite.config.js',
+  'vite.config.ts',
+  'index.html',
+  'tailwind.config.js',
+  'postcss.config.js',
+  'capacitor.config.json',
+  'index.tsx',
+  'main.tsx',
+  'App.tsx', // Almost always relevant as the root component
+  // Common entry patterns in some templates (backward compatibility)
+  'src/index.tsx',
+  'src/main.tsx',
+  'src/App.tsx',
+  'src/main.jsx',
+  'src/main.ts',
+];
 
-const MOCK_MODEL = 'gpt-4o';
+// Lightweight mirror of PROVIDER_MODELS to avoid import cycles.
+// If PROVIDER_MODELS is updated, this map should be kept in sync.
+const PROVIDER_MODELS_LOCAL: Record<string, string[]> = {
+  'Gemini Stream': ['gemini-2.5-flash', 'gemini-3-pro-preview', 'gemini-3-flash-preview', 'gemini-2.0-flash-thinking-exp-01-21'],
+  'Gemini': ['gemini-2.5-flash', 'gemini-3-pro-preview', 'gemini-3-flash-preview', 'gemini-2.0-flash-thinking-exp-01-21'],
+  'OpenAI': ['gpt-5.1', 'gpt-4.5-preview', 'o1', 'o3-mini', 'gpt-4o', 'gpt-4-turbo'],
+  'Anthropic': ['claude-3-7-sonnet-20250219', 'claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'],
+  'Perplexity': ['llama-3.1-sonar-large-128k-online', 'llama-3.1-sonar-huge-128k-online'],
+  'Llama 3.2': ['llama3.2', 'llama3.1', 'mistral']
+};
 
-// Dev-only harness to exercise selectSmartContext with canned scenarios
-function runDevSmartContextTests(): { label: string; result: SmartContextResult }[] {
-  const scenarios: { label: string; files: Record<string, string>; activeFile: string; prompt: string; model: string }[] = [
-    {
-      label: 'Basic app edit (Header.tsx mentioned)',
-      files: {
-        'src/App.tsx': 'function App() { return <Header />; }',
-        'src/Header.tsx': 'export const Header = () => <div>Header</div>;',
-        'README.md': '# Demo',
-        'package.json': '{"name":"demo"}',
-      },
-      activeFile: 'src/App.tsx',
-      prompt: 'Please edit Header.tsx and explain changes',
-      model: 'gpt-4o',
-    },
-    {
-      label: 'Infra-focused prompt',
-      files: {
-        'src/App.tsx': 'function App() { return <div/>; }',
-        'vite.config.ts': 'export default {} as const;',
-        'tailwind.config.js': 'module.exports = {};',
-        'capacitor.config.json': '{"appId":"demo"}',
-      },
-      activeFile: 'src/App.tsx',
-      prompt: 'Update build config and Tailwind theme.',
-      model: 'gemini-2.5-flash',
-    },
-    {
-      label: 'Large file exclusion',
-      files: {
-        'src/App.tsx': 'function App() { return <div/>; }',
-        'src/BigDump.ts': '// big file' + 'x'.repeat(200_000),
-      },
-      activeFile: 'src/App.tsx',
-      prompt: 'Focus only on App shell.',
-      model: 'llama3.2',
-    },
-  ];
+// Build reverse lookup from model name -> provider key using PROVIDER_MODELS_LOCAL
+const MODEL_TO_PROVIDER: Record<string, string> = (() => {
+  const map: Record<string, string> = {};
+  for (const [provider, models] of Object.entries(PROVIDER_MODELS_LOCAL)) {
+    for (const m of models) {
+      map[m.toLowerCase()] = provider;
+    }
+  }
+  return map;
+})();
 
-  return scenarios.map((s) => ({
-    label: s.label,
-    result: selectSmartContext(s.files, s.activeFile, s.prompt, s.model, { debug: true }),
-  }));
-}
+/**
+ * Heuristically determine a safe character budget based on the model name.
+ *
+ * This implementation is wired to the actual list of supported models
+ * (PROVIDER_MODELS_LOCAL via MODEL_TO_PROVIDER) to avoid drift. Unknown
+ * models still fall back to reasonable heuristics.
+ */
+export function getCharLimitForModel(model: string): number {
+  const raw = (model || '').trim();
+  const m = raw.toLowerCase();
 
-function getReasonTags(entry: SmartContextDebugEntry): string[] {
-  const tags: string[] = [];
-  const r = (entry.reason || '').toLowerCase();
-
-  if (!entry.included) {
-    if (r.includes('too large') || r.includes('ishuge')) tags.push('excluded-large');
-    else if (r.includes('exceed')) tags.push('excluded-budget');
-    else tags.push('excluded-other');
+  // 1) Direct mapping via PROVIDER_MODELS_LOCAL
+  const provider = MODEL_TO_PROVIDER[m];
+  if (provider) {
+    switch (provider) {
+      case 'Gemini':
+      case 'Gemini Stream':
+        // Gemini models here are all large-context for this playground.
+        return 800_000;
+      case 'OpenAI':
+        // gpt-5.1, 4.5, o1, o3-mini, 4o, 4-turbo – all large-context.
+        return 120_000;
+      case 'Anthropic':
+        // Claude 3 family (100k-style context)
+        return 100_000;
+      case 'Perplexity':
+      case 'Llama 3.2':
+        // Good but typically smaller effective contexts for our usage.
+        return 64_000;
+      default:
+        return 32_000;
+    }
   }
 
-  if (r.includes('vital')) tags.push('vital');
-  if (r.includes('within remaining')) tags.push('within-budget');
-  if (r.includes('infra')) tags.push('infra');
-  if (r.includes('prompt')) tags.push('prompt-matched');
+  // 2) Heuristics for models that are not in PROVIDER_MODELS_LOCAL yet
 
-  return tags;
+  // Very large / experimental context models
+  if (
+    m.includes('gemini') ||
+    m.includes('1.5') ||
+    m.includes('2.0') ||
+    m.includes('3.0') ||
+    m.includes('128k') ||
+    m.includes('200k') ||
+    m.includes('1m') ||
+    m.includes('1000000')
+  ) {
+    // Gemini and similar: effectively unlimited for this playground.
+    return 800_000;
+  }
+
+  // Modern OpenAI family with large context (4.5, 5, o3-mini, o1, etc.)
+  if (
+    m.startsWith('gpt-5') ||
+    m.startsWith('gpt-4.5') ||
+    m.startsWith('gpt-4o') ||
+    m.startsWith('gpt-4-turbo') ||
+    m.startsWith('o1') ||
+    m.startsWith('o3')
+  ) {
+    return 120_000; // ~30k tokens equivalent
+  }
+
+  // Claude 3 family and other 100k-style models
+  if (m.includes('claude-3')) {
+    return 100_000;
+  }
+
+  // Default for smaller / unknown models
+  return 32_000;
 }
 
-export default function App() {
-  const [files] = useState<Record<string, string>>(() => ({ ...DEFAULT_FILES }));
-  const [activeFile, setActiveFile] = useState<string>('App.tsx');
-  const [prompt, setPrompt] = useState<string>('Edit App.tsx and explain file selection.');
+/**
+ * Normalize paths for more reliable comparisons.
+ */
+function normalizePath(path: string): string {
+  return path.replace(/\\/g, '/').replace(/^\.\//, '');
+}
 
-  const [lastResult, setLastResult] = useState<SmartContextResult | null>(null);
-  const [runHistory, setRunHistory] = useState<SmartContextRunSummary[]>([]);
-  const [selectedRunId, setSelectedRunId] = useState<string | null>(null);
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
+export interface SmartContextDebugEntry {
+  path: string;
+  score: number;
+  length: number;
+  included: boolean;
+  reason?: string;
+}
 
-  // Quick-filter state for debug entries
-  const [statusFilter, setStatusFilter] = useState<'all' | 'included' | 'excluded'>('all');
-  const [reasonFilter, setReasonFilter] = useState<
-    'all' | 'excluded-large' | 'excluded-budget' | 'infra' | 'prompt-matched' | 'vital'
-  >('all');
-
-  const executeSmartContext = () => {
-    const result = selectSmartContext(files, activeFile, prompt, MOCK_MODEL, { debug: true });
-    setLastResult(result);
-
-    if (result.debug) {
-      const id = `${Date.now()}`;
-      const summary: SmartContextRunSummary = {
-        id,
-        timestamp: new Date().toISOString(),
-        model: result.debug.model,
-        charLimit: result.debug.charLimit,
-        totalChars: result.debug.totalChars,
-        fileCount: Object.keys(result.files).length,
-        source: 'manual',
-      };
-      setRunHistory((prev) => [summary, ...prev].slice(0, 20));
-      setSelectedRunId(id);
-      setIsPanelOpen(true);
-    }
+export interface SmartContextResult {
+  files: Record<string, string>;
+  debug?: {
+    model: string;
+    charLimit: number;
+    totalChars: number;
+    entries: SmartContextDebugEntry[];
   };
+}
 
-  const executeDevTestHarness = () => {
-    const runs = runDevSmartContextTests();
+export interface SmartContextOptions {
+  /**
+   * If true, returns detailed telemetry about why each file was
+   * included or excluded. This is intended for tuning & debugging
+   * and should not be enabled in tight token budgets.
+   */
+  debug?: boolean;
+}
 
-    if (runs.length === 0) return;
+export const selectSmartContext = (
+  files: Record<string, string>,
+  activeFile: string,
+  prompt: string,
+  model: string,
+  options: SmartContextOptions = {}
+): SmartContextResult => {
+  if (!files || typeof files !== 'object') return { files: {} };
 
-    // For now, show the last scenario as the active one in the panel
-    const last = runs[runs.length - 1];
-    setLastResult(last.result);
+  const debugMode = !!options.debug;
+  const charLimit = getCharLimitForModel(model);
+  const lowerPrompt = (prompt || '').toLowerCase();
+  const normalizedActive = normalizePath(activeFile || '');
 
-    const newSummaries: SmartContextRunSummary[] = runs
-      .map((r, idx) => {
-        const d = r.result.debug;
-        if (!d) return null;
-        return {
-          id: `${Date.now()}-${idx}`,
-          timestamp: new Date().toISOString(),
-          model: d.model,
-          charLimit: d.charLimit,
-          totalChars: d.totalChars,
-          fileCount: Object.keys(r.result.files).length,
-          source: 'test-harness',
-        } as SmartContextRunSummary;
-      })
-      .filter((x): x is SmartContextRunSummary => !!x);
+  // Pre-normalize infra file list for cheap endsWith checks
+  const normalizedInfra = INFRA_FILES.map(normalizePath);
 
-    if (newSummaries.length) {
-      setRunHistory((prev) => [...newSummaries, ...prev].slice(0, 30));
-      setSelectedRunId(newSummaries[0].id);
-      setIsPanelOpen(true);
-    }
-  };
+  // Calculate scores
+  const scoredFiles: { path: string; content: string; score: number; fileName: string; nameNoExt: string }[] = Object.entries(files).map(
+    ([rawPath, rawContent]) => {
+      const path = normalizePath(rawPath);
+      const content = typeof rawContent === 'string' ? rawContent : String(rawContent ?? '');
 
-  const selectedDebugEntries = useMemo(() => {
-    if (!lastResult?.debug) return [];
-    let entries = lastResult.debug.entries;
+      let score = 0;
+      const fileName = path.split('/').pop() || '';
+      const nameNoExt = fileName.split('.')[0];
+      const lowerFileName = fileName.toLowerCase();
+      const lowerNameNoExt = nameNoExt.toLowerCase();
 
-    if (statusFilter !== 'all') {
-      entries = entries.filter((e) => (statusFilter === 'included' ? e.included : !e.included));
-    }
-
-    if (reasonFilter !== 'all') {
-      entries = entries.filter((e) => getReasonTags(e).includes(reasonFilter));
-    }
-
-    return entries;
-  }, [lastResult, statusFilter, reasonFilter]);
-
-  const policySummary = useMemo(() => {
-    if (!runHistory.length) return null;
-    const byModel: Record<string, { runs: number; avgChars: number; lastLimit: number }> = {};
-
-    runHistory.forEach((r) => {
-      if (!byModel[r.model]) {
-        byModel[r.model] = { runs: 0, avgChars: 0, lastLimit: r.charLimit };
+      // 1. Active File (Highest Priority)
+      if (path === normalizedActive && path.length > 0) {
+        score += 100;
       }
-      const bucket = byModel[r.model];
-      bucket.runs += 1;
-      bucket.avgChars += r.totalChars;
-      bucket.lastLimit = r.charLimit;
-    });
 
-    Object.values(byModel).forEach((b) => {
-      b.avgChars = Math.round(b.avgChars / b.runs);
-    });
+      // 2. Explicit Mention in Prompt ("Edit Header.tsx" or "Check Header")
+      if (
+        (lowerFileName && lowerPrompt.includes(lowerFileName)) ||
+        (lowerNameNoExt.length > 3 && lowerPrompt.includes(lowerNameNoExt))
+      ) {
+        score += 80;
+      }
 
-    return byModel;
-  }, [runHistory]);
+      // 3. Infrastructure Files
+      if (normalizedInfra.some((infra) => path.endsWith(infra))) {
+        score += 50;
+      }
 
-  const handleDownloadLog = () => {
-    if (!lastResult?.debug) return;
-    const payload = {
-      model: lastResult.debug.model,
-      charLimit: lastResult.debug.charLimit,
-      totalChars: lastResult.debug.totalChars,
-      entries: lastResult.debug.entries,
-      generatedAt: new Date().toISOString(),
-    };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `smart-context-debug-${Date.now()}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  };
+      // 4. Imports / references in Active File (Contextual Relevance)
+      if (normalizedActive && files[activeFile]) {
+        const activeContent = String(files[activeFile] ?? '');
+        // Simple heuristic: if the filename (without ext) appears in the active file's code
+        if (nameNoExt.length > 3 && activeContent.includes(nameNoExt) && path !== normalizedActive) {
+          score += 30;
+        }
+      }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex flex-col items-center justify-center text-white p-4 sm:p-8">
-      <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-10 shadow-2xl border border-white/10 text-center max-w-3xl w-full relative overflow-hidden">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-tr from-blue-500 to-cyan-500 rounded-2xl rotate-3 flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-lg shadow-blue-500/20">
-          <Zap size={32} className="text-white" />
-        </div>
+      // 5. Source vs Config weighting
+      if (path.startsWith('src/')) {
+        score += 10;
+      }
 
-        <h1 className="text-2xl sm:text-4xl font-black mb-3 sm:mb-4 tracking-tight text-white">
-          App Runner <span className="text-blue-400">Stable</span>
-        </h1>
-        <p className="text-slate-300 text-sm sm:text-lg mb-6 sm:mb-8 leading-relaxed">
-          Running in compatibility mode (Capacitor 5). This ensures maximum stability across build environments.
-        </p>
-
-        <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8 text-left">
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10 flex items-center gap-3">
-            <Box size={18} className="text-blue-400" />
-            <div className="text-left">
-              <p className="text-xs font-bold text-white">Dependencies Normalized</p>
-              <p className="text-[10px] text-slate-400">Capacitor Core/Android 5.7.0</p>
-            </div>
-          </div>
-
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10 flex items-center gap-3">
-            <Smartphone size={18} className="text-indigo-400" />
-            <div className="text-left">
-              <p className="text-xs font-bold text-white">Native Android</p>
-              <p className="text-[10px] text-slate-400">Java 17 Compatible</p>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={executeSmartContext}
-            className="p-3 bg-emerald-500/10 hover:bg-emerald-500/20 rounded-xl border border-emerald-500/40 flex items-center gap-3 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-          >
-            <BugPlay size={18} className="text-emerald-400" />
-            <div className="text-left">
-              <p className="text-xs font-bold text-white">Run Smart Context</p>
-              <p className="text-[10px] text-emerald-200/80">Debug file selection logic</p>
-            </div>
-          </button>
-        </div>
-
-        <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8 text-left">
-          <button
-            type="button"
-            onClick={executeDevTestHarness}
-            className="p-3 bg-purple-500/10 hover:bg-purple-500/20 rounded-xl border border-purple-500/40 flex items-center gap-3 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-slate-900 col-span-1"
-          >
-            <FlaskConical size={18} className="text-purple-300" />
-            <div className="text-left">
-              <p className="text-xs font-bold text-white">Run Dev Test Harness</p>
-              <p className="text-[10px] text-purple-100/80">Sample Smart Context scenarios</p>
-            </div>
-          </button>
-
-          <div className="sm:col-span-2 flex flex-col gap-2">
-            <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Active File</label>
-              <input
-                value={activeFile}
-                onChange={(e) => setActiveFile(e.target.value)}
-                className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-400/60"
-              />
-            </div>
-            <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Prompt</label>
-              <input
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-400/60"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-[10px] text-slate-400">
-            <FileSearch size={12} />
-            <span>
-              Last run:{' '}
-              {lastResult?.debug
-                ? `${Object.keys(lastResult.files).length} files · ${lastResult.debug.totalChars.toLocaleString()} chars`
-                : 'no runs yet'}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              disabled={!lastResult?.debug}
-              onClick={() => setIsPanelOpen(true)}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-white/10 hover:bg-white/15 border border-white/20 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-            >
-              <BugPlay size={12} />
-              View Smart Context Debug
-            </button>
-
-            <button
-              type="button"
-              disabled={!lastResult?.debug}
-              onClick={handleDownloadLog}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-indigo-600 hover:bg-indigo-500 border border-indigo-400/60 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-            >
-              <DownloadCloud size={12} />
-              Download Log
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {isPanelOpen && lastResult?.debug && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/70">
-          <div className="bg-[#050509] border border-white/10 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[85vh] flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
-              <div className="flex items-center gap-2">
-                <BugPlay size={16} className="text-emerald-400" />
-                <div>
-                  <p className="text-xs font-semibold text-white">Smart Context Debug</p>
-                  <p className="text-[10px] text-slate-400">
-                    Model: {lastResult.debug.model} · Limit: {lastResult.debug.charLimit.toLocaleString()} chars
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsPanelOpen(false)}
-                className="p-1.5 rounded-full hover:bg-white/10 text-slate-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-slate-500"
-              >
-                <X size={14} />
-              </button>
-            </div>
-
-            <div className="flex border-b border-white/10 bg-black/60 text-[10px] text-slate-300">
-              <div className="flex-1 px-4 py-2 space-y-1">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span>
-                    Total selected files: {Object.keys(lastResult.files).length}
-                  </span>
-                  <span>
-                    Total chars: {lastResult.debug.totalChars.toLocaleString()} /{' '}
-                    {lastResult.debug.charLimit.toLocaleString()}
-                  </span>
-                  <span>
-                    Included: {lastResult.debug.entries.filter((e) => e.included).length} · Excluded:{' '}
-                    {lastResult.debug.entries.filter((e) => !e.included).length}
-                  </span>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2 mt-1">
-                  <span className="uppercase text-[9px] text-slate-500">Status</span>
-                  <div className="inline-flex rounded-md bg-white/5 overflow-hidden">
-                    <button
-                      type="button"
-                      onClick={() => setStatusFilter('all')}
-                      className={`px-2 py-1 text-[10px] border-r border-white/10 focus:outline-none ${
-                        statusFilter === 'all' ? 'bg-emerald-500/20 text-emerald-200' : 'text-slate-300'
-                      }`}
-                    >
-                      All
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStatusFilter('included')}
-                      className={`px-2 py-1 text-[10px] border-r border-white/10 focus:outline-none ${
-                        statusFilter === 'included' ? 'bg-emerald-500/20 text-emerald-200' : 'text-slate-300'
-                      }`}
-                    >
-                      Included
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStatusFilter('excluded')}
-                      className={`px-2 py-1 text-[10px] focus:outline-none ${
-                        statusFilter === 'excluded' ? 'bg-emerald-500/20 text-emerald-200' : 'text-slate-300'
-                      }`}
-                    >
-                      Excluded
-                    </button>
-                  </div>
-
-                  <span className="uppercase text-[9px] text-slate-500 ml-2">Reason</span>
-                  <select
-                    className="bg-black/40 border border-white/10 rounded-md px-2 py-1 text-[10px] focus:outline-none focus:ring-1 focus:ring-emerald-400"
-                    value={reasonFilter}
-                    onChange={(e) => setReasonFilter(e.target.value as any)}
-                  >
-                    <option value="all">All</option>
-                    <option value="excluded-large">Excluded: Large</option>
-                    <option value="excluded-budget">Excluded: Budget</option>
-                    <option value="infra">Infra</option>
-                    <option value="prompt-matched">Prompt Matched</option>
-                    <option value="vital">Vital</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="w-48 sm:w-56 border-l border-white/10 px-3 py-2 overflow-y-auto">
-                <p className="text-[9px] font-semibold text-slate-400 uppercase mb-1">Per-model Summary</p>
-                {policySummary &&
-                  Object.entries(policySummary).map(([model, bucket]) => (
-                    <div key={model} className="mb-1.5 text-[9px] text-slate-300">
-                      <p className="font-semibold truncate">{model}</p>
-                      <p>
-                        Runs: {bucket.runs} · Avg chars: {bucket.avgChars.toLocaleString()}
-                      </p>
-                      <p>Char limit: {bucket.lastLimit.toLocaleString()}</p>
-                    </div>
-                  ))}
-                {!policySummary && <p className="text-[9px] text-slate-500">No runs yet.</p>}
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-auto divide-y divide-white/5">
-              <div className="px-4 py-2 text-[11px] text-slate-300 font-mono grid grid-cols-12 gap-2 sticky top-0 bg-[#050509] border-b border-white/5">
-                <span className="col-span-6 truncate">Path</span>
-                <span className="col-span-2 text-right">Score</span>
-                <span className="col-span-2 text-right">Length</span>
-                <span className="col-span-2 text-center">Status</span>
-              </div>
-
-              <div className="flex-1 overflow-y-auto text-[11px]">
-                {selectedDebugEntries.map((entry) => (
-                  <div
-                    key={entry.path + entry.score + String(entry.included)}
-                    className={`px-4 py-1.5 grid grid-cols-12 gap-2 items-center border-b border-white/5/0 last:border-b-0 ${
-                      entry.included ? 'bg-emerald-500/5' : 'bg-red-500/5'
-                    }`}
-                  >
-                    <span className="col-span-6 truncate text-slate-200" title={entry.path}>
-                      {entry.path}
-                    </span>
-                    <span className="col-span-2 text-right text-slate-300">{entry.score}</span>
-                    <span className="col-span-2 text-right text-slate-400">{entry.length.toLocaleString()}</span>
-                    <span
-                      className={`col-span-2 text-center font-semibold ${
-                        entry.included ? 'text-emerald-300' : 'text-red-300'
-                      }`}
-                    >
-                      {entry.included ? 'INCLUDED' : 'EXCLUDED'}
-                    </span>
-                    {entry.reason && (
-                      <div className="col-span-12 text-[10px] text-slate-500 pl-2 italic truncate">
-                        {entry.reason}
-                      </div>
-                    )}
-                  </div>
-                ))}
-                {selectedDebugEntries.length === 0 && (
-                  <div className="px-4 py-6 text-center text-[11px] text-slate-500">
-                    No debug entries available for the current filters.
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="px-4 py-2 border-t border-white/10 bg-black/60 flex items-center justify-between text-[10px] text-slate-500">
-              <div>
-                Showing latest Smart Context run. Use the dev test harness to compare model policy behavior.
-              </div>
-              <button
-                type="button"
-                onClick={handleDownloadLog}
-                disabled={!lastResult?.debug}
-                className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 text-[10px] text-slate-200 disabled:opacity-40"
-              >
-                <DownloadIcon size={10} />
-                Download JSON
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+      return { path: rawPath, content, score, fileName, nameNoExt };
+    }
   );
+
+  // Sort: Higher score first, then shorter paths (root files), then alphabetical
+  scoredFiles.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    if (a.path.length !== b.path.length) return a.path.length - b.path.length;
+    return a.path.localeCompare(b.path);
+  });
+
+  const selected: Record<string, string> = {};
+  const debugEntries: SmartContextDebugEntry[] = [];
+  let totalChars = 0;
+
+  for (const file of scoredFiles) {
+    const { path, content, score } = file;
+    const length = content.length;
+
+    const isVital = score >= 40;
+    const isHuge = length > charLimit * 0.5; // single file would consume >50% of budget
+
+    if (isVital && !isHuge) {
+      selected[path] = content;
+      totalChars += length;
+      if (debugMode) {
+        debugEntries.push({
+          path,
+          score,
+          length,
+          included: true,
+          reason: isHuge
+            ? 'vital-but-huge (should not happen due to guard)'
+            : 'vital (score >= 40)'
+        });
+      }
+      continue;
+    }
+
+    if (totalChars + length <= charLimit) {
+      selected[path] = content;
+      totalChars += length;
+      if (debugMode) {
+        debugEntries.push({
+          path,
+          score,
+          length,
+          included: true,
+          reason: 'within remaining charLimit'
+        });
+      }
+    } else if (debugMode) {
+      debugEntries.push({
+        path,
+        score,
+        length,
+        included: false,
+        reason: isHuge
+          ? 'excluded: file too large for budget (isHuge)'
+          : 'excluded: would exceed charLimit'
+      });
+    }
+  }
+
+  const result: SmartContextResult = { files: selected };
+
+  if (debugMode) {
+    result.debug = {
+      model,
+      charLimit,
+      totalChars,
+      entries: debugEntries,
+    };
+
+    // Lightweight console-based telemetry for tuning in the playground.
+    // This is intentionally guarded by debugMode to avoid noisy logs.
+    // eslint-disable-next-line no-console
+    console.table(
+      debugEntries.map((e) => ({
+        included: e.included,
+        score: e.score,
+        length: e.length,
+        path: e.path,
+        reason: e.reason || ''
+      }))
+    );
+  }
+
+  return result;
+};
+
+// ---------------------------------------------------------------------------
+// Inline Test Harness (Step 2: basic validation without external test runner)
+// ---------------------------------------------------------------------------
+
+function __runSelectSmartContextTests() {
+  try {
+    const files: Record<string, string> = {
+      'src/App.tsx': 'function App() { return <Header />; }',
+      'src/Header.tsx': 'export default function Header = () => <div>Header</div>;',
+      'README.md': '# Demo',
+      'package.json': '{"name":"demo"}',
+    };
+
+    const modelsToTest = [
+      'gemini-2.5-flash',
+      'gpt-4o',
+      'claude-3-5-sonnet-20241022',
+      'llama3.2',
+      'unknown-small-model',
+    ];
+
+    // eslint-disable-next-line no-console
+    console.group('[SmartContext] getCharLimitForModel sanity checks');
+    for (const m of modelsToTest) {
+      // eslint-disable-next-line no-console
+      console.log(m, '=>', getCharLimitForModel(m));
+    }
+    // eslint-disable-next-line no-console
+    console.groupEnd();
+
+    // Basic scoring behavior: App.tsx should be highest due to activeFile
+    const result = selectSmartContext(files, 'src/App.tsx', 'Please edit the Header', 'gpt-4o', {
+      debug: true,
+    });
+
+    if (!result.files['src/App.tsx']) {
+      // eslint-disable-next-line no-console
+      console.warn('[SmartContext][Test] Expected src/App.tsx to be selected');
+    }
+    if (!result.files['src/Header.tsx']) {
+      // eslint-disable-next-line no-console
+      console.warn('[SmartContext][Test] Expected src/Header.tsx to be selected (referenced + mentioned)');
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('[SmartContext][Test] Error during inline tests:', e);
+  }
+}
+
+// Run inline tests only in a non-production, browser-capable environment
+if (typeof window !== 'undefined' && typeof process !== 'undefined' && process.env?.NODE_ENV !== 'production') {
+  __runSelectSmartContextTests();
 }
