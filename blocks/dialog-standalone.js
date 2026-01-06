@@ -2,6 +2,10 @@
  * Dialog Component
  * Props: { props?: any }
  */
+
+// Note: This component uses Tailwind CSS utility classes only.
+// No custom component library dependencies.
+// Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
