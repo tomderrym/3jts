@@ -1,66 +1,118 @@
 /**
  * Icon Component
- * Props: { tab?: any }
+
  */
 
 // Note: This component uses Tailwind CSS utility classes only.
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
-import { Home, Wind, Music, BookOpen, User, Sparkles, Calendar } from 'lucide-react';
-import { motion } from 'motion/react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Sparkles, Target, Heart } from 'lucide-react';
 
-interface BottomNavProps {
-  currentTab: string;
-  onTabChange: (tab: string) => void;
+interface OnboardingProps {
+  onComplete: () => void;
 }
 
-const tabs = [
-  { id: 'home', icon: Home, label: 'Home' },
-  { id: 'breathe', icon: Wind, label: 'Breathe' },
-  { id: 'meditate', icon: Music, label: 'Meditate' },
-  { id: 'routines', icon: Calendar, label: 'Routines' },
-  { id: 'profile', icon: User, label: 'Profile' },
+const steps = [
+  {
+    icon: Sparkles,
+    title: 'Calm',
+    description: 'Find peace in the present moment through guided breathing exercises',
+  },
+  {
+    icon: Target,
+    title: 'Focus',
+    description: 'Enhance your concentration and mental clarity with mindful breathing',
+  },
+  {
+    icon: Heart,
+    title: 'Balance',
+    description: 'Create harmony between mind and body through daily practice',
+  },
 ];
 
-export function BottomNav({ currentTab, onTabChange }: BottomNavProps) {
+export function Onboarding({ onComplete }: OnboardingProps) {
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const handleNext = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      onComplete();
+    }
+  };
+
+  const handleSkip = () => {
+    onComplete();
+  };
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-border z-50 pb-5">
-      <div className="max-w-md mx-auto flex items-center justify-around px-2 py-2 safe-area-inset-bottom">
-        {tabs.map((tab) => {
-          export default function Icon = tab.icon;
-          const isActive = currentTab === tab.id;
-          
-          return (
-            <button
-              key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className="relative flex flex-col items-center justify-center gap-1 px-4 py-2 min-w-[64px] transition-colors"
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-b from-background via-muted to-background">
+      <div className="w-full max-w-md space-y-8">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="text-center space-y-6"
+          >
+            <motion.div
+              className="flex justify-center"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <div className="relative">
-                <Icon
-                  className={`w-5 h-5 transition-colors ${
-                    isActive ? 'text-primary' : 'text-muted-foreground'
-                  }`}
-                  strokeWidth={1.5}
-                />
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute -inset-2 bg-primary/10 rounded-xl -z-10"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </div>
-              <span
-                className={`text-[10px] transition-colors ${
-                  isActive ? 'text-primary' : 'text-muted-foreground'
+              {(() => {
+                export default function Icon = steps[currentStep].icon;
+                return (
+                  <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Icon className="w-12 h-12 text-primary" strokeWidth={1.5} />
+                  </div>
+                );
+              })()}
+            </motion.div>
+
+            <div className="space-y-3">
+              <h2 className="text-3xl">{steps[currentStep].title}</h2>
+              <p className="text-muted-foreground px-4">
+                {steps[currentStep].description}
+              </p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="space-y-4">
+          <div className="flex justify-center gap-2">
+            {steps.map((_, index) => (
+              <div
+                key={index}
+                className={`h-2 rounded-full transition-all ${
+                  index === currentStep
+                    ? 'w-8 bg-primary'
+                    : 'w-2 bg-muted-foreground/20'
                 }`}
+              />
+            ))}
+          </div>
+
+          <div className="space-y-3">
+            <Button className="w-full" onClick={handleNext}>
+              {currentStep === steps.length - 1 ? 'Get Started' : 'Continue'}
+            </Button>
+
+            {currentStep < steps.length - 1 && (
+              <button
+                className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                onClick={handleSkip}
               >
-                {tab.label}
-              </span>
-            </button>
-          );
-        })}
+                Skip
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
