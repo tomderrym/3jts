@@ -2,6 +2,10 @@
  * AppContext Component
  * Props: { user?: any }
  */
+
+// Note: This component uses Tailwind CSS utility classes only.
+// No custom component library dependencies.
+// Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React, {  createContext, useContext, useState, useEffect, useRef  } from 'https://esm.sh/react@18';
 import { Bell, CheckCircle, AlertCircle } from 'lucide-react';
 
