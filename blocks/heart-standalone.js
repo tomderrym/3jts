@@ -1,253 +1,415 @@
-# Component Extractor Styling Guide
+/**
+ * Heart Component
+
+ */
+# Custom Components + Remote Blocks Integration Guide
 
 ## 🎯 Overview
 
-This guide ensures extracted components follow your **custom Tailwind-based styling approach** and can be easily integrated with your component library.
+This guide explains how to combine your **custom Tailwind-based components** with **remote blocks** from `github.com/tomderrym/3jts`.
 
-## ✅ Styling Rules for Extracted Blocks
+## 🏗️ Architecture
 
-### 1. Use Tailwind Utility Classes Only
-
-**✅ DO:**
-```tsx
-createElement('button', {
-  className: 'px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
-}, 'Click Me')
+```
+Your App
+├── Custom Components (/components/)
+│   ├── CommonComponents.tsx (Buttons, Cards, Modals, etc.)
+│   └── UIComponentsLibrary.tsx (Badges, Avatars, Toasts, etc.)
+│
+└── Remote Blocks (from blocks_index)
+    ├── Hero sections
+    ├── Navigation components
+    ├── Feature sections
+    └── Other reusable blocks
 ```
 
-**❌ DON'T:**
-```tsx
-// Don't import custom components
+## 🔗 Integration Strategies
 
+### Strategy 1: Remote Blocks as Base, Custom Components for Enhancement
 
-// Don't use custom component classes
-className: 'button-primary'
-```
-
-### 2. Responsive by Default
-
-Always include responsive classes:
-
-```tsx
-createElement('div', {
-  className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 sm:p-6 lg:p-8'
-})
-```
-
-### 3. Dark Mode Support
-
-Include dark mode variants:
-
-```tsx
-createElement('div', {
-  className: 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-200 dark:border-gray-700'
-})
-```
-
-### 4. Typography System
-
-**✅ DO:**
-```tsx
-// Use semantic HTML with default typography
-createElement('h1', { className: 'mb-4' }, title)
-createElement('p', { className: 'text-gray-600 dark:text-gray-400' }, description)
-```
-
-**❌ DON'T:**
-```tsx
-// Don't override typography unless necessary
-className: 'text-2xl font-bold' // Only if design specifically requires it
-```
-
-### 5. Utility Libraries Integration
-
-#### Icons (lucide-react)
-
-```tsx
-// In extracted block, check if icons are available
-const Heart = (globalThis as any).LucideIcons?.Heart;
-
-if (Heart) {
-  return createElement(Heart, { size: 20, className: 'text-red-500' });
-}
-```
-
-#### Toast Notifications (sonner)
-
-```tsx
-const toast = (globalThis as any).toast;
-
-if (toast) {
-  toast.success('Action completed!');
-}
-```
-
-## 📋 Component Extraction Checklist
-
-When extracting components, ensure:
-
-- [ ] Uses only Tailwind utility classes
-- [ ] No imports of custom component library
-- [ ] Responsive classes included (sm:, md:, lg:, xl:)
-- [ ] Dark mode classes included (dark:)
-- [ ] Uses `createElement` instead of JSX
-- [ ] Exports default React component
-- [ ] Props are typed and documented
-- [ ] Accepts `className` prop for customization
-- [ ] Uses semantic HTML elements
-- [ ] Includes accessibility attributes (aria-*, role, etc.)
-
-## 🎨 Example: Properly Styled Block
-
-```tsx
-// blocks/hero-01-standalone.js
-import React from 'https://esm.sh/react@18';
-import { createElement } from 'https://esm.sh/react@18';
-
-/**
- * Hero Section Block
- * Props: { 
- *   title?: string, 
- *   subtitle?: string, 
- *   ctaText?: string,
- *   className?: string
- * }
- */
-export default function Hero01({ 
-  title = 'Welcome to Our Platform',
-  subtitle = 'Build amazing applications with AI-powered blocks',
-  ctaText = 'Get Started',
-  className = '',
-  ...props 
-}) {
-  return createElement('div', {
-    className: `bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 sm:p-12 lg:p-16 rounded-lg ${className}`,
-    ...props
-  }, [
-    createElement('h1', {
-      key: 'title',
-      className: 'mb-4 sm:mb-6'
-    }, title),
-    createElement('p', {
-      key: 'subtitle',
-      className: 'text-lg sm:text-xl mb-6 sm:mb-8 opacity-90'
-    }, subtitle),
-    createElement('button', {
-      key: 'cta',
-      className: 'px-6 py-3 sm:px-8 sm:py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600',
-      onClick: () => {
-        const toast = (globalThis as any).toast;
-        if (toast) {
-          toast.success('CTA clicked!');
-        } else {
-          alert('CTA clicked!');
-        }
-      },
-      'aria-label': ctaText
-    }, ctaText)
-  ]);
-}
-```
-
-## 🔧 Component Extractor Configuration
-
-The component extractor should:
-
-1. **Detect Custom Components**
-   - Scan for imports from `./components/CommonComponents`
-   - Scan for imports from `./components/UIComponentsLibrary`
-   - Replace with Tailwind equivalents
-
-2. **Convert JSX to createElement**
-   - Transform JSX syntax to `createElement` calls
-   - Preserve className and props
-
-3. **Add Responsive Classes**
-   - Ensure spacing uses responsive variants
-   - Add breakpoint classes where appropriate
-
-4. **Add Dark Mode**
-   - Include dark: variants for colors
-   - Include dark: variants for backgrounds
-
-5. **Remove Local Imports**
-   - Remove all local component imports
-   - Remove local utility imports (keep only CDN imports)
-
-## 🎯 Integration with Custom Components
-
-### Strategy 1: Wrap Remote Blocks
+Use remote blocks for structure, enhance with your custom components:
 
 ```tsx
 
 
 
-function StyledHero({ block, ...props }) {
-  return (
-    <Card variant="elevated" className="p-0 overflow-hidden">
-      <RemoteBlockRenderer block={block} props={props} />
-    </Card>
-  );
-}
-```
 
-### Strategy 2: Enhance with Custom Components
-
-```tsx
-
-
-
-function EnhancedFeature({ block, ...props }) {
+function EnhancedHero({ blockId, title, subtitle }) {
   return (
     <div>
-      <RemoteBlockRenderer block={block} props={props} />
+      {/* Remote block provides base structure */}
+      <RemoteBlockRenderer 
+        block={heroBlock}
+        props={{ title, subtitle }}
+      />
+      
+      {/* Enhance with custom components */}
       <div className="mt-4 flex gap-2">
-        <Button variant="primary">Learn More</Button>
-        <Badge variant="new">New</Badge>
+        <Button variant="primary">Get Started</Button>
+        <Badge variant="new">New Feature</Badge>
       </div>
     </div>
   );
 }
 ```
 
-## 📚 Best Practices
+### Strategy 2: Custom Components Wrap Remote Blocks
 
-1. **Keep Blocks Simple**
-   - Remote blocks should be self-contained
-   - Use Tailwind only, no custom dependencies
+Wrap remote blocks in your custom components for consistent styling:
 
-2. **Enhance Locally**
-   - Add custom components in your app
-   - Don't expect them in remote blocks
+```tsx
 
-3. **Share Design Tokens**
-   - Pass tokens via props
-   - Use CSS variables for global tokens
 
-4. **Test Responsiveness**
-   - Test on mobile, tablet, desktop
-   - Verify dark mode works
 
-5. **Document Props**
-   - Include JSDoc comments
-   - Specify default values
-   - List all available props
+function BlockCard({ block, ...props }) {
+  return (
+    <Card variant="elevated" className="p-6">
+      <RemoteBlockRenderer block={block} props={props} />
+    </Card>
+  );
+}
+```
+
+### Strategy 3: Hybrid Approach
+
+Mix remote blocks and custom components in the same layout:
+
+```tsx
+
+
+import { toast } from 'sonner';
+
+function LandingPage() {
+  return (
+    <div>
+      {/* Remote Hero Block */}
+      <RemoteBlockRenderer block={heroBlock} />
+      
+      {/* Custom Feature Section */}
+      <section className="py-12">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold mb-6">Features</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {features.map(feature => (
+              <Card key={feature.id} variant="outlined">
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+                <Button onClick={() => toast.success('Clicked!')}>
+                  Learn More
+                </Button>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Remote CTA Block */}
+      <RemoteBlockRenderer block={ctaBlock} />
+    </div>
+  );
+}
+```
+
+## 🎨 Styling Remote Blocks with Your System
+
+### Option 1: CSS Variables (Recommended)
+
+Define CSS variables in `/styles/globals.css` that remote blocks can use:
+
+```css
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #64748b;
+  --border-radius: 0.5rem;
+  --spacing-unit: 1rem;
+}
+
+/* Remote blocks can use these */
+.remote-block {
+  color: var(--primary-color);
+  border-radius: var(--border-radius);
+}
+```
+
+### Option 2: Tailwind Classes via Props
+
+Pass Tailwind classes to remote blocks via props:
+
+```tsx
+<RemoteBlockRenderer 
+  block={block}
+  props={{
+    className: "bg-blue-500 text-white rounded-lg p-4",
+    buttonClass: "px-4 py-2 bg-indigo-600 hover:bg-indigo-700"
+  }}
+/>
+```
+
+### Option 3: Wrapper Components
+
+Create wrapper components that apply your styling:
+
+```tsx
+function StyledRemoteBlock({ block, variant = 'default', ...props }) {
+  const variantClasses = {
+    default: "bg-white dark:bg-gray-800 rounded-lg shadow",
+    elevated: "bg-white dark:bg-gray-800 rounded-lg shadow-lg",
+    outlined: "border border-gray-200 dark:border-gray-700 rounded-lg"
+  };
+  
+  return (
+    <div className={variantClasses[variant]}>
+      <RemoteBlockRenderer block={block} props={props} />
+    </div>
+  );
+}
+```
+
+## 🔧 Component Extractor Integration
+
+When extracting components, ensure they follow your styling approach:
+
+### Extracted Block Template
+
+```tsx
+// blocks/hero-01-standalone.js
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
+
+export default function Hero01({ 
+  title = 'Welcome',
+  subtitle = 'Build amazing apps',
+  className = '',
+  ...props 
+}) {
+  return createElement('div', {
+    className: `bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg ${className}`,
+    ...props
+  }, [
+    createElement('h1', { key: 'title', className: 'text-4xl font-bold mb-4' }, title),
+    createElement('p', { key: 'subtitle', className: 'text-xl mb-6' }, subtitle),
+    // Use Tailwind classes, not custom component classes
+    createElement('button', {
+      key: 'cta',
+      className: 'px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors',
+      onClick: () => alert('CTA clicked!')
+    }, 'Get Started')
+  ]);
+}
+```
+
+## 📦 Using Your Utility Libraries in Blocks
+
+Remote blocks can use your utility libraries if they're available globally:
+
+### Icons (lucide-react)
+
+```tsx
+// In your app setup
+import * as LucideIcons from 'lucide-react';
+(window as any).LucideIcons = LucideIcons;
+
+// In remote blocks
+const Heart = (window as any).LucideIcons?.Heart;
+```
+
+### Toast Notifications (sonner)
+
+```tsx
+// Make toast available globally
+import { toast } from 'sonner';
+(window as any).toast = toast;
+
+// Remote blocks can use it
+(window as any).toast?.success('Action completed!');
+```
+
+## 🎯 Best Practices
+
+### 1. Keep Remote Blocks Simple
+
+Remote blocks should use:
+- ✅ Tailwind utility classes
+- ✅ Standard HTML elements
+- ✅ Basic React patterns
+- ❌ NOT your custom component library (they won't be available)
+
+### 2. Enhance with Custom Components Locally
+
+```tsx
+// ❌ Don't do this in remote blocks
+
+
+// ✅ Do this instead
+<button className="px-4 py-2 bg-blue-500 text-white rounded">
+  Click Me
+</button>
+
+// ✅ Then enhance locally
+
+<Button variant="primary">Enhanced Button</Button>
+```
+
+### 3. Use Props for Customization
+
+```tsx
+// Remote block accepts styling props
+<RemoteBlockRenderer 
+  block={block}
+  props={{
+    title: "Custom Title",
+    className: "custom-classes",
+    buttonText: "Custom Button",
+    // Pass your design tokens
+    primaryColor: "bg-blue-500",
+    borderRadius: "rounded-lg"
+  }}
+/>
+```
+
+## 🔄 Workflow: Creating Blocks from Your Components
+
+1. **Build with Custom Components Locally**
+   ```tsx
+   
+   
+   function MyFeature() {
+     return (
+       <Card variant="elevated">
+         <Button>Click Me</Button>
+       </Card>
+     );
+   }
+   ```
+
+2. **Convert to Standalone Block**
+   - Replace custom components with Tailwind classes
+   - Remove local imports
+   - Make it work with `createElement`
+
+3. **Extract via Component Extractor**
+   - Component Extractor will convert it
+   - Save to GitHub
+   - Add to `blocks_index`
+
+4. **Use as Remote Block**
+   ```tsx
+   <RemoteBlockRenderer block={extractedBlock} />
+   ```
+
+## 📚 Example: Complete Integration
+
+```tsx
+
+
+
+
+
+function App() {
+  const { blocks, loading } = useBlocks();
+  
+  return (
+    <>
+      <ToastContainer />
+      
+      {/* Remote Hero Block */}
+      {blocks.hero && (
+        <RemoteBlockRenderer 
+          block={blocks.hero}
+          props={{ title: "Welcome", subtitle: "Get started" }}
+        />
+      )}
+      
+      {/* Custom Feature Section */}
+      <section className="py-12 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8">Features</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {features.map(feature => (
+              <Card key={feature.id} variant="elevated">
+                <Badge variant="new">New</Badge>
+                <h3 className="text-xl font-semibold mt-4">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 mt-2">
+                  {feature.description}
+                </p>
+                <Button 
+                  variant="primary"
+                  onClick={() => toast.success('Feature clicked!')}
+                  className="mt-4"
+                >
+                  Learn More
+                </Button>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Remote CTA Block */}
+      {blocks.cta && (
+        <RemoteBlockRenderer block={blocks.cta} />
+      )}
+    </>
+  );
+}
+```
+
+## 🎨 Design Token Integration
+
+Share design tokens between custom components and remote blocks:
+
+```tsx
+// tokens.ts
+export const tokens = {
+  colors: {
+    primary: '#3b82f6',
+    secondary: '#64748b',
+  },
+  spacing: {
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '2rem',
+  },
+  borderRadius: {
+    sm: '0.25rem',
+    md: '0.5rem',
+    lg: '1rem',
+  }
+};
+
+// Use in custom components
+<Button style={{ backgroundColor: tokens.colors.primary }}>
+
+// Pass to remote blocks
+<RemoteBlockRenderer 
+  block={block}
+  props={{ tokens }}
+/>
+```
+
+## ✅ Checklist for Block Integration
+
+- [ ] Remote block uses Tailwind classes (not custom components)
+- [ ] Custom components wrap/enhance remote blocks locally
+- [ ] Design tokens are shared via props
+- [ ] Toast/notifications are available globally if needed
+- [ ] Icons use lucide-react (verify existence first)
+- [ ] Responsive classes are included (sm:, md:, lg:)
+- [ ] Dark mode classes are included (dark:)
+- [ ] Accessibility attributes are present
 
 ## 🚀 Quick Reference
 
-| Aspect | Rule |
-|--------|------|
-| Styling | Tailwind utility classes only |
-| Components | No custom component imports |
-| Icons | Check for global LucideIcons |
-| Toasts | Check for global toast |
-| Responsive | Always include sm:, md:, lg: |
-| Dark Mode | Always include dark: variants |
-| Typography | Use semantic HTML, minimal overrides |
-| Exports | Default export React component |
-| Props | Accept className for customization |
+**Custom Components**: Use for complex, app-specific UI
+**Remote Blocks**: Use for reusable, simple components
+
+**Mix them**: Remote blocks for structure, custom components for enhancement!
 
 ---
 
-Following these guidelines ensures extracted components work seamlessly with your custom component library! 🎨
+This approach gives you the best of both worlds:
+- ✅ Reusable blocks from GitHub
+- ✅ Custom components for your specific needs
+- ✅ Consistent styling with Tailwind
+- ✅ Full control and flexibility
 
