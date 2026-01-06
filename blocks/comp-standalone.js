@@ -2,9 +2,13 @@
  * Comp Component
  * Props: { visible?: any, variants?: any, secondary?: any, destructive?: any, outline?: any, defaultVariants?: any }
  */
+
+// Note: This component uses Tailwind CSS utility classes only.
+// No custom component library dependencies.
+// Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot@1.1.2";
-import { cva, type VariantProps } from "class-variance-authority@0.7.1";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
 
 
 const badgeVariants = cva(
