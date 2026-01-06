@@ -2,36 +2,20 @@
  * Icon Component
 
  */
-# Custom Component Library Guide
 
-Complete guide to building UI components with Tailwind CSS, the way I generate apps in Figma Make.
+// Note: This component uses Tailwind CSS utility classes only.
+// No custom component library dependencies.
+// Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
+// Most Commonly Used Components - Complete Implementation
+// Cards, Modals, Dropdowns, Inputs, Tabs
 
----
+import { useState, useEffect, useRef, ReactNode } from 'react';
+import { X, ChevronDown, Eye, EyeOff, Search, Mail, Lock, User, Calendar } from 'lucide-react';
 
-## 📋 Table of Contents
+// ==================== BUTTONS ====================
 
-1. [Buttons](#buttons)
-2. [Cards](#cards)
-3. [Modals/Dialogs](#modals)
-4. [Dropdowns](#dropdowns)
-5. [Input Fields](#inputs)
-6. [Tabs](#tabs)
-7. [Tooltips](#tooltips)
-8. [Badges](#badges)
-9. [Avatars](#avatars)
-10. [Loading Spinners](#spinners)
-11. [Alerts/Notifications](#alerts)
-12. [Navigation](#navigation)
-
----
-
-## 🔘 Buttons
-
-### Basic Button Component
-
-```tsx
 interface ButtonProps {
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
@@ -39,6 +23,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
+  fullWidth?: boolean;
 }
 
 export function Button({
@@ -49,16 +34,17 @@ export function Button({
   loading = false,
   onClick,
   type = 'button',
-  className = ''
+  className = '',
+  fullWidth = false
 }: ButtonProps) {
-  const baseClasses = "rounded transition-all duration-200 font-medium inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseClasses = "rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed";
   
   const variants = {
     primary: "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700",
     secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300 active:bg-gray-400",
     danger: "bg-red-500 text-white hover:bg-red-600 active:bg-red-700",
     ghost: "bg-transparent hover:bg-gray-100 active:bg-gray-200 text-gray-700",
-    outline: "border-2 border-blue-500 text-blue-500 hover:bg-blue-50 active:bg-blue-100"
+    outline: "border-2 border-blue-500 text-blue-500 hover:bg-blue-50 active:bg-blue-100 bg-transparent"
   };
   
   const sizes = {
@@ -72,7 +58,7 @@ export function Button({
       type={type}
       onClick={onClick}
       disabled={disabled || loading}
-      className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${fullWidth ? 'w-full' : ''} ${className}`}
     >
       {loading && (
         <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -81,71 +67,16 @@ export function Button({
     </button>
   );
 }
-```
 
-### Icon Button
+// ==================== CARDS ====================
 
-```tsx
-import { X } from 'lucide-react';
-
-export default function IconButton({ 
-  icon: Icon, 
-  onClick, 
-  variant = 'ghost',
-  size = 'md',
-  'aria-label': ariaLabel 
-}: {
-  icon: any;
-  onClick?: () => void;
-  variant?: 'ghost' | 'primary' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
-  'aria-label': string;
-}) {
-  const baseClasses = "rounded-full transition-colors inline-flex items-center justify-center";
-  
-  const variants = {
-    ghost: "hover:bg-gray-100 active:bg-gray-200 text-gray-700",
-    primary: "bg-blue-500 text-white hover:bg-blue-600",
-    danger: "hover:bg-red-50 text-red-500 hover:text-red-600"
-  };
-  
-  const sizes = {
-    sm: "w-8 h-8",
-    md: "w-10 h-10",
-    lg: "w-12 h-12"
-  };
-  
-  const iconSizes = {
-    sm: 16,
-    md: 20,
-    lg: 24
-  };
-  
-  return (
-    <button
-      onClick={onClick}
-      className={`${baseClasses} ${variants[variant]} ${sizes[size]}`}
-      aria-label={ariaLabel}
-    >
-      <Icon size={iconSizes[size]} />
-    </button>
-  );
-}
-```
-
----
-
-## 🎴 Cards
-
-### Basic Card
-
-```tsx
 interface CardProps {
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: 'default' | 'bordered' | 'elevated';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   className?: string;
   onClick?: () => void;
+  hoverable?: boolean;
 }
 
 export function Card({ 
@@ -153,14 +84,15 @@ export function Card({
   variant = 'default',
   padding = 'md',
   className = '',
-  onClick 
+  onClick,
+  hoverable = false
 }: CardProps) {
   const baseClasses = "rounded-lg transition-all";
   
   const variants = {
     default: "bg-white",
     bordered: "bg-white border border-gray-200",
-    elevated: "bg-white shadow-lg hover:shadow-xl"
+    elevated: "bg-white shadow-md"
   };
   
   const paddings = {
@@ -170,105 +102,29 @@ export function Card({
     lg: "p-6"
   };
   
-  const interactive = onClick ? "cursor-pointer hover:shadow-md" : "";
+  const interactive = onClick ? "cursor-pointer" : "";
+  const hoverEffect = (onClick || hoverable) ? "hover:shadow-lg" : "";
   
   return (
     <div 
       onClick={onClick}
-      className={`${baseClasses} ${variants[variant]} ${paddings[padding]} ${interactive} ${className}`}
+      className={`${baseClasses} ${variants[variant]} ${paddings[padding]} ${interactive} ${hoverEffect} ${className}`}
     >
       {children}
     </div>
   );
 }
-```
 
-### Feature Card
-
-```tsx
-import { LucideIcon } from 'lucide-react';
-
-interface FeatureCardProps {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  iconColor?: string;
-}
-
-export function FeatureCard({ 
-  icon: Icon, 
-  title, 
-  description,
-  iconColor = 'text-blue-500'
-}: FeatureCardProps) {
-  return (
-    <Card variant="bordered" padding="lg" className="hover:border-blue-200 transition-colors">
-      <div className="flex flex-col items-center text-center gap-3">
-        <div className={`${iconColor} bg-blue-50 p-3 rounded-lg`}>
-          <Icon size={32} />
-        </div>
-        <h3>{title}</h3>
-        <p className="text-gray-600">{description}</p>
-      </div>
-    </Card>
-  );
-}
-```
-
-### Product Card
-
-```tsx
-import { ShoppingCart } from 'lucide-react';
-
-interface ProductCardProps {
-  image: string;
-  title: string;
-  price: number;
-  onAddToCart: () => void;
-}
-
-export function ProductCard({ image, title, price, onAddToCart }: ProductCardProps) {
-  return (
-    <Card variant="bordered" padding="none" className="overflow-hidden group">
-      <div className="aspect-square overflow-hidden bg-gray-100">
-        <img 
-          src={image} 
-          alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-      </div>
-      <div className="p-4">
-        <h3 className="mb-2">{title}</h3>
-        <div className="flex items-center justify-between">
-          <span className="text-blue-600">${price.toFixed(2)}</span>
-          <Button size="sm" onClick={onAddToCart}>
-            <ShoppingCart size={16} />
-            Add
-          </Button>
-        </div>
-      </div>
-    </Card>
-  );
-}
-```
-
----
-
-## 🪟 Modals
-
-### Modal Component
-
-```tsx
-import { X } from 'lucide-react';
-import { useEffect } from 'react';
+// ==================== MODAL ====================
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
-  children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  children: ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   showCloseButton?: boolean;
+  footer?: ReactNode;
 }
 
 export function Modal({
@@ -277,9 +133,9 @@ export function Modal({
   title,
   children,
   size = 'md',
-  showCloseButton = true
+  showCloseButton = true,
+  footer
 }: ModalProps) {
-  // Prevent scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -291,7 +147,6 @@ export function Modal({
     };
   }, [isOpen]);
 
-  // Close on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) onClose();
@@ -306,47 +161,47 @@ export function Modal({
     sm: 'max-w-md',
     md: 'max-w-lg',
     lg: 'max-w-2xl',
-    xl: 'max-w-4xl'
+    xl: 'max-w-4xl',
+    full: 'max-w-full m-4'
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
-        className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
       
-      {/* Modal */}
-      <div className={`relative bg-white rounded-lg shadow-xl w-full ${sizes[size]} m-4 max-h-[90vh] overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200`}>
-        {/* Header */}
+      <div className={`relative bg-white rounded-lg shadow-2xl w-full ${sizes[size]} max-h-[90vh] overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200`}>
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            {title && <h2>{title}</h2>}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+            {title && <h2 className="text-xl">{title}</h2>}
             {showCloseButton && (
-              <IconButton
-                icon={X}
+              <button
                 onClick={onClose}
-                variant="ghost"
-                aria-label="Close modal"
-              />
+                className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X size={20} />
+              </button>
             )}
           </div>
         )}
         
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto px-6 py-4">
           {children}
         </div>
+
+        {footer && (
+          <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );
 }
-```
 
-### Confirmation Modal
-
-```tsx
+// Confirmation Modal
 export function ConfirmModal({
   isOpen,
   onClose,
@@ -367,38 +222,41 @@ export function ConfirmModal({
   variant?: 'danger' | 'primary';
 }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="sm" showCloseButton={false}>
-      <div className="text-center">
-        <h3 className="mb-4">{title}</h3>
-        <p className="text-gray-600 mb-6">{message}</p>
+    <Modal 
+      isOpen={isOpen} 
+      onClose={onClose} 
+      size="sm"
+      footer={
         <div className="flex gap-3 justify-end">
           <Button variant="ghost" onClick={onClose}>
             {cancelText}
           </Button>
-          <Button variant={variant} onClick={() => { onConfirm(); onClose(); }}>
+          <Button 
+            variant={variant} 
+            onClick={() => { 
+              onConfirm(); 
+              onClose(); 
+            }}
+          >
             {confirmText}
           </Button>
         </div>
+      }
+    >
+      <div className="text-center py-4">
+        <h3 className="mb-4">{title}</h3>
+        <p className="text-gray-600">{message}</p>
       </div>
     </Modal>
   );
 }
-```
 
----
-
-## 📋 Dropdowns
-
-### Dropdown Menu
-
-```tsx
-import { useState, useRef, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+// ==================== DROPDOWN ====================
 
 interface DropdownProps {
-  trigger: React.ReactNode;
-  children: React.ReactNode;
-  align?: 'left' | 'right';
+  trigger: ReactNode;
+  children: ReactNode;
+  align?: 'left' | 'right' | 'center';
 }
 
 export function Dropdown({ trigger, children, align = 'left' }: DropdownProps) {
@@ -412,11 +270,17 @@ export function Dropdown({ trigger, children, align = 'left' }: DropdownProps) {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isOpen]);
 
-  const alignmentClasses = align === 'right' ? 'right-0' : 'left-0';
+  const alignmentClasses = {
+    left: 'left-0',
+    right: 'right-0',
+    center: 'left-1/2 -translate-x-1/2'
+  };
 
   return (
     <div className="relative inline-block" ref={dropdownRef}>
@@ -425,8 +289,10 @@ export function Dropdown({ trigger, children, align = 'left' }: DropdownProps) {
       </div>
       
       {isOpen && (
-        <div className={`absolute ${alignmentClasses} mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in zoom-in duration-200`}>
-          {children}
+        <div className={`absolute ${alignmentClasses[align]} mt-2 min-w-[200px] bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200`}>
+          <div onClick={() => setIsOpen(false)}>
+            {children}
+          </div>
         </div>
       )}
     </div>
@@ -437,12 +303,14 @@ export function DropdownItem({
   children, 
   onClick,
   icon: Icon,
-  variant = 'default'
+  variant = 'default',
+  disabled = false
 }: { 
-  children: React.ReactNode; 
+  children: ReactNode; 
   onClick?: () => void;
   icon?: any;
   variant?: 'default' | 'danger';
+  disabled?: boolean;
 }) {
   const variantClasses = variant === 'danger' 
     ? 'text-red-600 hover:bg-red-50' 
@@ -451,30 +319,35 @@ export function DropdownItem({
   return (
     <button
       onClick={onClick}
-      className={`w-full px-4 py-2 text-left flex items-center gap-3 transition-colors ${variantClasses}`}
+      disabled={disabled}
+      className={`w-full px-4 py-2.5 text-left flex items-center gap-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${variantClasses}`}
     >
-      {Icon && <Icon size={16} />}
-      {children}
+      {Icon && <Icon size={18} />}
+      <span>{children}</span>
     </button>
   );
 }
-```
 
-### Select Component
+export function DropdownDivider() {
+  return <div className="h-px bg-gray-200 my-1" />;
+}
 
-```tsx
+// ==================== SELECT ====================
+
 export function Select({
   value,
   onChange,
   options,
   placeholder = 'Select...',
-  className = ''
+  className = '',
+  disabled = false
 }: {
   value: string;
   onChange: (value: string) => void;
   options: Array<{ value: string; label: string }>;
   placeholder?: string;
   className?: string;
+  disabled?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const selectedOption = options.find(opt => opt.value === value);
@@ -482,7 +355,10 @@ export function Select({
   return (
     <Dropdown
       trigger={
-        <button className={`w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg hover:border-gray-400 transition-colors flex items-center justify-between ${className}`}>
+        <button 
+          disabled={disabled}
+          className={`w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg hover:border-gray-400 transition-colors flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+        >
           <span className={selectedOption ? 'text-gray-900' : 'text-gray-400'}>
             {selectedOption?.label || placeholder}
           </span>
@@ -504,26 +380,21 @@ export function Select({
     </Dropdown>
   );
 }
-```
 
----
+// ==================== INPUT FIELDS ====================
 
-## ✍️ Input Fields
-
-### Text Input
-
-```tsx
 interface InputProps {
   label?: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
+  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
   error?: string;
   disabled?: boolean;
   required?: boolean;
   icon?: any;
   className?: string;
+  helperText?: string;
 }
 
 export function Input({
@@ -536,23 +407,27 @@ export function Input({
   disabled = false,
   required = false,
   icon: Icon,
-  className = ''
+  className = '',
+  helperText
 }: InputProps) {
+  const [showPassword, setShowPassword] = useState(false);
+  const inputType = type === 'password' && showPassword ? 'text' : type;
+
   const inputClasses = `
-    w-full px-4 py-2 rounded-lg border transition-all
+    w-full px-4 py-2 rounded-lg border transition-all outline-none
     ${Icon ? 'pl-10' : ''}
+    ${type === 'password' ? 'pr-10' : ''}
     ${error 
-      ? 'border-red-500 focus:ring-2 focus:ring-red-200' 
+      ? 'border-red-500 focus:ring-2 focus:ring-red-200 focus:border-red-500' 
       : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
     }
-    ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'}
-    outline-none
+    ${disabled ? 'bg-gray-100 cursor-not-allowed text-gray-500' : 'bg-white'}
   `;
 
   return (
     <div className={className}>
       {label && (
-        <label className="block mb-2 text-gray-700">
+        <label className="block mb-2 text-sm text-gray-700">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
@@ -566,7 +441,7 @@ export function Input({
         )}
         
         <input
-          type={type}
+          type={inputType}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
@@ -574,7 +449,21 @@ export function Input({
           required={required}
           className={inputClasses}
         />
+
+        {type === 'password' && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        )}
       </div>
+      
+      {helperText && !error && (
+        <p className="mt-1 text-sm text-gray-500">{helperText}</p>
+      )}
       
       {error && (
         <p className="mt-1 text-sm text-red-500">{error}</p>
@@ -582,11 +471,7 @@ export function Input({
     </div>
   );
 }
-```
 
-### Textarea
-
-```tsx
 export function Textarea({
   label,
   value,
@@ -594,7 +479,11 @@ export function Textarea({
   placeholder,
   rows = 4,
   error,
-  className = ''
+  disabled = false,
+  required = false,
+  className = '',
+  helperText,
+  maxLength
 }: {
   label?: string;
   value: string;
@@ -602,12 +491,19 @@ export function Textarea({
   placeholder?: string;
   rows?: number;
   error?: string;
+  disabled?: boolean;
+  required?: boolean;
   className?: string;
+  helperText?: string;
+  maxLength?: number;
 }) {
   return (
     <div className={className}>
       {label && (
-        <label className="block mb-2 text-gray-700">{label}</label>
+        <label className="block mb-2 text-sm text-gray-700">
+          {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
+        </label>
       )}
       
       <textarea
@@ -615,198 +511,174 @@ export function Textarea({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={rows}
+        disabled={disabled}
+        required={required}
+        maxLength={maxLength}
         className={`
           w-full px-4 py-2 rounded-lg border transition-all outline-none resize-none
           ${error 
             ? 'border-red-500 focus:ring-2 focus:ring-red-200' 
             : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
           }
+          ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'}
         `}
       />
       
-      {error && (
-        <p className="mt-1 text-sm text-red-500">{error}</p>
-      )}
+      <div className="flex items-center justify-between mt-1">
+        {helperText && !error && (
+          <p className="text-sm text-gray-500">{helperText}</p>
+        )}
+        {error && (
+          <p className="text-sm text-red-500">{error}</p>
+        )}
+        {maxLength && (
+          <p className="text-sm text-gray-400 ml-auto">
+            {value.length}/{maxLength}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
-```
 
-### Checkbox
-
-```tsx
 export function Checkbox({
   label,
   checked,
   onChange,
-  disabled = false
+  disabled = false,
+  description
 }: {
   label: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
   disabled?: boolean;
+  description?: string;
 }) {
   return (
-    <label className="flex items-center gap-2 cursor-pointer">
+    <label className={`flex items-start gap-3 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
       <input
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         disabled={disabled}
-        className="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-2 focus:ring-blue-200 cursor-pointer"
+        className="mt-1 w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-2 focus:ring-blue-200 cursor-pointer disabled:opacity-50"
       />
-      <span className={disabled ? 'text-gray-400' : 'text-gray-700'}>
-        {label}
-      </span>
-    </label>
-  );
-}
-```
-
-### Switch/Toggle
-
-```tsx
-export function Switch({
-  checked,
-  onChange,
-  label,
-  disabled = false
-}: {
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-  label?: string;
-  disabled?: boolean;
-}) {
-  return (
-    <label className="flex items-center gap-3 cursor-pointer">
-      <div className="relative">
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={(e) => onChange(e.target.checked)}
-          disabled={disabled}
-          className="sr-only peer"
-        />
-        <div className={`
-          w-11 h-6 rounded-full transition-all
-          ${disabled ? 'bg-gray-200 cursor-not-allowed' : 'bg-gray-300'}
-          peer-checked:bg-blue-500
-        `}>
-          <div className={`
-            absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-all
-            ${checked ? 'translate-x-5' : 'translate-x-0'}
-          `} />
-        </div>
-      </div>
-      {label && (
+      <div className="flex-1">
         <span className={disabled ? 'text-gray-400' : 'text-gray-700'}>
           {label}
         </span>
-      )}
+        {description && (
+          <p className="text-sm text-gray-500 mt-1">{description}</p>
+        )}
+      </div>
     </label>
   );
 }
-```
 
----
+export function Radio({
+  label,
+  name,
+  value,
+  checked,
+  onChange,
+  disabled = false,
+  description
+}: {
+  label: string;
+  name: string;
+  value: string;
+  checked: boolean;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+  description?: string;
+}) {
+  return (
+    <label className={`flex items-start gap-3 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={(e) => onChange(e.target.value)}
+        disabled={disabled}
+        className="mt-1 w-4 h-4 text-blue-500 border-gray-300 focus:ring-2 focus:ring-blue-200 cursor-pointer disabled:opacity-50"
+      />
+      <div className="flex-1">
+        <span className={disabled ? 'text-gray-400' : 'text-gray-700'}>
+          {label}
+        </span>
+        {description && (
+          <p className="text-sm text-gray-500 mt-1">{description}</p>
+        )}
+      </div>
+    </label>
+  );
+}
 
-## 📑 Tabs
-
-```tsx
-import { useState } from 'react';
+// ==================== TABS ====================
 
 interface Tab {
   id: string;
   label: string;
-  content: React.ReactNode;
+  content: ReactNode;
   icon?: any;
+  badge?: number;
 }
 
-export function Tabs({ tabs }: { tabs: Tab[] }) {
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
+export function Tabs({ 
+  tabs,
+  defaultTab,
+  onChange
+}: { 
+  tabs: Tab[];
+  defaultTab?: string;
+  onChange?: (tabId: string) => void;
+}) {
+  const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
   const activeContent = tabs.find(tab => tab.id === activeTab)?.content;
+
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    onChange?.(tabId);
+  };
 
   return (
     <div>
-      {/* Tab Headers */}
       <div className="border-b border-gray-200">
-        <div className="flex gap-1">
+        <div className="flex gap-1 overflow-x-auto">
           {tabs.map(tab => {
             export default function Icon = tab.icon;
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
                 className={`
-                  px-4 py-2 border-b-2 transition-all flex items-center gap-2
+                  px-4 py-3 border-b-2 transition-all flex items-center gap-2 whitespace-nowrap
                   ${activeTab === tab.id
                     ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
                   }
                 `}
               >
-                {Icon && <Icon size={16} />}
+                {Icon && <Icon size={18} />}
                 {tab.label}
+                {tab.badge !== undefined && (
+                  <span className={`
+                    px-2 py-0.5 text-xs rounded-full
+                    ${activeTab === tab.id ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'}
+                  `}>
+                    {tab.badge}
+                  </span>
+                )}
               </button>
             );
           })}
         </div>
       </div>
       
-      {/* Tab Content */}
-      <div className="p-4">
+      <div className="py-4">
         {activeContent}
       </div>
     </div>
   );
 }
-```
-
----
-
-## 💬 Tooltips
-
-```tsx
-import { useState, useRef } from 'react';
-
-export function Tooltip({
-  children,
-  content,
-  position = 'top'
-}: {
-  children: React.ReactNode;
-  content: string;
-  position?: 'top' | 'bottom' | 'left' | 'right';
-}) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const positions = {
-    top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
-    bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
-    left: 'right-full top-1/2 -translate-y-1/2 mr-2',
-    right: 'left-full top-1/2 -translate-y-1/2 ml-2'
-  };
-
-  return (
-    <div 
-      className="relative inline-block"
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
-    >
-      {children}
-      
-      {isVisible && (
-        <div className={`absolute ${positions[position]} z-50 px-3 py-2 text-sm text-white bg-gray-900 rounded whitespace-nowrap animate-in fade-in zoom-in duration-200`}>
-          {content}
-          {/* Arrow */}
-          <div className="absolute w-2 h-2 bg-gray-900 rotate-45" />
-        </div>
-      )}
-    </div>
-  );
-}
-```
-
----
-
-I'll continue with the rest in the next file...
