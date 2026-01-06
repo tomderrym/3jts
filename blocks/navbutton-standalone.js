@@ -2,6 +2,10 @@
  * NavButton Component
 
  */
+
+// Note: This component uses Tailwind CSS utility classes only.
+// No custom component library dependencies.
+// Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React, {  useState  } from 'https://esm.sh/react@18';
 import { Home, Wind, Sparkles, Users, UserCircle } from 'lucide-react';
 
