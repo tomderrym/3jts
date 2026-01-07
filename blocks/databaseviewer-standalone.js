@@ -173,18 +173,16 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="bg-[#111114] border border-white/10 rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95">
+  return createElement('div', {className: 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm'}, '<div className="bg-[#111114] border border-white/10 rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center">
-              <Database size={20} className="text-cyan-400" />
+              createElement('Database', {className: 'text-cyan-400'})
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white">Database Viewer</h2>
-              <p className="text-xs text-slate-400">View your app's database schema and data</p>
+              createElement('h2', {className: 'text-lg font-bold text-white'}, 'Database Viewer')
+              createElement('p', {className: 'text-xs text-slate-400'}, 'View your app's database schema and data')
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -193,13 +191,13 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
               className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
               title="Refresh"
             >
-              <RefreshCw size={18} />
+              createElement('RefreshCw', null)
             </button>
             <button
               onClick={onClose}
               className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
             >
-              <X size={18} />
+              createElement('X', null)
             </button>
           </div>
         </div>
@@ -209,13 +207,11 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
           {/* Tables List */}
           <div className="w-64 border-r border-white/10 bg-black/40 overflow-y-auto shrink-0">
             <div className="p-4">
-              <h3 className="text-xs font-bold text-slate-400 uppercase mb-3">Tables</h3>
+              createElement('h3', {className: 'text-xs font-bold text-slate-400 uppercase mb-3'}, 'Tables')
               {loading ? (
                 <div className="flex items-center justify-center py-8">
-                  <Loader2 size={16} className="animate-spin text-slate-500" />
-                </div>
-              ) : tables.length === 0 ? (
-                <p className="text-xs text-slate-500">No tables found</p>
+                  createElement('Loader2', {className: 'animate-spin text-slate-500'})') : tables.length === 0 ? (
+                createElement('p', {className: 'text-xs text-slate-500'}, 'No tables found')
               ) : (
                 <div className="space-y-1">
                   {tables.map(({ table, rowCount }) => (
@@ -229,13 +225,11 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
                       }`}
                     >
                       <div className="flex items-center gap-2 min-w-0">
-                        <Table size={12} />
-                        <span className="truncate">{table.table_name}</span>
+                        createElement('Table', null)
+                        createElement('span', {className: 'truncate'}, '{table.table_name}')
                       </div>
                       {rowCount !== undefined && (
-                        <span className="text-[10px] text-slate-500 ml-2 shrink-0">
-                          {rowCount}
-                        </span>
+                        createElement('span', {className: 'text-[10px] text-slate-500 ml-2 shrink-0'}, '{rowCount}')
                       )}
                     </button>
                   ))}
@@ -250,33 +244,33 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
               <div className="space-y-4">
                 {loadingData ? (
                   <div className="flex items-center justify-center py-12">
-                    <Loader2 size={24} className="animate-spin text-indigo-400" />
+                    createElement('Loader2', {className: 'animate-spin text-indigo-400'})
                   </div>
                 ) : (
                   <>
                     {/* Schema */}
                     <div>
                       <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                        <Columns size={16} />
+                        createElement('Columns', null)
                         Schema: {selectedTable}
                       </h3>
                       <div className="bg-black/40 rounded-lg border border-white/5 overflow-hidden">
                         <table className="w-full text-xs">
                           <thead className="bg-white/5">
                             <tr>
-                              <th className="px-3 py-2 text-left text-slate-400 font-semibold">Column</th>
-                              <th className="px-3 py-2 text-left text-slate-400 font-semibold">Type</th>
-                              <th className="px-3 py-2 text-left text-slate-400 font-semibold">Nullable</th>
-                              <th className="px-3 py-2 text-left text-slate-400 font-semibold">Default</th>
+                              createElement('th', {className: 'px-3 py-2 text-left text-slate-400 font-semibold'}, 'Column')
+                              createElement('th', {className: 'px-3 py-2 text-left text-slate-400 font-semibold'}, 'Type')
+                              createElement('th', {className: 'px-3 py-2 text-left text-slate-400 font-semibold'}, 'Nullable')
+                              createElement('th', {className: 'px-3 py-2 text-left text-slate-400 font-semibold'}, 'Default')
                             </tr>
                           </thead>
                           <tbody>
                             {tables.find(t => t.table.table_name === selectedTable)?.columns.map((col, idx) => (
                               <tr key={idx} className="border-t border-white/5">
-                                <td className="px-3 py-2 text-slate-300 font-mono">{col.column_name}</td>
-                                <td className="px-3 py-2 text-slate-400">{col.data_type}</td>
-                                <td className="px-3 py-2 text-slate-400">{col.is_nullable}</td>
-                                <td className="px-3 py-2 text-slate-500">{col.column_default || '-'}</td>
+                                createElement('td', {className: 'px-3 py-2 text-slate-300 font-mono'}, '{col.column_name}')
+                                createElement('td', {className: 'px-3 py-2 text-slate-400'}, '{col.data_type}')
+                                createElement('td', {className: 'px-3 py-2 text-slate-400'}, '{col.is_nullable}')
+                                createElement('td', {className: 'px-3 py-2 text-slate-500'}, '{col.column_default || '-'}')
                               </tr>
                             ))}
                           </tbody>
@@ -287,12 +281,12 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
                     {/* Data Preview */}
                     <div>
                       <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                        <Eye size={16} />
+                        createElement('Eye', null)
                         Data Preview (first 100 rows)
                       </h3>
                       {tableData.length === 0 ? (
                         <div className="bg-black/40 rounded-lg border border-white/5 p-8 text-center">
-                          <p className="text-xs text-slate-500">No data in this table</p>
+                          createElement('p', {className: 'text-xs text-slate-500'}, 'No data in this table')
                         </div>
                       ) : (
                         <div className="bg-black/40 rounded-lg border border-white/5 overflow-x-auto">
@@ -300,9 +294,7 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
                             <thead className="bg-white/5">
                               <tr>
                                 {Object.keys(tableData[0] || {}).map((key) => (
-                                  <th key={key} className="px-3 py-2 text-left text-slate-400 font-semibold">
-                                    {key}
-                                  </th>
+                                  createElement('th', {className: 'px-3 py-2 text-left text-slate-400 font-semibold'}, '{key}')
                                 ))}
                               </tr>
                             </thead>
@@ -310,9 +302,7 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
                               {tableData.map((row, idx) => (
                                 <tr key={idx} className="border-t border-white/5">
                                   {Object.values(row).map((value: any, colIdx) => (
-                                    <td key={colIdx} className="px-3 py-2 text-slate-300 max-w-xs truncate" title={String(value)}>
-                                      {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                                    </td>
+                                    createElement('td', {className: 'px-3 py-2 text-slate-300 max-w-xs truncate'}, '{typeof value === 'object' ? JSON.stringify(value) : String(value)}')
                                   ))}
                                 </tr>
                               ))}
@@ -327,8 +317,8 @@ export default function DatabaseViewer: React.FC<DatabaseViewerProps> = ({
             ) : (
               <div className="h-full flex items-center justify-center text-slate-500">
                 <div className="text-center">
-                  <Database size={48} className="mx-auto mb-4 opacity-50" />
-                  <p className="text-sm">Select a table to view schema and data</p>
+                  createElement('Database', {className: 'mx-auto mb-4 opacity-50'})
+                  createElement('p', {className: 'text-sm'}, 'Select a table to view schema and data')
                 </div>
               </div>
             )}
