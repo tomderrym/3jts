@@ -139,40 +139,27 @@ const MaintenanceLogsScreen = ({
         <Card key={idx} className="text-left">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <Skeleton className="h-4 w-32" />
-              <Skeleton className="h-3 w-16" />
+              createElement('Skeleton', {className: 'h-4 w-32'})
+              createElement('Skeleton', {className: 'h-3 w-16'})
             </div>
-            <Skeleton className="h-3 w-40" />
-            <Skeleton className="h-3 w-32" />
-            <Skeleton className="h-3 w-36" />
+            createElement('Skeleton', {className: 'h-3 w-40'})
+            createElement('Skeleton', {className: 'h-3 w-32'})
+            createElement('Skeleton', {className: 'h-3 w-36'})
           </div>
         </Card>
       ))}
     </div>
   );
 
-  return (
-    <div className="flex flex-col items-stretch p-0 w-full h-full overflow-y-auto">
-      <HeaderBar
-        title="Maintenance Logs"
-        rightSlot={(
-          <button
-            onClick={onBack}
-            className="px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-sm font-semibold text-white shadow-md h-[52px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-          >
-            Back to Dashboard
-          </button>
-        )}
-        sticky
-      />
+  return createElement('div', {className: 'flex flex-col items-stretch p-0 w-full h-full overflow-y-auto'}, 'createElement('HeaderBar', {title: 'Maintenance Logs'})
 
       {(userRole === 'customer' || userRole === 'mechanic') && (
         <div className="w-full max-w-sm mx-auto space-y-6 px-4 py-4 mb-4">
-          <h2 className="text-2xl font-semibold text-white">Add New Log</h2>
+          createElement('h2', {className: 'text-2xl font-semibold text-white'}, 'Add New Log')
           <Card>
             <form onSubmit={handleAddLog} className="space-y-4">
               <div>
-                <label htmlFor="logDate" className="block text-slate-300 text-sm font-medium mb-1">Date</label>
+                createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'logDate'}, 'Date')
                 <div className="relative">
                   <input
                     type="date"
@@ -182,11 +169,11 @@ const MaintenanceLogsScreen = ({
                     className="w-full h-12 px-4 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base appearance-none pr-10"
                     required
                   />
-                  <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
+                  createElement('Calendar', {className: 'absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none'})
                 </div>
               </div>
               <div>
-                <label htmlFor="logDescription" className="block text-slate-300 text-sm font-medium mb-1">Description</label>
+                createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'logDescription'}, 'Description')
                 <div className="relative">
                   <input
                     type="text"
@@ -197,11 +184,11 @@ const MaintenanceLogsScreen = ({
                     className="w-full h-12 px-4 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base pr-10"
                     required
                   />
-                  <Edit3 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
+                  createElement('Edit3', {className: 'absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none'})
                 </div>
               </div>
               <div>
-                <label htmlFor="logMileage" className="block text-slate-300 text-sm font-medium mb-1">Mileage (optional)</label>
+                createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'logMileage'}, 'Mileage (optional)')
                 <div className="relative">
                   <input
                     type="number"
@@ -211,11 +198,11 @@ const MaintenanceLogsScreen = ({
                     onChange={(e) => setMileage(e.target.value)}
                     className="w-full h-12 px-4 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base pr-10"
                   />
-                  <Car className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
+                  createElement('Car', {className: 'absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none'})
                 </div>
               </div>
               <div>
-                <label htmlFor="logCost" className="block text-slate-300 text-sm font-medium mb-1">Cost (optional)</label>
+                createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'logCost'}, 'Cost (optional)')
                 <div className="relative">
                   <input
                     type="number"
@@ -225,121 +212,103 @@ const MaintenanceLogsScreen = ({
                     onChange={(e) => setCost(e.target.value)}
                     className="w-full h-12 px-4 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base pr-10"
                   />
-                  <DollarSign className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
+                  createElement('DollarSign', {className: 'absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none'})
                 </div>
               </div>
               <div>
-                <label htmlFor="logNotes" className="block text-slate-300 text-sm font-medium mb-1">Notes (optional)</label>
+                createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'logNotes'}, 'Notes (optional)')
                 <div className="relative">
-                  <textarea
-                    id="logNotes"
-                    placeholder="Any specific details about the service"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                  createElement('textarea', {id: 'logNotes', placeholder: 'Any specific details about the service'}, 'setNotes(e.target.value)}
                     rows={3}
                     className="w-full h-auto min-h-[80px] px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base pr-10"
-                  ></textarea>
-                  <BookOpen className="absolute right-3 top-3 text-slate-400 pointer-events-none" size={20} />
+                  >')
+                  createElement('BookOpen', {className: 'absolute right-3 top-3 text-slate-400 pointer-events-none'})
                 </div>
               </div>
               <div>
-                <label htmlFor="receiptUpload" className="block text-slate-300 text-sm font-medium mb-1">Receipt (optional)</label>
+                createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'receiptUpload'}, 'Receipt (optional)')
                 <div className="flex items-center space-x-2">
-                  <input
-                    type="file"
-                    id="receiptUpload"
-                    onChange={handleFileChange}
-                    className="hidden"
-                    accept="image/*,application/pdf"
-                  />
+                  createElement('input', {className: 'hidden', type: 'file', id: 'receiptUpload', accept: 'image/*,application/pdf', onChange: handleFileChange})
                   <label
                     htmlFor="receiptUpload"
                     className="flex items-center justify-center flex-grow h-12 bg-slate-700 hover:bg-slate-600 active:bg-slate-500 border border-slate-600 rounded-lg text-white font-semibold cursor-pointer transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800"
                   >
-                    <Upload className="mr-2" size={20} />
+                    createElement('Upload', {className: 'mr-2'})
                     {receiptFile ? receiptFile.name : 'Choose File'}
                   </label>
                 </div>
               </div>
-              <PrimaryButton type="submit">
-                Add Log
-              </PrimaryButton>
+              createElement('PrimaryButton', {type: 'submit'}, 'Add Log')
             </form>
-          </Card>
-        </div>
-      )}
+          </Card>')}
 
       <div className="w-full max-w-sm mx-auto px-4 pb-4">
-        <h2 className="text-2xl font-semibold text-white mt-4 mb-2">Your Logs</h2>
+        createElement('h2', {className: 'text-2xl font-semibold text-white mt-4 mb-2'}, 'Your Logs')
         {isLoading ? (
           renderSkeletonLogs()
         ) : filteredLogs.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-10 text-center text-slate-400 space-y-3">
             <div className="h-12 w-12 rounded-full bg-slate-800 flex items-center justify-center mb-1">
-              <FileWarning size={24} className="text-slate-500" />
+              createElement('FileWarning', {className: 'text-slate-500'})
             </div>
-            <p className="font-medium text-slate-200">No maintenance history yet</p>
-            <p className="text-sm max-w-sm">
-              {userRole === 'customer'
+            createElement('p', {className: 'font-medium text-slate-200'}, 'No maintenance history yet')
+            createElement('p', {className: 'text-sm max-w-sm'}, '{userRole === 'customer'
                 ? 'Start tracking your vehicle services by adding your first log above.'
-                : 'Your service history with customers will appear here as you add logs.'}
-            </p>
+                : 'Your service history with customers will appear here as you add logs.'}')
           </div>
         ) : (
           <div className="flex flex-col space-y-4 animate-[fadeIn_220ms_ease-out]">
             {filteredLogs.map((log) => (
               <Card key={log.id} className="text-left">
                 <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-lg font-bold text-white">{log.description}</h3>
-                  <span className="text-sm text-slate-400">{log.date}</span>
+                  createElement('h3', {className: 'text-lg font-bold text-white'}, '{log.description}')
+                  createElement('span', {className: 'text-sm text-slate-400'}, '{log.date}')
                 </div>
-                {log.mileage && <p className="text-slate-300 text-sm">Mileage: {log.mileage.toLocaleString()}</p>}
-                {log.cost && <p className="text-slate-300 text-sm">Cost: ${log.cost.toFixed(2)}</p>}
-                {log.customerEmail && userRole !== 'customer' && <p className="text-slate-300 text-sm">Customer: {getDisplayName(log.customerEmail)}</p>}
-                {log.mechanicEmail && userRole !== 'mechanic' && <p className="text-slate-300 text-sm">Mechanic: {getDisplayName(log.mechanicEmail)}</p>}
+                {log.mileage && createElement('p', {className: 'text-slate-300 text-sm'}, 'Mileage: {log.mileage.toLocaleString()}')}
+                {log.cost && createElement('p', {className: 'text-slate-300 text-sm'}, 'Cost: ${log.cost.toFixed(2)}')}
+                {log.customerEmail && userRole !== 'customer' && createElement('p', {className: 'text-slate-300 text-sm'}, 'Customer: {getDisplayName(log.customerEmail)}')}
+                {log.mechanicEmail && userRole !== 'mechanic' && createElement('p', {className: 'text-slate-300 text-sm'}, 'Mechanic: {getDisplayName(log.mechanicEmail)}')}
 
                 {editingLogId === log.id && userRole === 'mechanic' ? (
                   <div className="mt-2 space-y-2">
-                    <textarea
-                      value={editingNotes}
-                      onChange={(e) => setEditingNotes(e.target.value)}
+                    createElement('textarea', null, 'setEditingNotes(e.target.value)}
                       rows={3}
                       className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 text-base"
                       placeholder="Add/update notes..."
-                    ></textarea>
+                    >')
                     <div className="flex space-x-2">
                       <button
                         onClick={() => saveEditedNotes(log.id)}
                         className="flex-1 px-3 py-2 bg-green-600 hover:bg-green-500 active:bg-green-700 text-white text-sm font-medium rounded-lg shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800"
                       >
-                        <Save size={16} className="inline mr-1" /> Save Notes
+                        createElement('Save', {className: 'inline mr-1'}) Save Notes
                       </button>
                       <button
                         onClick={cancelEditNotes}
                         className="flex-1 px-3 py-2 bg-red-600 hover:bg-red-500 active:bg-red-700 text-white text-sm font-medium rounded-lg shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800"
                       >
-                        <XCircle size={16} className="inline mr-1" /> Cancel
+                        createElement('XCircle', {className: 'inline mr-1'}) Cancel
                       </button>
                     </div>
                   </div>
                 ) : (
                   <div className="mt-1 flex justify-between items-center">
                     {log.notes ? (
-                      <p className="text-slate-400 text-sm italic">Notes: {log.notes}</p>
+                      createElement('p', {className: 'text-slate-400 text-sm italic'}, 'Notes: {log.notes}')
                     ) : (
-                      (userRole === 'mechanic') && <p className="text-slate-500 text-sm italic">No notes.</p>
+                      (userRole === 'mechanic') && createElement('p', {className: 'text-slate-500 text-sm italic'}, 'No notes.')
                     )}
                     {userRole === 'mechanic' && (
                       <button
                         onClick={() => startEditNotes(log)}
                         className="ml-2 px-3 py-1 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-xs font-medium rounded-lg shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800 min-h-[32px]"
                       >
-                        <Edit3 size={14} className="inline mr-1" /> Edit Notes
+                        createElement('Edit3', {className: 'inline mr-1'}) Edit Notes
                       </button>
                     )}
                   </div>
                 )}
-                {log.receiptFileName && <p className="text-blue-400 text-sm mt-1 flex items-center"><Upload size={16} className="mr-1"/>{log.receiptFileName} (Mock)</p>}
+                {log.receiptFileName && <p className="text-blue-400 text-sm mt-1 flex items-center">createElement('Upload', {className: 'mr-1'}){log.receiptFileName} (Mock)</p>}
               </Card>
             ))}
           </div>
