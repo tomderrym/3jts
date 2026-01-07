@@ -1,6 +1,6 @@
 /**
  * Comp Component
-
+ * Props: { visible?: any, variants?: any, secondary?: any, destructive?: any, outline?: any, defaultVariants?: any }
  */
 
 // Note: This component uses Tailwind CSS utility classes only.
@@ -10,70 +10,42 @@ import React from 'https://esm.sh/react@18';
 import { createElement } from 'https://esm.sh/react@18';
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot@1.1.2";
-import { ChevronRight, MoreHorizontal } from "lucide-react@0.487.0";
+import { cva, type VariantProps } from "class-variance-authority@0.7.1";
 
 
-function Breadcrumb({ ...props }: React.ComponentProps<"nav">) {
-  return createElement('nav', {label: 'breadcrumb', slot: 'breadcrumb'});
-}
+const badgeVariants = cva(
+  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  {
+    variants: {
+      variant: {
+        default:
+          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+        secondary:
+          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
+        destructive:
+          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        outline:
+          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+);
 
-function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
-  return (
-    createElement('ol', {slot: 'breadcrumb-list'})
-  );
-}
-
-function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
-  return (
-    createElement('li', {slot: 'breadcrumb-item'})
-  );
-}
-
-function BreadcrumbLink({
-  asChild,
+function Badge({
   className,
+  variant,
+  asChild = false,
   ...props
-}: React.ComponentProps<"a"> & {
-  asChild?: boolean;
-}) {
-  export default function Comp = asChild ? Slot : "a";
+}: React.ComponentProps<"span"> &
+  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+  export default function Comp = asChild ? Slot : "span";
 
   return (
-    createElement('Comp', {slot: 'breadcrumb-link'})
+    createElement('Comp', {slot: 'badge'})
   );
 }
 
-function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
-  return (
-    createElement('span', {slot: 'breadcrumb-page', role: 'link', disabled: 'true', current: 'page'})
-  );
-}
-
-function BreadcrumbSeparator({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"li">) {
-  return createElement('li', {slot: 'breadcrumb-separator', role: 'presentation', hidden: 'true'}, 'svg]:size-3.5", className)}
-      {...props}
-    >
-      {children ?? createElement('ChevronRight', null)}');
-}
-
-function BreadcrumbEllipsis({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
-  return createElement('span', {slot: 'breadcrumb-ellipsis', role: 'presentation', hidden: 'true'}, 'createElement('MoreHorizontal', {className: 'size-4'})
-      createElement('span', {className: 'sr-only'}, 'More')');
-}
-
-export {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-  BreadcrumbEllipsis,
-};
+export { Badge, badgeVariants };
