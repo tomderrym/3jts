@@ -34,39 +34,35 @@ export default function LoginPage: React.FC = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+  return createElement('div', {className: 'min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 flex items-center justify-center p-4'}, '<div className="w-full max-w-md">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 mb-8 text-white hover:text-indigo-400 transition-colors">
-          <ArrowLeft size={20} />
+          createElement('ArrowLeft', null)
           <div className="w-8 h-8 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-lg flex items-center justify-center">
-            <Code2 size={20} className="text-white" />
+            createElement('Code2', {className: 'text-white'})
           </div>
-          <span className="text-xl font-bold">3J Tech Solutions</span>
+          createElement('span', {className: 'text-xl font-bold'}, '3J Tech Solutions')
         </Link>
 
         {/* Login Card */}
         <div className="bg-[#111114] border border-white/10 rounded-2xl p-8 shadow-2xl">
           <div className="text-center mb-8">
             <div className="w-12 h-12 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/20">
-              <LogIn className="text-white" size={24} />
+              createElement('LogIn', {className: 'text-white'})
             </div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">Welcome Back</h2>
-            <p className="text-slate-400 mt-2">Sign in to your account</p>
+            createElement('h2', {className: 'text-2xl font-bold text-white tracking-tight'}, 'Welcome Back')
+            createElement('p', {className: 'text-slate-400 mt-2'}, 'Sign in to your account')
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-lg text-sm">
-                {error}
-              </div>
+              createElement('div', {className: 'bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-lg text-sm'}, '{error}')
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
+              createElement('label', {className: 'block text-sm font-medium text-slate-300 mb-2'}, 'Email')
               <div className="relative">
-                <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                createElement('Mail', {className: 'absolute left-3 top-1/2 -translate-y-1/2 text-slate-500'})
                 <input
                   type="email"
                   value={email}
@@ -79,9 +75,9 @@ export default function LoginPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
+              createElement('label', {className: 'block text-sm font-medium text-slate-300 mb-2'}, 'Password')
               <div className="relative">
-                <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                createElement('Lock', {className: 'absolute left-3 top-1/2 -translate-y-1/2 text-slate-500'})
                 <input
                   type="password"
                   value={password}
@@ -98,7 +94,7 @@ export default function LoginPage: React.FC = () => {
               disabled={loading}
               className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? <Loader2 size={16} className="animate-spin" /> : <LogIn size={16} />}
+              {loading ? createElement('Loader2', {className: 'animate-spin'}) : createElement('LogIn', null)}
               Sign In
             </button>
           </form>
@@ -106,14 +102,10 @@ export default function LoginPage: React.FC = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-slate-400">
               Don't have an account?{' '}
-              <Link to="/signup" className="text-indigo-400 hover:text-indigo-300 font-medium">
-                Sign up
-              </Link>
+              createElement('Link', {className: 'text-indigo-400 hover:text-indigo-300 font-medium', to: '/signup'}, 'Sign up')
             </p>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </div>');
 };
 
