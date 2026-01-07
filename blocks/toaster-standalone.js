@@ -1,5 +1,3 @@
-import React from 'https://esm.sh/react@18';
-import { createElement } from 'https://esm.sh/react@18';
 /**
  * Toaster Component
 
@@ -8,10 +6,12 @@ import { createElement } from 'https://esm.sh/react@18';
 // Note: This component uses Tailwind CSS utility classes only.
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 "use client";
 
-import { useTheme } from "next-themes";
-import { Toaster as Sonner, ToasterProps } from "sonner";
+import { useTheme } from "next-themes@0.4.6";
+import { Toaster as Sonner, ToasterProps } from "sonner@2.0.3";
 
 export default function Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme();
