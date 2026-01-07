@@ -185,9 +185,7 @@ export default function RequiresActionPanel: React.FC<RequiresActionPanelProps> 
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="bg-[#111114] border border-white/10 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95">
+  return createElement('div', {className: 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm'}, '<div className="bg-[#111114] border border-white/10 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
@@ -204,19 +202,17 @@ export default function RequiresActionPanel: React.FC<RequiresActionPanelProps> 
               />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white">Required Actions</h2>
-              <p className="text-xs text-slate-400">
-                {unresolvedCount > 0 
+              createElement('h2', {className: 'text-lg font-bold text-white'}, 'Required Actions')
+              createElement('p', {className: 'text-xs text-slate-400'}, '{unresolvedCount > 0 
                   ? `${unresolvedCount} action${unresolvedCount !== 1 ? 's' : ''} needed`
-                  : 'All actions completed'}
-              </p>
+                  : 'All actions completed'}')
             </div>
           </div>
           <button
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
           >
-            <X size={18} />
+            createElement('X', null)
           </button>
         </div>
 
@@ -224,13 +220,11 @@ export default function RequiresActionPanel: React.FC<RequiresActionPanelProps> 
         <div className="flex-1 overflow-y-auto p-6">
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 size={24} className="animate-spin text-indigo-400" />
-            </div>
-          ) : actions.length === 0 ? (
+              createElement('Loader2', {className: 'animate-spin text-indigo-400'})') : actions.length === 0 ? (
             <div className="text-center py-12">
-              <CheckCircle size={48} className="mx-auto mb-4 text-emerald-400 opacity-50" />
-              <p className="text-sm text-slate-400">No actions required</p>
-              <p className="text-xs text-slate-500 mt-2">Everything is set up correctly!</p>
+              createElement('CheckCircle', {className: 'mx-auto mb-4 text-emerald-400 opacity-50'})
+              createElement('p', {className: 'text-sm text-slate-400'}, 'No actions required')
+              createElement('p', {className: 'text-xs text-slate-500 mt-2'}, 'Everything is set up correctly!')
             </div>
           ) : (
             <div className="space-y-3">
@@ -252,32 +246,16 @@ export default function RequiresActionPanel: React.FC<RequiresActionPanelProps> 
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
-                        {action.type === 'supabase_setup' && <Database size={16} className="text-indigo-400" />}
-                        {action.type === 'edge_function_deploy' && <Server size={16} className="text-purple-400" />}
-                        {action.type === 'database_migration' && <Database size={16} className="text-cyan-400" />}
-                        {action.type === 'api_key_missing' && <Key size={16} className="text-yellow-400" />}
-                        <h3 className={`text-sm font-bold ${
-                          action.resolved ? 'text-slate-400 line-through' : 'text-white'
-                        }`}>
-                          {action.title}
-                        </h3>
+                        {action.type === 'supabase_setup' && createElement('Database', {className: 'text-indigo-400'})}
+                        {action.type === 'edge_function_deploy' && createElement('Server', {className: 'text-purple-400'})}
+                        {action.type === 'database_migration' && createElement('Database', {className: 'text-cyan-400'})}
+                        {action.type === 'api_key_missing' && createElement('Key', {className: 'text-yellow-400'})}
+                        createElement('h3', null, '{action.title}')
                         {!action.resolved && (
-                          <span className={`text-xs px-2 py-0.5 rounded ${
-                            action.severity === 'high'
-                              ? 'bg-red-500/20 text-red-400'
-                              : action.severity === 'medium'
-                              ? 'bg-amber-500/20 text-amber-400'
-                              : 'bg-blue-500/20 text-blue-400'
-                          }`}>
-                            {action.severity.toUpperCase()}
-                          </span>
+                          createElement('span', null, '{action.severity.toUpperCase()}')
                         )}
                       </div>
-                      <p className={`text-xs ${
-                        action.resolved ? 'text-slate-500' : 'text-slate-300'
-                      }`}>
-                        {action.description}
-                      </p>
+                      createElement('p', null, '{action.description}')
                       {action.actionUrl && !action.resolved && (
                         <button
                           onClick={() => {
@@ -295,7 +273,7 @@ export default function RequiresActionPanel: React.FC<RequiresActionPanelProps> 
                           className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition-colors"
                         >
                           {action.actionLabel || 'Take Action'}
-                          <ExternalLink size={12} />
+                          createElement('ExternalLink', null)
                         </button>
                       )}
                     </div>
@@ -305,7 +283,7 @@ export default function RequiresActionPanel: React.FC<RequiresActionPanelProps> 
                         className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-emerald-400 transition-colors"
                         title="Mark as resolved"
                       >
-                        <CheckCircle size={16} />
+                        createElement('CheckCircle', null)
                       </button>
                     )}
                   </div>
@@ -318,16 +296,14 @@ export default function RequiresActionPanel: React.FC<RequiresActionPanelProps> 
         {/* Footer */}
         <div className="px-6 py-3 border-t border-white/10 bg-black/40 shrink-0">
           <div className="flex items-center justify-between text-xs text-slate-500">
-            <span>
-              {unresolvedCount > 0 
+            createElement('span', null, '{unresolvedCount > 0 
                 ? `${unresolvedCount} unresolved action${unresolvedCount !== 1 ? 's' : ''}`
-                : 'All actions completed'}
-            </span>
+                : 'All actions completed'}')
             <button
               onClick={checkRequiredActions}
               className="text-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-1"
             >
-              <Zap size={12} />
+              createElement('Zap', null)
               Refresh
             </button>
           </div>
