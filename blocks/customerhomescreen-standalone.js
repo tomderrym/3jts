@@ -130,23 +130,18 @@ const CustomerHomeScreen = ({
 
   const renderDashboard = () => (
     <div className="w-full max-w-sm mx-auto text-center space-y-6 px-4 py-4">
-      <p className="text-xl text-slate-200">Welcome, {userEmail.split('@')[0]}!</p>
-      <h2 className="text-2xl font-semibold text-white">Customer Dashboard</h2>
-      <PrimaryButton onClick={() => setCustomerCurrentView('browseMechanics')}>
-        Browse Mechanics
-      </PrimaryButton>
-      <PrimaryButton
-        onClick={() => setCustomerCurrentView('maintenanceLogs')}
+      createElement('p', {className: 'text-xl text-slate-200'}, 'Welcome, {userEmail.split('@')[0]}!')
+      createElement('h2', {className: 'text-2xl font-semibold text-white'}, 'Customer Dashboard')
+      createElement('PrimaryButton', null, 'setCustomerCurrentView('browseMechanics')}>
+        Browse Mechanics')
+      createElement('PrimaryButton', null, 'setCustomerCurrentView('maintenanceLogs')}
         className="bg-purple-600 hover:bg-purple-500 disabled:bg-purple-800 focus-visible:ring-purple-500"
       >
-        View Maintenance Logs
-      </PrimaryButton>
+        View Maintenance Logs')
     </div>
   );
 
-  return (
-    <div className="flex flex-col items-stretch w-full h-full">
-      <HeaderBar
+  return createElement('div', {className: 'flex flex-col items-stretch w-full h-full'}, '<HeaderBar
         title="FilOzAutoCare"
         leftSlot={(
           <button
@@ -154,7 +149,7 @@ const CustomerHomeScreen = ({
             className="h-[50px] w-[50px] bg-gray-600 hover:bg-gray-500 text-white rounded-xl shadow-md flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             aria-label="Edit Profile"
           >
-            <Settings size={20} />
+            createElement('Settings', null)
           </button>
         )}
         rightSlot={(
@@ -165,19 +160,10 @@ const CustomerHomeScreen = ({
             >
               Messages
               {totalUnreadMessages > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  {totalUnreadMessages}
-                </span>
+                createElement('span', {className: 'absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'}, '{totalUnreadMessages}')
               )}
             </button>
-            <button
-              onClick={onLogout}
-              className="px-4 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-semibold text-white shadow-md h-[52px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-            >
-              Logout
-            </button>
-          </div>
-        )}
+            createElement('button', {className: 'px-4 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-semibold text-white shadow-md h-[52px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900', onClick: onLogout}, 'Logout')')}
         sticky
       />
 
