@@ -93,18 +93,16 @@ const MechanicAvailabilityScreen = ({
       {Array.from({ length: 3 }).map((_, idx) => (
         <Card key={idx} className="flex items-center justify-between">
           <div className="space-y-2">
-            <Skeleton className="h-4 w-32" />
-            <Skeleton className="h-3 w-28" />
+            createElement('Skeleton', {className: 'h-4 w-32'})
+            createElement('Skeleton', {className: 'h-3 w-28'})
           </div>
-          <Skeleton className="h-9 w-10" />
+          createElement('Skeleton', {className: 'h-9 w-10'})
         </Card>
       ))}
     </div>
   );
 
-  return (
-    <div className="flex flex-col items-stretch p-0 w-full h-full overflow-y-auto">
-      <HeaderBar
+  return createElement('div', {className: 'flex flex-col items-stretch p-0 w-full h-full overflow-y-auto'}, '<HeaderBar
         title="My Availability"
         leftSlot={(
           <button
@@ -112,18 +110,18 @@ const MechanicAvailabilityScreen = ({
             className="h-[50px] w-[50px] flex items-center justify-center text-indigo-400 hover:text-indigo-300 active:text-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             aria-label="Back"
           >
-            <ArrowLeft size={24} />
+            createElement('ArrowLeft', null)
           </button>
         )}
         sticky
       />
 
       <div className="w-full max-w-sm mx-auto space-y-6 px-4 py-4 mb-4">
-        <h2 className="text-2xl font-semibold text-white">Add New Availability</h2>
+        createElement('h2', {className: 'text-2xl font-semibold text-white'}, 'Add New Availability')
         <Card>
           <form onSubmit={handleAddSlot} className="space-y-4">
             <div>
-              <label htmlFor="slotDate" className="block text-slate-300 text-sm font-medium mb-1">Date</label>
+              createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'slotDate'}, 'Date')
               <input
                 type="date"
                 id="slotDate"
@@ -136,7 +134,7 @@ const MechanicAvailabilityScreen = ({
             </div>
             <div className="flex space-x-2">
               <div className="flex-1">
-                <label htmlFor="startTime" className="block text-slate-300 text-sm font-medium mb-1">Start Time</label>
+                createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'startTime'}, 'Start Time')
                 <input
                   type="time"
                   id="startTime"
@@ -147,7 +145,7 @@ const MechanicAvailabilityScreen = ({
                 />
               </div>
               <div className="flex-1">
-                <label htmlFor="endTime" className="block text-slate-300 text-sm font-medium mb-1">End Time</label>
+                createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'endTime'}, 'End Time')
                 <input
                   type="time"
                   id="endTime"
@@ -159,38 +157,36 @@ const MechanicAvailabilityScreen = ({
               </div>
             </div>
             <PrimaryButton type="submit" className="flex items-center justify-center">
-              <PlusCircle size={20} className="mr-2" /> Add Slot
+              createElement('PlusCircle', {className: 'mr-2'}) Add Slot
             </PrimaryButton>
           </form>
         </Card>
       </div>
 
       <div className="w-full max-w-sm mx-auto px-4 pb-4">
-        <h2 className="text-2xl font-semibold text-white mt-4">Your Current Availability</h2>
+        createElement('h2', {className: 'text-2xl font-semibold text-white mt-4'}, 'Your Current Availability')
         {isLoading ? (
           renderSkeletons()
         ) : filteredAvailability.length === 0 ? (
           <div className="flex flex-col items-center justify-center mt-4 py-8 text-center text-slate-400 space-y-3">
             <div className="h-12 w-12 rounded-full bg-slate-800 flex items-center justify-center mb-1">
-              <CalendarClock size={24} className="text-slate-500" />
+              createElement('CalendarClock', {className: 'text-slate-500'})
             </div>
-            <p className="font-medium text-slate-200">No availability slots set</p>
-            <p className="text-sm max-w-sm">Add times you are available so customers can request appointments with you.</p>
-          </div>
-        ) : (
+            createElement('p', {className: 'font-medium text-slate-200'}, 'No availability slots set')
+            createElement('p', {className: 'text-sm max-w-sm'}, 'Add times you are available so customers can request appointments with you.')') : (
           <div className="flex flex-col space-y-4 mt-4 animate-[fadeIn_220ms_ease-out]">
             {filteredAvailability.map((slot) => (
               <Card key={slot.id} className="flex items-center justify-between">
                 <div>
-                  <p className="text-lg font-bold text-white flex items-center"><Calendar size={18} className="mr-2" />{slot.date}</p>
-                  <p className="text-slate-300 text-sm flex items-center mt-1"><Clock size={16} className="mr-2" />{slot.startTime} - {slot.endTime}</p>
+                  <p className="text-lg font-bold text-white flex items-center">createElement('Calendar', {className: 'mr-2'}){slot.date}</p>
+                  <p className="text-slate-300 text-sm flex items-center mt-1">createElement('Clock', {className: 'mr-2'}){slot.startTime} - {slot.endTime}</p>
                 </div>
                 <button
                   onClick={() => handleDeleteSlot(slot.id)}
                   className="p-2 bg-red-600 hover:bg-red-500 active:bg-red-700 text-white rounded-lg shadow-sm transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800 min-h-[40px] flex items-center justify-center"
                   aria-label="Delete slot"
                 >
-                  <Trash2 size={20} />
+                  createElement('Trash2', null)
                 </button>
               </Card>
             ))}
