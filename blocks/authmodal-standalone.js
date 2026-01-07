@@ -44,25 +44,23 @@ export default function AuthModal: React.FC<AuthModalProps> = ({ onClose, onSucc
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-[#111114] border border-white/10 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative">
-        <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors"><X size={20}/></button>
+  return createElement('div', {className: 'fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in'}, '<div className="bg-[#111114] border border-white/10 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative">
+        <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors">createElement('X', null)</button>
         
         <div className="p-8">
           <div className="text-center mb-8">
             <div className="w-12 h-12 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/20">
-              <LogIn className="text-white" size={24} />
+              createElement('LogIn', {className: 'text-white'})
             </div>
-            <h2 className="text-xl font-bold text-white tracking-tight">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
-            <p className="text-sm text-slate-500 mt-2">Sign in to sync your apps across devices.</p>
+            createElement('h2', {className: 'text-xl font-bold text-white tracking-tight'}, '{isLogin ? 'Welcome Back' : 'Create Account'}')
+            createElement('p', {className: 'text-sm text-slate-500 mt-2'}, 'Sign in to sync your apps across devices.')
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Email</label>
+              createElement('label', {className: 'block text-xs font-bold text-slate-500 uppercase mb-1'}, 'Email')
               <div className="relative">
-                <Mail size={14} className="absolute left-3 top-3 text-slate-500" />
+                createElement('Mail', {className: 'absolute left-3 top-3 text-slate-500'})
                 <input 
                   type="email" 
                   value={email}
@@ -75,9 +73,9 @@ export default function AuthModal: React.FC<AuthModalProps> = ({ onClose, onSucc
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Password</label>
+              createElement('label', {className: 'block text-xs font-bold text-slate-500 uppercase mb-1'}, 'Password')
               <div className="relative">
-                <Lock size={14} className="absolute left-3 top-3 text-slate-500" />
+                createElement('Lock', {className: 'absolute left-3 top-3 text-slate-500'})
                 <input 
                   type="password" 
                   value={password}
@@ -91,9 +89,7 @@ export default function AuthModal: React.FC<AuthModalProps> = ({ onClose, onSucc
             </div>
 
             {error && (
-              <div className="text-xs text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
-                {error}
-              </div>
+              createElement('div', {className: 'text-xs text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-lg'}, '{error}')
             )}
 
             <button 
@@ -101,21 +97,17 @@ export default function AuthModal: React.FC<AuthModalProps> = ({ onClose, onSucc
               disabled={loading}
               className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 mt-2"
             >
-              {loading ? <Loader2 size={16} className="animate-spin" /> : (isLogin ? <LogIn size={16} /> : <UserPlus size={16} />)}
+              {loading ? createElement('Loader2', {className: 'animate-spin'}) : (isLogin ? createElement('LogIn', null) : createElement('UserPlus', null))}
               {isLogin ? 'Sign In' : 'Sign Up'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <button 
-              onClick={() => { setIsLogin(!isLogin); setError(null); }}
+            createElement('button', null, '{ setIsLogin(!isLogin); setError(null); }}
               className="text-xs text-slate-500 hover:text-indigo-400 transition-colors"
             >
-              {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
-            </button>
+              {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}')
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </div>');
 };
