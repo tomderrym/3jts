@@ -8,6 +8,7 @@
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 
 interface CodeEditorProps {
   content: string;
@@ -18,14 +19,10 @@ export default function CodeEditor: React.FC<CodeEditorProps> = ({ content, onCh
   // Safeguard: Ensure content is always a string. Handles null, undefined, or unexpected types.
   const safeContent = typeof content === 'string' ? content : String(content || '');
 
-  return (
-    <div className="flex-1 relative flex flex-col bg-[#08080a]">
-      {/* Line Numbers */}
+  return createElement('div', {className: 'flex-1 relative flex flex-col bg-[#08080a]'}, '{/* Line Numbers */}
       <div className="absolute top-0 left-0 w-12 h-full bg-[#0d0d0f] border-r border-white/5 flex flex-col items-center pt-6 pointer-events-none z-10">
         {Array.from({ length: Math.max(20, safeContent.split('\n').length) }).map((_, i) => (
-          <div key={i} className="text-[10px] font-mono text-slate-700 h-6 flex items-center">
-            {i + 1}
-          </div>
+          createElement('div', {className: 'text-[10px] font-mono text-slate-700 h-6 flex items-center'}, '{i + 1}')
         ))}
       </div>
       
@@ -39,10 +36,6 @@ export default function CodeEditor: React.FC<CodeEditorProps> = ({ content, onCh
       
       {/* Subtle selection/cursor glow simulation */}
       <div className="absolute bottom-4 right-6 pointer-events-none opacity-20">
-        <div className="text-[10px] font-mono text-indigo-400 uppercase tracking-widest">
-          UTF-8 · TypeScript JSX
-        </div>
-      </div>
-    </div>
-  );
+        createElement('div', {className: 'text-[10px] font-mono text-indigo-400 uppercase tracking-widest'}, 'UTF-8 · TypeScript JSX')
+      </div>');
 };
