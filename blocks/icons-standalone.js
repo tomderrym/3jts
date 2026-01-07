@@ -1,3 +1,5 @@
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 /**
  * Icons Component
 
@@ -11,15 +13,14 @@
   <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sketch AI App Builder</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    createElement('title', null, 'Sketch AI App Builder')
+    createElement('script', {src: 'https://unpkg.com/react@18/umd/react.development.js'}, null)
+    createElement('script', {src: 'https://unpkg.com/react-dom@18/umd/react-dom.development.js'}, null)
+    createElement('script', {src: 'https://unpkg.com/@babel/standalone/babel.min.js'}, null)
+    createElement('script', {src: 'https://cdn.tailwindcss.com'}, null)
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 
-<style>
-body {
+createElement('style', null, 'body {
             background-color: #121212;
             color: #e0e0e0;
             font-family: 'Inter', sans-serif;
@@ -61,13 +62,11 @@ body {
             background-color: rgba(59, 130, 246, 0.1);
             position: absolute;
             pointer-events: none;
-        }
-
-</style>
+        }')
   </head>
   <body>
 <div id="app">
-  <div id="root"></div>
+  createElement('div', {id: 'root'}, null)
 
     <script type="text/babel">
         const { useState, useEffect, useRef, useCallback } = React;
@@ -129,16 +128,16 @@ body {
 
         // --- Icons (SVGs) ---
         export default function Icons = {
-            Cursor: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="M13 13l6 6"/></svg>,
-            Hand: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>,
-            Pencil: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>,
-            Rect: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>,
-            Text: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>,
-            Image: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>,
-            Magic: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>,
-            Undo: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>,
-            Redo: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>,
-            Menu: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
+            Cursor: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('path', {d: 'M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'})createElement('path', {d: 'M13 13l6 6'})</svg>,
+            Hand: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('path', {d: 'M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0'})createElement('path', {d: 'M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2'})createElement('path', {d: 'M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8'})createElement('path', {d: 'M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15'})</svg>,
+            Pencil: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('path', {d: 'M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z'})</svg>,
+            Rect: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('rect', {x: '3', y: '3', width: '18', height: '18', rx: '2', ry: '2'})</svg>,
+            Text: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('path', {d: 'M4 7V4h16v3'})createElement('path', {d: 'M9 20h6'})createElement('path', {d: 'M12 4v16'})</svg>,
+            Image: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('rect', {x: '3', y: '3', width: '18', height: '18', rx: '2', ry: '2'})createElement('circle', {cx: '8.5', cy: '8.5', r: '1.5'})createElement('polyline', {points: '21 15 16 10 5 21'})</svg>,
+            Magic: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('path', {d: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'})</svg>,
+            Undo: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('path', {d: 'M3 7v6h6'})createElement('path', {d: 'M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13'})</svg>,
+            Redo: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('path', {d: 'M21 7v6h-6'})createElement('path', {d: 'M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13'})</svg>,
+            Menu: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">createElement('line', {x1: '3', y1: '12', x2: '21', y2: '12'})createElement('line', {x1: '3', y1: '6', x2: '21', y2: '6'})createElement('line', {x1: '3', y1: '18', x2: '21', y2: '18'})</svg>,
         };
 
         // --- Helper: Generate Random ID ---
@@ -440,33 +439,12 @@ body {
             const renderElement = (el) => {
                 if (el.type === 'rect') {
                     return (
-                        <rect
-                            key={el.id}
-                            x={el.w < 0 ? el.x + el.w : el.x}
-                            y={el.h < 0 ? el.y + el.h : el.y}
-                            width={Math.abs(el.w)}
-                            height={Math.abs(el.h)}
-                            fill={el.color || 'transparent'}
-                            stroke={selectedId === el.id ? '#3b82f6' : (el.stroke || 'none')}
-                            strokeWidth={el.strokeWidth || 0}
-                            rx={el.radius || 0}
-                            className={selectedId === el.id ? 'animate-pop' : ''}
-                        />
+                        createElement('rect', null)
                     );
                 }
                 if (el.type === 'text') {
                     return (
-                        <text
-                            key={el.id}
-                            x={el.x}
-                            y={el.y}
-                            fill={el.color || '#fff'}
-                            fontSize={el.fontSize || 16}
-                            fontFamily={el.isFrame ? 'Inter' : 'Kalam'}
-                            className="select-none pointer-events-none"
-                        >
-                            {el.content}
-                        </text>
+                        createElement('text', {className: 'select-none pointer-events-none', ontSize: el.fontSize || 16, ontFamily: el.isFrame ? 'Inter' : 'Kalam'}, '{el.content}')
                     );
                 }
                 if (el.type === 'path') {
@@ -474,46 +452,27 @@ body {
                         acc + (i === 0 ? `M ${p.x} ${p.y}` : ` L ${p.x} ${p.y}`), ''
                     );
                     return (
-                        <path
-                            key={el.id}
-                            d={d}
-                            stroke={el.color}
-                            strokeWidth={el.strokeWidth}
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
+                        createElement('path', {fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round'})
                     );
                 }
                 if (el.type === 'image') {
                     return (
-                        <image
-                            key={el.id}
-                            href={el.src}
-                            x={el.x}
-                            y={el.y}
-                            width={el.w}
-                            height={el.h}
-                            preserveAspectRatio="xMidYMid slice"
-                        />
+                        createElement('image', {preserveAspectRatio: 'xMidYMid slice'})
                     );
                 }
                 return null;
             };
 
-            return (
-                <div 
-                    className="w-screen h-screen flex flex-col overflow-hidden relative"
-                    onDragOver={(e) => e.preventDefault()}
+            return createElement('div', {className: 'w-screen h-screen flex flex-col overflow-hidden relative'}, 'e.preventDefault()}
                     onDrop={handleDrop}
                 >
                     {/* Top Bar */}
                     <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-[#2a2a2a] p-2 rounded-lg shadow-lg border border-[#444]">
-                        <button className="p-2 hover:bg-[#333] rounded text-gray-400"><Icons.Menu/></button>
-                        <span className="text-sm font-medium text-gray-300 px-2">Page 1</span>
-                        <div className="h-4 w-[1px] bg-[#444] mx-1"></div>
-                        <button className="p-2 hover:bg-[#333] rounded text-gray-400" onClick={() => playSound('click')}><Icons.Undo/></button>
-                        <button className="p-2 hover:bg-[#333] rounded text-gray-400" onClick={() => playSound('click')}><Icons.Redo/></button>
+                        <button className="p-2 hover:bg-[#333] rounded text-gray-400">createElement('Icons', null)</button>
+                        createElement('span', {className: 'text-sm font-medium text-gray-300 px-2'}, 'Page 1')
+                        createElement('div', {className: 'h-4 w-[1px] bg-[#444] mx-1'}, null)
+                        <button className="p-2 hover:bg-[#333] rounded text-gray-400" onClick={() => playSound('click')}>createElement('Icons', null)</button>
+                        <button className="p-2 hover:bg-[#333] rounded text-gray-400" onClick={() => playSound('click')}>createElement('Icons', null)</button>
                     </div>
 
                     {/* Properties Panel (Right) */}
@@ -528,8 +487,8 @@ body {
                                 />
                             ))}
                         </div>
-                        <div className="text-xs text-gray-500 font-mono uppercase mb-1">Stroke</div>
-                        <input type="range" min="1" max="10" className="w-full accent-blue-500 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer" />
+                        createElement('div', {className: 'text-xs text-gray-500 font-mono uppercase mb-1'}, 'Stroke')
+                        createElement('input', {className: 'w-full accent-blue-500 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer', type: 'range', min: '1', max: '10'})
                     </div>
 
                     {/* Canvas */}
@@ -541,20 +500,14 @@ body {
                         onPointerUp={handlePointerUp}
                         onPointerLeave={handlePointerUp}
                     >
-                        <svg 
-                            width="100%" 
-                            height="100%"
-                            style={{ transform: `translate(${view.x}px, ${view.y}px) scale(${view.zoom})` }}
-                        >
-                            {elements.map(renderElement)}
-                        </svg>
+                        createElement('svg', {style: {{ transform: `translate(${view.x}, width: '100%', height: '100%'}, '{elements.map(renderElement)}')
                     </div>
 
                     {/* AI Prompt Bar */}
                     <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-30 w-[500px] max-w-[90%]">
                         <div className={`bg-[#2a2a2a] p-1 rounded-xl shadow-2xl border border-[#444] flex items-center transition-all duration-300 ${isGenerating ? 'animate-pulse-glow border-purple-500' : ''}`}>
                             <div className="p-2 text-purple-400">
-                                <Icons.Magic />
+                                createElement('Icons', null)
                             </div>
                             <input 
                                 type="text" 
@@ -564,17 +517,10 @@ body {
                                 onChange={(e) => setPrompt(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleGenerate()}
                             />
-                            <button 
-                                onClick={handleGenerate}
-                                className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors flex items-center gap-2"
-                            >
-                                {isGenerating ? 'Dreaming...' : 'Generate'}
-                            </button>
+                            createElement('button', {className: 'bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors flex items-center gap-2', onClick: handleGenerate}, '{isGenerating ? 'Dreaming...' : 'Generate'}')
                         </div>
                         {/* Helper Text */}
-                        <div className="text-center mt-2 text-xs text-gray-500 font-mono opacity-60">
-                            Try: "Login screen", "Photo gallery", "Music player"
-                        </div>
+                        createElement('div', {className: 'text-center mt-2 text-xs text-gray-500 font-mono opacity-60'}, 'Try: "Login screen", "Photo gallery", "Music player"')
                     </div>
 
                     {/* Bottom Toolbar */}
@@ -592,31 +538,25 @@ body {
                                 onClick={() => { setTool(t.id); playSound('click'); }}
                                 className={`p-3 rounded-lg transition-all ${tool === t.id ? 'bg-blue-600 text-white shadow-lg scale-105' : 'text-gray-400 hover:bg-[#333] hover:text-white'}`}
                             >
-                                <t.icon />
+                                createElement('t', null)
                             </button>
                         ))}
                     </div>
 
                     {/* Zoom Indicator */}
-                    <div className="absolute bottom-6 left-6 z-20 bg-[#2a2a2a] px-3 py-1.5 rounded-lg border border-[#444] text-xs font-mono text-gray-400">
-                        {Math.round(view.zoom * 100)}%
-                    </div>
+                    createElement('div', {className: 'absolute bottom-6 left-6 z-20 bg-[#2a2a2a] px-3 py-1.5 rounded-lg border border-[#444] text-xs font-mono text-gray-400'}, '{Math.round(view.zoom * 100)}%')
 
                     {/* Watermark */}
-                    <div className="absolute bottom-6 right-6 z-20 opacity-30 text-[10px] font-mono text-gray-500">
-                        MADE WITH SKETCH-AI
-                    </div>
-                </div>
-            );
+                    createElement('div', {className: 'absolute bottom-6 right-6 z-20 opacity-30 text-[10px] font-mono text-gray-500'}, 'MADE WITH SKETCH-AI')');
         };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        root.render(createElement('App', null));
     </script>
 
 </div>
 
 
-    <script type="module" src="./index.tsx"></script>
+    createElement('script', {type: 'module', src: './index.tsx'}, null)
   </body>
 </html>
