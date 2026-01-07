@@ -49,35 +49,25 @@ export default function StudioPage: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center text-white">
-        <div>Loading...</div>
-      </div>
-    );
+    return createElement('div', {className: 'min-h-screen bg-[#0a0a0c] flex items-center justify-center text-white'}, 'createElement('div', null, 'Loading...')');
   }
 
-  return (
-    <div className="h-screen flex flex-col overflow-hidden">
-      {/* Studio Header */}
+  return createElement('div', {className: 'h-screen flex flex-col overflow-hidden'}, '{/* Studio Header */}
       <div className="h-12 border-b border-white/5 bg-[#111114] flex items-center px-4 shrink-0 z-40">
         <button
           onClick={() => navigate('/dashboard')}
           className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
         >
-          <ArrowLeft size={16} />
-          <span>Back to Dashboard</span>
+          createElement('ArrowLeft', null)
+          createElement('span', null, 'Back to Dashboard')
         </button>
         {project && (
-          <div className="ml-4 text-sm font-medium text-white">
-            {project.name}
-          </div>
+          createElement('div', {className: 'ml-4 text-sm font-medium text-white'}, '{project.name}')
         )}
       </div>
       {/* App Component (Studio Interface) */}
       <div className="flex-1 overflow-hidden min-h-0">
         <App initialProject={project} onNavigateToDashboard={() => navigate('/dashboard')} />
-      </div>
-    </div>
-  );
+      </div>');
 };
 
