@@ -62,13 +62,13 @@ const UserManagementScreen = ({
         {Array.from({ length: 3 }).map((_, idx) => (
           <div key={idx} className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-slate-800/80 rounded-lg border border-slate-700 space-y-3 md:space-y-0">
             <div className="flex-grow space-y-2">
-              <Skeleton className="h-4 w-40" />
-              <Skeleton className="h-3 w-24" />
-              <Skeleton className="h-3 w-28" />
+              createElement('Skeleton', {className: 'h-4 w-40'})
+              createElement('Skeleton', {className: 'h-3 w-24'})
+              createElement('Skeleton', {className: 'h-3 w-28'})
             </div>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 w-full md:w-auto">
-              <Skeleton className="h-9 w-28" />
-              <Skeleton className="h-9 w-24" />
+              createElement('Skeleton', {className: 'h-9 w-28'})
+              createElement('Skeleton', {className: 'h-9 w-24'})
             </div>
           </div>
         ))}
@@ -76,20 +76,7 @@ const UserManagementScreen = ({
     </Card>
   );
 
-  return (
-    <div className="flex flex-col items-stretch p-0 w-full h-full overflow-y-auto">
-      <HeaderBar
-        title="User Management"
-        rightSlot={(
-          <button
-            onClick={onBack}
-            className="px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-sm font-semibold text-white shadow-md h-[52px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-          >
-            Back
-          </button>
-        )}
-        sticky
-      />
+  return createElement('div', {className: 'flex flex-col items-stretch p-0 w-full h-full overflow-y-auto'}, 'createElement('HeaderBar', {title: 'User Management'})
 
       <div className="w-full max-w-2xl mx-auto space-y-4 px-4 py-4">
         {isLoading ? (
@@ -97,14 +84,10 @@ const UserManagementScreen = ({
         ) : users.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-10 text-center text-slate-400 space-y-3">
             <div className="h-12 w-12 rounded-full bg-slate-800 flex items-center justify-center mb-1">
-              <Users size={24} className="text-slate-500" />
+              createElement('Users', {className: 'text-slate-500'})
             </div>
-            <p className="font-medium text-slate-200">No users found</p>
-            <p className="text-sm max-w-sm">
-              New customers and mechanics will appear here as they register in the app.
-            </p>
-          </div>
-        ) : (
+            createElement('p', {className: 'font-medium text-slate-200'}, 'No users found')
+            createElement('p', {className: 'text-sm max-w-sm'}, 'New customers and mechanics will appear here as they register in the app.')') : (
           <Card>
             <div className="space-y-4 animate-[fadeIn_220ms_ease-out]">
               {users.map((user) => (
@@ -113,27 +96,25 @@ const UserManagementScreen = ({
                   className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-slate-800/80 rounded-lg shadow-sm border border-slate-700"
                 >
                   <div className="flex-grow mb-2 md:mb-0">
-                    <p className="text-lg font-semibold text-white break-all">{user.email}</p>
-                    <p className="text-slate-300 text-sm">Role: <span className="capitalize">{user.role}</span></p>
-                    <p className="text-slate-300 text-sm">Profile: {user.profileComplete ? 'Complete' : 'Incomplete'}</p>
+                    createElement('p', {className: 'text-lg font-semibold text-white break-all'}, '{user.email}')
+                    <p className="text-slate-300 text-sm">Role: createElement('span', {className: 'capitalize'}, '{user.role}')</p>
+                    createElement('p', {className: 'text-slate-300 text-sm'}, 'Profile: {user.profileComplete ? 'Complete' : 'Incomplete'}')
                     {user.role === 'mechanic' && user.profileData?.services && (
-                      <p className="text-slate-400 text-xs mt-1">Services: {user.profileData.services.join(', ')}</p>
+                      createElement('p', {className: 'text-slate-400 text-xs mt-1'}, 'Services: {user.profileData.services.join(', ')}')
                     )}
                   </div>
                   <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 w-full md:w-auto">
                     {user.role === 'mechanic' && !user.profileComplete && (
-                      <button
-                        onClick={() => handleApproveMechanic(user)}
+                      createElement('button', null, 'handleApproveMechanic(user)}
                         className="w-full md:w-auto px-3 py-2 bg-green-600 hover:bg-green-500 active:bg-green-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800 min-h-[40px]"
                       >
-                        Approve Mechanic
-                      </button>
+                        Approve Mechanic')
                     )}
                     <button
                       onClick={() => handleRemoveUser(user.email)}
                       className="w-full md:w-auto px-3 py-2 bg-red-600 hover:bg-red-500 active:bg-red-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800 min-h-[40px] flex items-center justify-center"
                     >
-                      <UserX size={14} className="mr-1" /> Remove User
+                      createElement('UserX', {className: 'mr-1'}) Remove User
                     </button>
                   </div>
                 </div>
