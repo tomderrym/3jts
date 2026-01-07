@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 import { Check, Lock, Play } from 'lucide-react';
 
 interface Energy {
@@ -50,26 +51,22 @@ export default function TransformationMap: React.FC<TransformationMapProps> = ({
     return 'available';
   };
 
-  return (
-    <div className="space-y-6">
-      <Card className="p-6 bg-gradient-to-br from-violet-500/10 to-purple-500/10 border-violet-500/30">
-        <h2 className="text-xl mb-2">Your Transformation Journey</h2>
-        <p className="text-slate-400 text-sm mb-4">
-          Progress through six universal energies at your own pace. Each energy builds upon the last,
-          guiding you from peace to unity consciousness.
-        </p>
+  return createElement('div', {className: 'space-y-6'}, '<Card className="p-6 bg-gradient-to-br from-violet-500/10 to-purple-500/10 border-violet-500/30">
+        createElement('h2', {className: 'text-xl mb-2'}, 'Your Transformation Journey')
+        createElement('p', {className: 'text-slate-400 text-sm mb-4'}, 'Progress through six universal energies at your own pace. Each energy builds upon the last,
+          guiding you from peace to unity consciousness.')
         <div className="flex items-center gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-green-500" />
-            <span className="text-slate-300">Complete</span>
+            createElement('div', {className: 'w-4 h-4 rounded-full bg-green-500'})
+            createElement('span', {className: 'text-slate-300'}, 'Complete')
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-blue-500 animate-pulse" />
-            <span className="text-slate-300">Active</span>
+            createElement('div', {className: 'w-4 h-4 rounded-full bg-blue-500 animate-pulse'})
+            createElement('span', {className: 'text-slate-300'}, 'Active')
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-slate-600" />
-            <span className="text-slate-300">Locked</span>
+            createElement('div', {className: 'w-4 h-4 rounded-full bg-slate-600'})
+            createElement('span', {className: 'text-slate-300'}, 'Locked')
           </div>
         </div>
       </Card>
@@ -79,16 +76,8 @@ export default function TransformationMap: React.FC<TransformationMapProps> = ({
         {/* Connection Lines */}
         {energies.map((_, index) => (
           index < energies.length - 1 && (
-            <div
-              key={`line-${index}`}
-              className={`absolute left-1/2 h-16 w-0.5 ${
-                isUnlocked(index + 1) ? 'bg-gradient-to-b from-blue-500 to-violet-500' : 'bg-slate-700'
-              }`}
-              style={{
-                top: `${(index + 1) * 240 - 40}px`,
-                transform: 'translateX(-50%)',
-              }}
-            />
+            createElement('div', {style: {{
+                top: `${(index + 1) * 240 - 40}})
           )
         ))}
 
@@ -116,31 +105,29 @@ export default function TransformationMap: React.FC<TransformationMapProps> = ({
                   <div className="flex items-start gap-4 mb-4">
                     <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${energy.color} flex items-center justify-center ${!unlocked && 'opacity-40'}`}>
                       {status === 'complete' ? (
-                        <Check className="w-8 h-8 text-white" />
+                        createElement('Check', {className: 'w-8 h-8 text-white'})
                       ) : !unlocked ? (
-                        <Lock className="w-8 h-8 text-white" />
+                        createElement('Lock', {className: 'w-8 h-8 text-white'})
                       ) : (
-                        <div className="text-white">{energy.icon}</div>
+                        createElement('div', {className: 'text-white'}, '{energy.icon}')
                       )}
                     </div>
 
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-2xl">{energy.name}</h3>
+                        createElement('h3', {className: 'text-2xl'}, '{energy.name}')
                         {status === 'active' && (
-                          <span className="px-2 py-1 rounded-full text-xs bg-blue-500/20 text-blue-400">
-                            Current
-                          </span>
+                          createElement('span', {className: 'px-2 py-1 rounded-full text-xs bg-blue-500/20 text-blue-400'}, 'Current')
                         )}
                       </div>
-                      <p className="text-slate-400 mb-3">{energy.description}</p>
+                      createElement('p', {className: 'text-slate-400 mb-3'}, '{energy.description}')
                       
                       {unlocked && (
                         <>
-                          <Progress value={prog} className="h-2 mb-2" />
+                          createElement('Progress', {className: 'h-2 mb-2'})
                           <div className="flex justify-between text-xs text-slate-500">
-                            <span>{prog}% Complete</span>
-                            <span>{100 - prog}% Remaining</span>
+                            createElement('span', null, '{prog}% Complete')
+                            createElement('span', null, '{100 - prog}% Remaining')
                           </div>
                         </>
                       )}
@@ -149,8 +136,7 @@ export default function TransformationMap: React.FC<TransformationMapProps> = ({
 
                   {unlocked && (
                     <div className="flex gap-2">
-                      <Button
-                        onClick={(e) => {
+                      createElement('Button', null, '{
                           e.stopPropagation();
                           setSelectedEnergy(energy);
                         }}
@@ -158,22 +144,17 @@ export default function TransformationMap: React.FC<TransformationMapProps> = ({
                         size="sm"
                         className="flex-1"
                       >
-                        Learn More
-                      </Button>
+                        Learn More')
                       {status !== 'complete' && (
-                        <Button
-                          onClick={(e) => {
+                        createElement('Button', null, '{
                             e.stopPropagation();
                             onEnergySelect(energy.id);
                           }}
                           size="sm"
                           className={`flex-1 bg-gradient-to-r ${energy.color}`}
                         >
-                          {status === 'active' ? 'Continue' : 'Begin'}
-                        </Button>
-                      )}
-                    </div>
-                  )}
+                          {status === 'active' ? 'Continue' : 'Begin'}')
+                      )}')}
                 </Card>
               </div>
             );
@@ -187,61 +168,50 @@ export default function TransformationMap: React.FC<TransformationMapProps> = ({
           <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-2xl">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-3 text-2xl">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${selectedEnergy.color} flex items-center justify-center`}>
-                  {selectedEnergy.icon}
-                </div>
+                createElement('div', null, '{selectedEnergy.icon}')
                 {selectedEnergy.name}
               </DialogTitle>
-              <DialogDescription>
-                Explore this energy's principles, practices, and complete activities to unlock your transformation
-              </DialogDescription>
+              createElement('DialogDescription', null, 'Explore this energy's principles, practices, and complete activities to unlock your transformation')
             </DialogHeader>
 
             <div className="space-y-6 py-4">
               <div>
-                <p className="text-slate-300">{selectedEnergy.description}</p>
+                createElement('p', {className: 'text-slate-300'}, '{selectedEnergy.description}')
               </div>
 
               <div>
-                <h4 className="text-lg mb-3">Core Principles</h4>
+                createElement('h4', {className: 'text-lg mb-3'}, 'Core Principles')
                 <div className="grid grid-cols-2 gap-2">
                   {selectedEnergy.principles.map((principle, index) => (
-                    <div key={index} className="px-3 py-2 rounded-lg bg-slate-800/50 text-slate-300 text-sm">
-                      • {principle}
-                    </div>
+                    createElement('div', {className: 'px-3 py-2 rounded-lg bg-slate-800/50 text-slate-300 text-sm'}, '• {principle}')
                   ))}
                 </div>
               </div>
 
               <div>
-                <h4 className="text-lg mb-3">Practices</h4>
+                createElement('h4', {className: 'text-lg mb-3'}, 'Practices')
                 <div className="space-y-2">
                   {selectedEnergy.practices.map((practice, index) => (
                     <div key={index} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-slate-800/30">
-                      <Play className="w-4 h-4 text-blue-400" />
-                      <span className="text-slate-300 text-sm">{practice}</span>
+                      createElement('Play', {className: 'w-4 h-4 text-blue-400'})
+                      createElement('span', {className: 'text-slate-300 text-sm'}, '{practice}')
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="flex gap-3 pt-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setSelectedEnergy(null)}
+                createElement('Button', {variant: 'outline'}, 'setSelectedEnergy(null)}
                   className="flex-1"
                 >
-                  Close
-                </Button>
-                <Button
-                  onClick={() => {
+                  Close')
+                createElement('Button', null, '{
                     onEnergySelect(selectedEnergy.id);
                     setSelectedEnergy(null);
                   }}
                   className={`flex-1 bg-gradient-to-r ${selectedEnergy.color}`}
                 >
-                  Start Practice
-                </Button>
+                  Start Practice')
               </div>
             </div>
           </DialogContent>
