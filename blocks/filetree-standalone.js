@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 import { FileCode, Trash2, Plus, Upload, FolderArchive, FolderInput, Wand2, Download, Link2, Unlink } from 'lucide-react';
 
 interface FileTreeProps {
@@ -50,15 +51,12 @@ export default function FileTree: React.FC<FileTreeProps> = ({
     return !f.startsWith('.');
   }).sort();
 
-  return (
-    <div className="bg-[#0d0d0f] border-r border-white/5 flex flex-col h-full shrink-0" style={style}> {/* Apply style here */}
+  return createElement('div', {className: 'bg-[#0d0d0f] border-r border-white/5 flex flex-col h-full shrink-0', style: {style}}, '{/* Apply style here */}
       <div className="p-4 border-b border-white/5 flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Explorer</h3>
+          createElement('h3', {className: 'text-[10px] font-black text-slate-500 uppercase tracking-widest'}, 'Explorer')
           {isLinkedMode && linkedFolderName && (
-            <span className="text-[9px] text-emerald-400 font-medium truncate max-w-[120px]" title={linkedFolderName}>
-              🔗 {linkedFolderName}
-            </span>
+            createElement('span', {className: 'text-[9px] text-emerald-400 font-medium truncate max-w-[120px]'}, '🔗 {linkedFolderName}')
           )}
         </div>
         <div className="flex gap-2">
@@ -69,27 +67,27 @@ export default function FileTree: React.FC<FileTreeProps> = ({
                 className="p-1 hover:bg-white/10 rounded cursor-pointer transition-colors group"
                 title="Convert HTML/Raw Code to React"
             >
-                <Wand2 size={14} className="text-purple-400 group-hover:text-purple-300" />
+                createElement('Wand2', {className: 'text-purple-400 group-hover:text-purple-300'})
             </button>
           )}
 
           {/* Extract ZIP */}
           <label className="p-1 hover:bg-white/10 rounded cursor-pointer transition-colors" title="Extract ZIP Archive">
-            <FolderArchive size={14} className="text-amber-400" />
-            <input type="file" accept=".zip" className="hidden" onChange={onExtractZip} />
+            createElement('FolderArchive', {className: 'text-amber-400'})
+            createElement('input', {className: 'hidden', type: 'file', accept: '.zip', onChange: onExtractZip})
           </label>
           
           {/* Import Folder */}
           <label className="p-1 hover:bg-white/10 rounded cursor-pointer transition-colors" title="Import Folder">
-            <FolderInput size={14} className="text-indigo-400" />
+            createElement('FolderInput', {className: 'text-indigo-400'})
             {/* @ts-ignore: React/TS doesn't fully type webkitdirectory yet */}
-            <input type="file" multiple webkitdirectory="" directory="" className="hidden" onChange={onImport} />
+            createElement('input', {className: 'hidden', type: 'file', onChange: onImport})
           </label>
 
           {/* Import Files */}
           <label className="p-1 hover:bg-white/10 rounded cursor-pointer transition-colors" title="Import Files">
-            <Upload size={14} className="text-slate-400" />
-            <input type="file" multiple className="hidden" onChange={onImport} />
+            createElement('Upload', {className: 'text-slate-400'})
+            createElement('input', {className: 'hidden', type: 'file', onChange: onImport})
           </label>
           
           {/* Link/Unlink Folder (Live Mode) */}
@@ -99,7 +97,7 @@ export default function FileTree: React.FC<FileTreeProps> = ({
               className="p-1 hover:bg-white/10 rounded cursor-pointer transition-colors group"
               title="Unlink Folder (stop live editing)"
             >
-              <Unlink size={14} className="text-red-400 group-hover:text-red-300" />
+              createElement('Unlink', {className: 'text-red-400 group-hover:text-red-300'})
             </button>
           ) : onLinkFolder ? (
             <button 
@@ -107,7 +105,7 @@ export default function FileTree: React.FC<FileTreeProps> = ({
               className="p-1 hover:bg-white/10 rounded cursor-pointer transition-colors group"
               title="Link Folder (live editing - changes save to original files)"
             >
-              <Link2 size={14} className="text-blue-400 group-hover:text-blue-300" />
+              createElement('Link2', {className: 'text-blue-400 group-hover:text-blue-300'})
             </button>
           ) : null}
           
@@ -118,7 +116,7 @@ export default function FileTree: React.FC<FileTreeProps> = ({
               className="p-1 hover:bg-white/10 rounded cursor-pointer transition-colors group"
               title="Export All Files as ZIP"
             >
-              <Download size={14} className="text-emerald-400 group-hover:text-emerald-300" />
+              createElement('Download', {className: 'text-emerald-400 group-hover:text-emerald-300'})
             </button>
           )}
           
@@ -128,7 +126,7 @@ export default function FileTree: React.FC<FileTreeProps> = ({
             className="p-1 hover:bg-white/10 rounded transition-colors"
             title="New File"
           >
-            <Plus size={14} className="text-slate-400" />
+            createElement('Plus', {className: 'text-slate-400'})
           </button>
         </div>
       </div>
@@ -142,8 +140,8 @@ export default function FileTree: React.FC<FileTreeProps> = ({
             onClick={() => onSelect(file)}
           >
             <div className="flex items-center gap-2 overflow-hidden">
-              <FileCode size={12} className={activeFile === file ? 'text-indigo-400' : 'text-slate-600'} />
-              <span className="truncate" title={file}>{file}</span>
+              createElement('FileCode', null)
+              createElement('span', {className: 'truncate'}, '{file}')
             </div>
             <button
               onClick={(e) => {
@@ -153,10 +151,8 @@ export default function FileTree: React.FC<FileTreeProps> = ({
               className="p-1 text-slate-600 hover:text-red-400 hover:bg-red-500/10 rounded transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
               title="Delete File"
             >
-              <Trash2 size={12} />
-            </button>
-          </div>
-        ))}
+              createElement('Trash2', null)
+            </button>'))}
       </div>
     </div>
   );
