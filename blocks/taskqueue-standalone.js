@@ -91,10 +91,8 @@ export default function TaskQueue: React.FC<TaskQueueProps> = ({ tasks, taskGrou
     }
   }, [groupedTasks.length]); // Only trigger when number of groups changes
 
-  return (
-    <div className="flex flex-col h-full bg-[#09090b]">
-       <div className="p-4 border-b border-white/5 bg-[#0c0c0e]">
-         <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Execution Plan</h3>
+  return createElement('div', {className: 'flex flex-col h-full bg-[#09090b]'}, '<div className="p-4 border-b border-white/5 bg-[#0c0c0e]">
+         createElement('h3', {className: 'text-xs font-bold text-slate-400 uppercase tracking-widest mb-3'}, 'Execution Plan')
          <div className="flex gap-2">
             <input 
               value={newTask}
@@ -104,7 +102,7 @@ export default function TaskQueue: React.FC<TaskQueueProps> = ({ tasks, taskGrou
               className="flex-1 bg-[#18181b] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white focus:border-indigo-500/50 outline-none"
             />
             <button onClick={handleAdd} className="p-1.5 bg-indigo-600/20 text-indigo-400 rounded-lg hover:bg-indigo-600/30 transition-colors">
-               <Plus size={14} />
+               createElement('Plus', null)
             </button>
          </div>
        </div>
@@ -112,10 +110,8 @@ export default function TaskQueue: React.FC<TaskQueueProps> = ({ tasks, taskGrou
        <div className="flex-1 overflow-y-auto p-2 space-y-3"> {/* Increased space-y to make groups visually distinct */}
           {tasks.length === 0 ? (
              <div className="text-center py-10 opacity-30">
-                <Clock size={32} className="mx-auto mb-2" />
-                <p className="text-[10px] uppercase font-bold">No tasks queued</p>
-             </div>
-          ) : (
+                createElement('Clock', {className: 'mx-auto mb-2'})
+                createElement('p', {className: 'text-[10px] uppercase font-bold'}, 'No tasks queued')') : (
             groupedTasks.map((groupData) => { // Use groupData directly
                 const group = groupData.group;
                 const isExpanded = expandedGroups[group?.id || 'no-group'] || false;
@@ -124,31 +120,27 @@ export default function TaskQueue: React.FC<TaskQueueProps> = ({ tasks, taskGrou
                 const completedCount = groupData.tasks.filter(t => t.status === 'completed').length;
                 const failedCount = groupData.tasks.filter(t => t.status === 'failed').length;
 
-                let groupStatusIcon = <Circle size={12} className="text-slate-600" />;
-                if (inProgressCount > 0) groupStatusIcon = <Loader2 size={12} className="text-indigo-400 animate-spin" />;
-                else if (pendingCount === 0 && failedCount === 0 && completedCount === groupData.tasks.length && groupData.tasks.length > 0) groupStatusIcon = <CheckCircle2 size={12} className="text-emerald-500" />;
-                else if (failedCount > 0) groupStatusIcon = <X size={12} className="text-red-500" />;
+                let groupStatusIcon = createElement('Circle', {className: 'text-slate-600'});
+                if (inProgressCount > 0) groupStatusIcon = createElement('Loader2', {className: 'text-indigo-400 animate-spin'});
+                else if (pendingCount === 0 && failedCount === 0 && completedCount === groupData.tasks.length && groupData.tasks.length > 0) groupStatusIcon = createElement('CheckCircle2', {className: 'text-emerald-500'});
+                else if (failedCount > 0) groupStatusIcon = createElement('X', {className: 'text-red-500'});
 
                 const groupTitleDisplay = group?.title || `Task Group ${group?.id?.substring(0, 8)}...`;
                 const groupTotalTasks = groupData.tasks.length;
 
-                return (
-                    <div key={group?.id || 'no-group'} className="bg-[#121214] border border-white/5 rounded-lg overflow-hidden">
-                        <button
+                return createElement('div', {className: 'bg-[#121214] border border-white/5 rounded-lg overflow-hidden'}, '<button
                             className="w-full flex items-center justify-between p-3 cursor-pointer hover:bg-[#18181b] transition-colors"
                             onClick={() => toggleGroup(group?.id || 'no-group')}
                         >
                             <div className="flex items-center gap-2">
-                                {isExpanded ? <ChevronDown size={14} className="text-slate-400" /> : <ChevronRight size={14} className="text-slate-400" />}
+                                {isExpanded ? createElement('ChevronDown', {className: 'text-slate-400'}) : createElement('ChevronRight', {className: 'text-slate-400'})}
                                 {groupStatusIcon}
-                                <span className="text-sm font-semibold text-slate-200 truncate">{groupTitleDisplay}</span>
+                                createElement('span', {className: 'text-sm font-semibold text-slate-200 truncate'}, '{groupTitleDisplay}')
                                 {groupData.totalTokens > 0 && (
-                                    <span className="ml-2 text-[10px] font-mono text-slate-500">
-                                        ({groupData.totalTokens} tokens)
-                                    </span>
+                                    createElement('span', {className: 'ml-2 text-[10px] font-mono text-slate-500'}, '({groupData.totalTokens} tokens)')
                                 )}
                             </div>
-                            <span className="text-[10px] text-slate-500">{groupTotalTasks} tasks</span>
+                            createElement('span', {className: 'text-[10px] text-slate-500'}, '{groupTotalTasks} tasks')
                         </button>
                         {isExpanded && ( // Only render tasks if group is expanded
                             <div className="border-t border-white/5 p-2 space-y-1">
@@ -161,23 +153,19 @@ export default function TaskQueue: React.FC<TaskQueueProps> = ({ tasks, taskGrou
                                           : 'bg-transparent' // Default for pending/failed within group
                                      }`}>
                                         <div className="mt-0.5 shrink-0">
-                                           {task.status === 'completed' && <CheckCircle2 size={14} className="text-emerald-500" />}
-                                           {task.status === 'in-progress' && <Loader2 size={14} className="text-indigo-400 animate-spin" />}
-                                           {task.status === 'pending' && <Circle size={14} className="text-slate-600" />}
-                                           {task.status === 'failed' && <X size={14} className="text-red-500" />}
+                                           {task.status === 'completed' && createElement('CheckCircle2', {className: 'text-emerald-500'})}
+                                           {task.status === 'in-progress' && createElement('Loader2', {className: 'text-indigo-400 animate-spin'})}
+                                           {task.status === 'pending' && createElement('Circle', {className: 'text-slate-600'})}
+                                           {task.status === 'failed' && createElement('X', {className: 'text-red-500'})}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                           <p className={`text-xs font-medium truncate ${task.status === 'completed' ? 'text-slate-500 line-through' : 'text-slate-200'}`}>
-                                              {task.title}
-                                           </p>
+                                           createElement('p', null, '{task.title}')
                                         </div>
                                         {task.status === 'pending' && (
                                            <button onClick={() => onDelete(task.id)} className="p-1 text-slate-600 hover:text-red-400 transition-colors rounded-md">
-                                              <X size={12} />
+                                              createElement('X', null)
                                            </button>
-                                        )}
-                                    </div>
-                                ))}
+                                        )}'))}
                             </div>
                         )}
                     </div>
