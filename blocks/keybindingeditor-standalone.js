@@ -1,4 +1,5 @@
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 
 interface KeybindingEditorProps {
   /**
@@ -290,36 +291,25 @@ export default function KeybindingEditor: React.FC<KeybindingEditorProps> = ({ i
 
   if (loading && !profile) {
     return (
-      <div className="h-full flex items-center justify-center text-xs text-slate-400">
-        Loading keybinding profile...
-      </div>
+      createElement('div', {className: 'h-full flex items-center justify-center text-xs text-slate-400'}, 'Loading keybinding profile...')
     );
   }
 
   if (error && !profile) {
-    return (
-      <div className="h-full flex flex-col items-center justify-center text-xs text-red-300 px-4 text-center">
-        <p className="mb-2">{error}</p>
-        <button
-          type="button"
-          onClick={() => {
+    return createElement('div', {className: 'h-full flex flex-col items-center justify-center text-xs text-red-300 px-4 text-center'}, 'createElement('p', {className: 'mb-2'}, '{error}')
+        createElement('button', {type: 'button'}, '{
             setHistory({ past: [], present: null, future: [] });
             setLoading(true);
             setError(null);
           }}
           className="px-3 py-1 rounded bg-slate-800 text-slate-100 border border-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900"
         >
-          Retry
-        </button>
-      </div>
-    );
+          Retry')');
   }
 
   if (!profile) {
     return (
-      <div className="h-full flex items-center justify-center text-xs text-slate-400">
-        No profile loaded.
-      </div>
+      createElement('div', {className: 'h-full flex items-center justify-center text-xs text-slate-400'}, 'No profile loaded.')
     );
   }
 
@@ -340,33 +330,23 @@ export default function KeybindingEditor: React.FC<KeybindingEditorProps> = ({ i
 
   const renderConflictLabel = (b: CommandBinding) => {
     if (!b.isConflicting) {
-      return <span className="text-emerald-400">none</span>;
+      return createElement('span', {className: 'text-emerald-400'}, 'none');
     }
     const label = b.conflictReason || 'conflict';
     const icon = b.conflictSeverity === 'error' ? '!' : '⚠';
-    return (
-      <span className={conflictBadgeClass(b.conflictSeverity)}>
-        <span className="mr-1" aria-hidden="true">{icon}</span>
-        {label}
-      </span>
-    );
+    return createElement('span', null, 'createElement('span', {className: 'mr-1', hidden: 'true'}, '{icon}')
+        {label}');
   };
 
   const totalConflicts = profile.bindings.filter((b) => b.isConflicting).length;
   const errorConflicts = profile.bindings.filter((b) => b.isConflicting && b.conflictSeverity === 'error').length;
   const warningConflicts = profile.bindings.filter((b) => b.isConflicting && b.conflictSeverity === 'warning').length;
 
-  return (
-    <div
-      className="h-full flex flex-col bg-slate-950 text-slate-50 text-xs"
-      aria-label="Keybinding editor"
-      role="region"
-    >
-      <div className="px-3 py-2 border-b border-slate-800 flex items-center justify-between bg-slate-900/80 gap-2">
+  return createElement('div', {className: 'h-full flex flex-col bg-slate-950 text-slate-50 text-xs', label: 'Keybinding editor', role: 'region'}, '<div className="px-3 py-2 border-b border-slate-800 flex items-center justify-between bg-slate-900/80 gap-2">
         <div className="flex flex-col gap-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <div className="flex items-center gap-1 text-[10px] text-slate-300 min-w-0">
-              <span className="text-[11px] font-semibold text-slate-100">Profile</span>
+              createElement('span', {className: 'text-[11px] font-semibold text-slate-100'}, 'Profile')
               <select
                 value={selectedProfileId ?? profile.id}
                 onChange={handleProfileSelectChange}
@@ -374,95 +354,59 @@ export default function KeybindingEditor: React.FC<KeybindingEditorProps> = ({ i
                 aria-label="Select keybinding profile"
               >
                 {profiles.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                    {p.isDefault ? ' (default)' : ''}
-                  </option>
+                  createElement('option', null, '{p.name}
+                    {p.isDefault ? ' (default)' : ''}')
                 ))}
                 {!profiles.find((p) => p.id === profile.id) && (
-                  <option value={profile.id}>{profile.name}</option>
+                  createElement('option', null, '{profile.name}')
                 )}
               </select>
-              {saving && <span className="ml-1 text-[10px] text-slate-400">Saving...</span>}
+              {saving && createElement('span', {className: 'ml-1 text-[10px] text-slate-400'}, 'Saving...')}
             </div>
             <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={handleCreateProfile}
-                className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900"
-              >
-                New
-              </button>
-              <button
-                type="button"
-                onClick={handleDeleteProfile}
-                disabled={profile.isDefault}
-                className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-red-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:ring-offset-slate-900"
-              >
-                Delete
-              </button>
+              createElement('button', {className: 'px-1.5 py-0.5 rounded bg-slate-800 text-[10px] hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900', type: 'button', onClick: handleCreateProfile}, 'New')
+              createElement('button', {className: 'px-1.5 py-0.5 rounded bg-slate-800 text-[10px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-red-700/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:ring-offset-slate-900', type: 'button', onClick: handleDeleteProfile}, 'Delete')
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2 text-[10px] text-slate-400">
             <div className="flex items-center gap-1 min-w-0">
-              <span className="text-slate-500">Name</span>
-              <input
-                type="text"
-                value={profile.name}
-                onChange={handleProfileNameChange}
-                className="bg-slate-900 border border-slate-700 rounded px-1.5 h-[22px] text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500 max-w-[160px]"
-                aria-label="Profile name"
-              />
+              createElement('span', {className: 'text-slate-500'}, 'Name')
+              createElement('input', {className: 'bg-slate-900 border border-slate-700 rounded px-1.5 h-[22px] text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500 max-w-[160px]', type: 'text', label: 'Profile name', onChange: handleProfileNameChange})
             </div>
             <div className="flex items-center gap-1 min-w-0 flex-1">
-              <span className="text-slate-500">Description</span>
-              <input
-                type="text"
-                value={profile.description ?? ''}
-                onChange={handleProfileDescriptionChange}
-                placeholder="Optional description"
-                className="bg-slate-900 border border-slate-700 rounded px-1.5 h-[22px] text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-1 min-w-[80px]"
-                aria-label="Profile description"
-              />
+              createElement('span', {className: 'text-slate-500'}, 'Description')
+              createElement('input', {className: 'bg-slate-900 border border-slate-700 rounded px-1.5 h-[22px] text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-1 min-w-[80px]', type: 'text', placeholder: 'Optional description', label: 'Profile description', onChange: handleProfileDescriptionChange})
             </div>
             <div className="flex items-center gap-2 text-[10px]">
-              <span className="text-slate-500">Conflicts:</span>
-              <span className="text-emerald-400">Total {totalConflicts}</span>
-              <span className="text-red-300">Errors {errorConflicts}</span>
-              <span className="text-amber-300">Warnings {warningConflicts}</span>
+              createElement('span', {className: 'text-slate-500'}, 'Conflicts:')
+              createElement('span', {className: 'text-emerald-400'}, 'Total {totalConflicts}')
+              createElement('span', {className: 'text-red-300'}, 'Errors {errorConflicts}')
+              createElement('span', {className: 'text-amber-300'}, 'Warnings {warningConflicts}')
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <label className="flex items-center gap-1 text-[10px] text-slate-300">
-            <span>Chord timeout (ms)</span>
-            <input
-              type="number"
-              min={100}
-              step={50}
-              value={profile.chordTimeoutMs}
-              onChange={handleTimeoutChange}
-              className="bg-slate-900 border border-slate-700 rounded px-1.5 h-[26px] w-20 text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              aria-label="Chord timeout in milliseconds"
-            />
+            createElement('span', null, 'Chord timeout (ms)')
+            createElement('input', {className: 'bg-slate-900 border border-slate-700 rounded px-1.5 h-[26px] w-20 text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500', type: 'number', label: 'Chord timeout in milliseconds', onChange: handleTimeoutChange})
           </label>
           <div className="flex flex-col gap-1 text-[10px] text-slate-300">
             <div className="flex items-center gap-1">
-              <span>Default panel</span>
+              createElement('span', null, 'Default panel')
               <select
                 value={profile.defaultPanel ?? ''}
                 onChange={handleDefaultPanelChange}
                 className="bg-slate-900 border border-slate-700 rounded px-1.5 h-[24px] text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 aria-label="Default panel context for this profile"
               >
-                <option value="">(all)</option>
-                <option value="editor">Editor</option>
-                <option value="sidebar">Sidebar</option>
-                <option value="terminal">Terminal</option>
+                createElement('option', null, '(all)')
+                createElement('option', {value: 'editor'}, 'Editor')
+                createElement('option', {value: 'sidebar'}, 'Sidebar')
+                createElement('option', {value: 'terminal'}, 'Terminal')
               </select>
             </div>
             <div className="flex items-center gap-1">
-              <span>Default modes</span>
+              createElement('span', null, 'Default modes')
               <select
                 multiple
                 value={profile.defaultModes ?? []}
@@ -470,9 +414,9 @@ export default function KeybindingEditor: React.FC<KeybindingEditorProps> = ({ i
                 className="bg-slate-900 border border-slate-700 rounded px-1.5 h-[40px] text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 aria-label="Default modes for this profile"
               >
-                <option value="normal">Normal</option>
-                <option value="insert">Insert</option>
-                <option value="command">Command</option>
+                createElement('option', {value: 'normal'}, 'Normal')
+                createElement('option', {value: 'insert'}, 'Insert')
+                createElement('option', {value: 'command'}, 'Command')
               </select>
             </div>
           </div>
@@ -485,57 +429,29 @@ export default function KeybindingEditor: React.FC<KeybindingEditorProps> = ({ i
             aria-label="Search keybindings"
           />
           <div className="flex items-center gap-1">
-            <button
-              type="button"
-              onClick={undo}
-              disabled={!canUndo}
-              className="px-2 py-1 rounded bg-slate-800 text-[10px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900"
-            >
-              Undo
-            </button>
-            <button
-              type="button"
-              onClick={redo}
-              disabled={!canRedo}
-              className="px-2 py-1 rounded bg-slate-800 text-[10px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900"
-            >
-              Redo
-            </button>
+            createElement('button', {className: 'px-2 py-1 rounded bg-slate-800 text-[10px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900', type: 'button', onClick: undo}, 'Undo')
+            createElement('button', {className: 'px-2 py-1 rounded bg-slate-800 text-[10px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900', type: 'button', onClick: redo}, 'Redo')
           </div>
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={saving}
-            className="px-2.5 py-1.5 rounded bg-indigo-600 text-[10px] font-medium disabled:opacity-60 disabled:cursor-not-allowed hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900"
-          >
-            {saving ? 'Saving...' : 'Save'}
-          </button>
+          createElement('button', {className: 'px-2.5 py-1.5 rounded bg-indigo-600 text-[10px] font-medium disabled:opacity-60 disabled:cursor-not-allowed hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900', type: 'button', onClick: handleSave}, '{saving ? 'Saving...' : 'Save'}')
         </div>
       </div>
 
       {error && (
-        <div
-          className="px-3 py-1 text-[10px] text-amber-300 border-b border-slate-800 bg-slate-900"
-          role="alert"
-        >
-          {error}
-        </div>
+        createElement('div', {className: 'px-3 py-1 text-[10px] text-amber-300 border-b border-slate-800 bg-slate-900', role: 'alert'}, '{error}')
       )}
 
       <div className="flex-1 overflow-auto">
         {filteredBindings.length === 0 ? (
-          <div className="px-3 py-3 text-[10px] text-slate-400">
-            No bindings match the current filter.
-          </div>
+          createElement('div', {className: 'px-3 py-3 text-[10px] text-slate-400'}, 'No bindings match the current filter.')
         ) : (
           <table className="min-w-full text-[11px]" aria-label="Keybinding list">
             <thead className="bg-slate-900 border-b border-slate-800">
               <tr>
-                <th className="text-left px-3 py-2 font-medium">Command</th>
-                <th className="text-left px-3 py-2 font-medium">Chord</th>
-                <th className="text-left px-3 py-2 font-medium">Context</th>
-                <th className="text-left px-3 py-2 font-medium">Conflicts</th>
-                <th className="text-left px-3 py-2 font-medium">Actions</th>
+                createElement('th', {className: 'text-left px-3 py-2 font-medium'}, 'Command')
+                createElement('th', {className: 'text-left px-3 py-2 font-medium'}, 'Chord')
+                createElement('th', {className: 'text-left px-3 py-2 font-medium'}, 'Context')
+                createElement('th', {className: 'text-left px-3 py-2 font-medium'}, 'Conflicts')
+                createElement('th', {className: 'text-left px-3 py-2 font-medium'}, 'Actions')
               </tr>
             </thead>
             <tbody>
@@ -551,26 +467,19 @@ export default function KeybindingEditor: React.FC<KeybindingEditorProps> = ({ i
                     highlightedBindingId === b.id ? 'ring-1 ring-amber-400 bg-slate-900' : '',
                   ].join(' ')}
                 >
-                  <td className="px-3 py-1.5">{b.command}</td>
-                  <td className="px-3 py-1.5 font-mono text-[10px]">
-                    {b.chord.sequence
+                  createElement('td', {className: 'px-3 py-1.5'}, '{b.command}')
+                  createElement('td', {className: 'px-3 py-1.5 font-mono text-[10px]'}, '{b.chord.sequence
                       .map((s) => `${s.modifiers.join('+')}${s.modifiers.length ? '+' : ''}${s.key}`)
-                      .join(' then ')}
-                  </td>
-                  <td className="px-3 py-1.5 text-[10px] text-slate-400">
-                    panels: {b.context.panel.join(', ') || 'all'}; modes: {b.context.modes.join(', ') || 'all'}
-                  </td>
-                  <td className="px-3 py-1.5 text-[10px]">{renderConflictLabel(b)}</td>
+                      .join(' then ')}')
+                  createElement('td', {className: 'px-3 py-1.5 text-[10px] text-slate-400'}, 'panels: {b.context.panel.join(', ') || 'all'}; modes: {b.context.modes.join(', ') || 'all'}')
+                  createElement('td', {className: 'px-3 py-1.5 text-[10px]'}, '{renderConflictLabel(b)}')
                   <td className="px-3 py-1.5 text-[10px]">
                     {b.isConflicting && (
-                      <button
-                        type="button"
-                        onClick={() => focusBindingRow(b.id)}
+                      createElement('button', {type: 'button'}, 'focusBindingRow(b.id)}
                         className="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-[10px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-950"
                         aria-label={`Jump to conflicting binding ${b.command}`}
                       >
-                        Jump
-                      </button>
+                        Jump')
                     )}
                   </td>
                 </tr>
@@ -578,7 +487,5 @@ export default function KeybindingEditor: React.FC<KeybindingEditorProps> = ({ i
             </tbody>
           </table>
         )}
-      </div>
-    </div>
-  );
+      </div>');
 };
