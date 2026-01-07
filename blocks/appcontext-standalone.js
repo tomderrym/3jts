@@ -304,7 +304,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       toasts, showToast, removeToast
     }}>
       {children}
-      <ToastContainer toasts={toasts} />
+      createElement('ToastContainer', null)
     </AppContext.Provider>
   );
 }
@@ -316,10 +316,10 @@ const ToastContainer = ({ toasts }: { toasts: ToastMessage[] }) => (
         key={t.id} 
         className="animate-slideUp bg-slate-800/90 backdrop-blur-md border border-white/10 text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-3"
       >
-        {t.type === 'success' && <CheckCircle size={18} className="text-emerald-400" />}
-        {t.type === 'error' && <AlertCircle size={18} className="text-red-400" />}
-        {t.type === 'info' && <Bell size={18} className="text-blue-400" />}
-        <span className="text-sm font-medium">{t.message}</span>
+        {t.type === 'success' && createElement('CheckCircle', {className: 'text-emerald-400'})}
+        {t.type === 'error' && createElement('AlertCircle', {className: 'text-red-400'})}
+        {t.type === 'info' && createElement('Bell', {className: 'text-blue-400'})}
+        createElement('span', {className: 'text-sm font-medium'}, '{t.message}')
       </div>
     ))}
   </div>
