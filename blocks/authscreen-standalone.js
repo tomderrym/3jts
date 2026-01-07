@@ -45,26 +45,20 @@ const AuthScreen = ({
     }
   };
 
-  return (
-    <div className="flex flex-col w-full h-full bg-slate-950 text-white">
-      <HeaderBar title="FilOzAutoCare" />
+  return createElement('div', {className: 'flex flex-col w-full h-full bg-slate-950 text-white'}, 'createElement('HeaderBar', {title: 'FilOzAutoCare'})
 
       <div className="flex flex-col flex-1 items-center justify-center px-4 py-6">
         <div className="w-full max-w-sm">
           <Card>
             <div className="flex flex-col items-center w-full space-y-6">
               <div className="space-y-2 text-center">
-                <h2 className="text-2xl font-semibold tracking-tight text-white">Welcome back</h2>
-                <p className="text-sm text-slate-300 max-w-xs mx-auto">
-                  Sign in or create an account to connect with trusted mechanics nearby.
-                </p>
+                createElement('h2', {className: 'text-2xl font-semibold tracking-tight text-white'}, 'Welcome back')
+                createElement('p', {className: 'text-sm text-slate-300 max-w-xs mx-auto'}, 'Sign in or create an account to connect with trusted mechanics nearby.')
               </div>
 
               <div className="w-full space-y-3">
                 <div className="space-y-1">
-                  <label htmlFor="email" className="block text-xs font-medium uppercase tracking-wide text-slate-300">
-                    Email
-                  </label>
+                  createElement('label', {className: 'block text-xs font-medium uppercase tracking-wide text-slate-300', htmlFor: 'email'}, 'Email')
                   <input
                     id="email"
                     type="email"
@@ -77,9 +71,7 @@ const AuthScreen = ({
                 </div>
 
                 <div className="space-y-1">
-                  <label htmlFor="password" className="block text-xs font-medium uppercase tracking-wide text-slate-300">
-                    Password
-                  </label>
+                  createElement('label', {className: 'block text-xs font-medium uppercase tracking-wide text-slate-300', htmlFor: 'password'}, 'Password')
                   <input
                     id="password"
                     type="password"
@@ -92,45 +84,32 @@ const AuthScreen = ({
                 </div>
               </div>
 
-              <PrimaryButton onClick={handleLogin} disabled={isLoading}>
-                {isLoading ? 'Signing in…' : 'Sign in'}
-              </PrimaryButton>
+              createElement('PrimaryButton', {onClick: handleLogin}, '{isLoading ? 'Signing in…' : 'Sign in'}')
 
               <div className="w-full space-y-2">
-                <p className="text-xs text-slate-400 text-center uppercase tracking-wide">
-                  Or create a new account
-                </p>
+                createElement('p', {className: 'text-xs text-slate-400 text-center uppercase tracking-wide'}, 'Or create a new account')
                 <div className="flex w-full space-x-2">
-                  <PrimaryButton
-                    onClick={() => handleRegister('customer')}
+                  createElement('PrimaryButton', null, 'handleRegister('customer')}
                     disabled={isLoading}
                     className="flex-1 bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-800 focus-visible:ring-emerald-500"
                   >
-                    Register as Customer
-                  </PrimaryButton>
-                  <PrimaryButton
-                    onClick={() => handleRegister('mechanic')}
+                    Register as Customer')
+                  createElement('PrimaryButton', null, 'handleRegister('mechanic')}
                     disabled={isLoading}
                     className="flex-1 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 focus-visible:ring-blue-500"
                   >
-                    Register as Mechanic
-                  </PrimaryButton>
+                    Register as Mechanic')
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => console.log('Forgot Password clicked')}
+              createElement('button', {type: 'button'}, 'console.log('Forgot Password clicked')}
                 className="text-xs text-indigo-300 hover:text-indigo-200 underline-offset-4 hover:underline h-[50px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               >
-                Forgot your password?
-              </button>
+                Forgot your password?')
             </div>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+      </div>');
 };
 
 export default AuthScreen;
