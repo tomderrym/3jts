@@ -1,3 +1,5 @@
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 /**
  * Button Component
 
@@ -96,7 +98,7 @@ await ai.processNaturalLanguage('/tmp/App.tsx', 'Change button to green');
 // Create a new component
 await fileTools.writeFile('/tmp/Button.tsx', `
 export default function Button = ({ children }) => {
-  return <button className="bg-blue-500">{children}</button>;
+  return createElement('button', {className: 'bg-blue-500'}, '{children}');
 };
 `);
 
@@ -199,16 +201,11 @@ function FileExplorer() {
     });
   }, []);
 
-  return (
-    <div>
-      {files.map(file => (
+  return createElement('div', null, '{files.map(file => (
         <div key={file.name}>
           {file.name}
-          <button onClick={() => fileTools.deleteFile(`/tmp/${file.name}`)}>
-            Delete
-          </button>
-        </div>
-      ))}
+          createElement('button', null, 'fileTools.deleteFile(`/tmp/${file.name}`)}>
+            Delete')'))}
     </div>
   );
 }
@@ -226,19 +223,15 @@ function CodeSearch() {
     setResults(res.data);
   };
 
-  return (
-    <div>
-      <input value={query} onChange={e => setQuery(e.target.value)} />
-      <button onClick={search}>Search</button>
+  return createElement('div', null, '<input value={query} onChange={e => setQuery(e.target.value)} />
+      createElement('button', {onClick: search}, 'Search')
       
       {results?.results.map(result => (
         <div key={result.file}>
-          <h3>{result.file}</h3>
+          createElement('h3', null, '{result.file}')
           {result.matches.map(match => (
-            <div>Line {match.line}: {match.content}</div>
-          ))}
-        </div>
-      ))}
+            createElement('div', null, 'Line {match.line}: {match.content}')
+          ))}'))}
     </div>
   );
 }
@@ -261,16 +254,12 @@ function AIChatEditor() {
     }
   };
 
-  return (
-    <div>
-      <input 
+  return createElement('div', null, '<input 
         value={input} 
         onChange={e => setInput(e.target.value)}
         placeholder="Ask AI: 'Change button to green'"
       />
-      <button onClick={handleCommand}>Send</button>
-    </div>
-  );
+      createElement('button', {onClick: handleCommand}, 'Send')');
 }
 ```
 
@@ -367,7 +356,7 @@ With these tools, you can create:
 
 1. **Try the Demo Component**
    ```tsx
-      <AIFileEditor accessToken={token} />
+      createElement('AIFileEditor', null)
    ```
 
 2. **Build Your AI Integration**
