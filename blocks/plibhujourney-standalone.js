@@ -1,48 +1,60 @@
+// Standalone PLIBHUJourney Block - Works with dynamic import()
+// React via CDN, no JSX, no bundler required
+
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
+
 /**
- * Block ID: plibhujourney
- * Category: component
- * Description: PLIBHUJourney component
- * Runtime: Glue-Paste Safe (no imports, no JSX, no framework)
+ * PLIBHUJourney Block
+ * Props:
+ *  - title?: string
+ *  - description?: string
  */
+export default function PLIBHUJourney({
+  title = 'PLIBHU Journey',
+  description = 'This is the PLIBHU Journey component rendered as a standalone React block.'
+}) {
+  return createElement(
+    'div',
+    {
+      style: {
+        padding: '2rem',
+        fontFamily: 'system-ui, sans-serif',
+        borderRadius: '8px',
+        background: '#f9fafb',
+        border: '1px solid #e5e7eb',
+        maxWidth: '800px',
+        margin: '0 auto'
+      }
+    },
+    [
+      createElement(
+        'h2',
+        {
+          key: 'title',
+          style: {
+            fontSize: '2rem',
+            fontWeight: '700',
+            margin: '0 0 1rem 0',
+            color: '#111827'
+          }
+        },
+        title
+      ),
 
-(function () {
-  // ---- Guard: prevent double definition ----
-  if (window.__BLOCK_PLIBHUJOURNEY_DEFINED__) return;
-  window.__BLOCK_PLIBHUJOURNEY_DEFINED__ = true;
-
-  let root = null;
-
-  function mount(props = {}, host) {
-    if (root) return; // Already mounted
-
-
-    // ---- Root ----
-    root = document.createElement("div");
-    root.style.padding = "2rem";
-    root.style.fontFamily = "system-ui, sans-serif";
-    root.textContent = "PLIBHUJourney component (basic conversion - JSX not fully parsed)";
-
-
-    // Mount to provided host or fallback to document.body
-    const mountTarget = host || document.body;
-    mountTarget.appendChild(root);
-  }
-
-  function unmount() {
-    if (root && root.parentNode) {
-      root.remove();
-      root = null;
-    }
-  }
-
-  // ---- Register with BlockRegistry (if available) ----
-  if (window.BlockRegistry && typeof window.BlockRegistry.register === "function") {
-    window.BlockRegistry.register("plibhujourney", {
-      mount,
-      unmount,
-    });
-  } else {
-    // Fallback: auto-mount if BlockRegistry is not available
-    mount(window.__BLOCK_PROPS__ || {}, window.__BLOCK_HOST__);
-  }
-})();
+      createElement(
+        'p',
+        {
+          key: 'description',
+          style: {
+            fontSize: '1rem',
+            lineHeight: '1.6',
+            color: '#374151',
+            margin: 0
+          }
+        },
+        description
+      )
+    ]
+  );
+}
