@@ -280,13 +280,12 @@ function convertHtmlToReact(htmlContent: string, fileName: string): ConversionRe
   
   // Create App component
   const appCode = `import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 import './App.css';
 
 function App() {
   return (
-    <div className="app">
-      ${jsxContent}
-    </div>
+    createElement('div', {className: 'app'}, '${jsxContent}')
   );
 }
 
@@ -304,7 +303,7 @@ import './index.css';
 const rootElement = document.getElementById('root');
 if (rootElement) {
   const root = createRoot(rootElement);
-  root.render(<App />);
+  root.render(createElement('App', null));
 }`;
   
   files['index.css'] = `* {
@@ -321,12 +320,12 @@ body {
   files['index.html'] = `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title}</title>
+  createElement('meta', {charset: 'UTF-8'})
+  createElement('meta', {name: 'viewport', content: 'width=device-width, initial-scale=1.0'})
+  createElement('title', null, '${title}')
 </head>
 <body>
-  <div id="root"></div>
+  createElement('div', {id: 'root'}, null)
 </body>
 </html>`;
   
@@ -459,7 +458,7 @@ import './index.css';
 const rootElement = document.getElementById('root');
 if (rootElement) {
   const root = createRoot(rootElement);
-  root.render(<App />);
+  root.render(createElement('App', null));
 }`;
   }
   
