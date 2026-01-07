@@ -1,3 +1,5 @@
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 /**
  * Form Component
 
@@ -45,7 +47,7 @@ export default function FormField = <
 }: ControllerProps<TFieldValues, TName>) => {
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
+      createElement('Controller', null)
     </FormFieldContext.Provider>
   );
 };
@@ -86,11 +88,7 @@ export default function FormItem({ className, ...props }: React.ComponentProps<"
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div
-        data-slot="form-item"
-        className={cn("grid gap-2", className)}
-        {...props}
-      />
+      createElement('div', {slot: 'form-item'})
     </FormItemContext.Provider>
   );
 }
@@ -102,13 +100,7 @@ export default function FormLabel({
   const { error, formItemId } = useFormField();
 
   return (
-    <Label
-      data-slot="form-label"
-      data-error={!!error}
-      className={cn("data-[error=true]:text-destructive", className)}
-      htmlFor={formItemId}
-      {...props}
-    />
+    createElement('Label', {slot: 'form-label'})
   );
 }
 
@@ -117,17 +109,7 @@ export default function FormControl({ ...props }: React.ComponentProps<typeof Sl
     useFormField();
 
   return (
-    <Slot
-      data-slot="form-control"
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
-      {...props}
-    />
+    createElement('Slot', {slot: 'form-control'})
   );
 }
 
@@ -135,12 +117,7 @@ export default function FormDescription({ className, ...props }: React.Component
   const { formDescriptionId } = useFormField();
 
   return (
-    <p
-      data-slot="form-description"
-      id={formDescriptionId}
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
+    createElement('p', {slot: 'form-description'})
   );
 }
 
@@ -153,14 +130,7 @@ export default function FormMessage({ className, ...props }: React.ComponentProp
   }
 
   return (
-    <p
-      data-slot="form-message"
-      id={formMessageId}
-      className={cn("text-destructive text-sm", className)}
-      {...props}
-    >
-      {body}
-    </p>
+    createElement('p', {slot: 'form-message'}, '{body}')
   );
 }
 
