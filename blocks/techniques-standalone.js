@@ -48,11 +48,9 @@ export default function TabBreathe() {
     );
   }
 
-  return (
-    <div className="p-6 pt-10 space-y-6 animate-fadeIn">
-      <header>
-        <h1 className="text-3xl font-bold text-white mb-2">Breathe</h1>
-        <p className="text-slate-400">Select a technique to center your mind.</p>
+  return createElement('div', {className: 'p-6 pt-10 space-y-6 animate-fadeIn'}, '<header>
+        createElement('h1', {className: 'text-3xl font-bold text-white mb-2'}, 'Breathe')
+        createElement('p', {className: 'text-slate-400'}, 'Select a technique to center your mind.')
       </header>
 
       <div className="space-y-3">
@@ -62,24 +60,22 @@ export default function TabBreathe() {
             onClick={() => setActiveTechnique(t)}
             className="w-full group relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 p-5 flex items-center justify-between active:scale-[0.98] active:bg-white/10 transition-all text-left"
           >
-            <div className={`absolute left-0 top-0 bottom-0 w-1 ${t.color}`} />
+            createElement('div', null)
             <div className="flex items-center gap-4">
               <div className={`w-12 h-12 rounded-2xl ${t.color}/20 flex items-center justify-center ${t.color.replace('bg-', 'text-')}`}>
-                <Wind size={24} />
+                createElement('Wind', null)
               </div>
               <div>
-                <h3 className="font-bold text-white text-lg">{t.name}</h3>
-                <p className="text-sm text-slate-400">{t.durationMin} min • {getPhaseLabel(t)}</p>
+                createElement('h3', {className: 'font-bold text-white text-lg'}, '{t.name}')
+                createElement('p', {className: 'text-sm text-slate-400'}, '{t.durationMin} min • {getPhaseLabel(t)}')
               </div>
             </div>
             <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center group-hover:bg-white/10 transition-colors">
-              <Play size={18} fill="currentColor" className="text-white ml-1" />
+              createElement('Play', {className: 'text-white ml-1', fill: 'currentColor'})
             </div>
           </button>
         ))}
-      </div>
-    </div>
-  );
+      </div>');
 }
 
 function getPhaseLabel(t: BreathingPattern) {
