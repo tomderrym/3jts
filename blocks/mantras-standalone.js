@@ -1,3 +1,5 @@
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 /**
  * MANTRAS Component
 
@@ -180,33 +182,29 @@ export function MantraLibrary({ onBack }: MantraLibraryProps) {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  return (
-    <div className="min-h-screen p-6 pb-24">
-      <div className="max-w-2xl mx-auto">
+  return createElement('div', {className: 'min-h-screen p-6 pb-24'}, '<div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <button
             onClick={onBack}
             className="p-2 rounded-full bg-muted/30 hover:bg-muted/50 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 text-foreground" />
+            createElement('ArrowLeft', {className: 'w-5 h-5 text-foreground'})
           </button>
           <div className="flex-1">
-            <h1 className="text-foreground">Sacred Mantras</h1>
-            <p className="text-sm text-muted-foreground">Words of power and transformation</p>
+            createElement('h1', {className: 'text-foreground'}, 'Sacred Mantras')
+            createElement('p', {className: 'text-sm text-muted-foreground'}, 'Words of power and transformation')
           </div>
         </div>
 
         {/* Info Card */}
         <Card className="p-5 mb-6 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
           <div className="flex items-start gap-3">
-            <div className="text-2xl">🙏</div>
+            createElement('div', {className: 'text-2xl'}, '🙏')
             <div>
-              <h3 className="text-foreground mb-1">How to Use Mantras</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Repeat silently or aloud during meditation. Focus on the vibration and meaning. 
-                Let the mantra become your anchor, guiding you deeper into presence.
-              </p>
+              createElement('h3', {className: 'text-foreground mb-1'}, 'How to Use Mantras')
+              createElement('p', {className: 'text-sm text-muted-foreground leading-relaxed'}, 'Repeat silently or aloud during meditation. Focus on the vibration and meaning. 
+                Let the mantra become your anchor, guiding you deeper into presence.')
             </div>
           </div>
         </Card>
@@ -214,42 +212,37 @@ export function MantraLibrary({ onBack }: MantraLibraryProps) {
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-6">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="all">All</TabsTrigger>
+            createElement('TabsTrigger', {value: 'all'}, 'All')
             <TabsTrigger value="favorites">
-              <Heart className="w-4 h-4 mr-1" />
+              createElement('Heart', {className: 'w-4 h-4 mr-1'})
               Saved
             </TabsTrigger>
-            <TabsTrigger value="peace">Peace</TabsTrigger>
-            <TabsTrigger value="love">Love</TabsTrigger>
+            createElement('TabsTrigger', {value: 'peace'}, 'Peace')
+            createElement('TabsTrigger', {value: 'love'}, 'Love')
           </TabsList>
         </Tabs>
 
         {/* Secondary Tabs */}
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
           {['infinity', 'belief', 'harmony', 'unity'].map((energy) => (
-            <button
-              key={energy}
-              onClick={() => setActiveTab(energy)}
+            createElement('button', null, 'setActiveTab(energy)}
               className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all ${
                 activeTab === energy
                   ? 'bg-primary/20 text-primary border border-primary/30'
                   : 'bg-muted/30 text-muted-foreground border border-transparent hover:border-primary/20'
               }`}
             >
-              {energy.charAt(0).toUpperCase() + energy.slice(1)}
-            </button>
+              {energy.charAt(0).toUpperCase() + energy.slice(1)}')
           ))}
         </div>
 
         {/* Mantras List */}
         {filteredMantras.length === 0 ? (
           <Card className="p-8 text-center bg-card border-primary/20">
-            <div className="text-4xl mb-3">🤍</div>
-            <p className="text-muted-foreground">
-              {activeTab === 'favorites' 
+            createElement('div', {className: 'text-4xl mb-3'}, '🤍')
+            createElement('p', {className: 'text-muted-foreground'}, '{activeTab === 'favorites' 
                 ? 'No saved mantras yet. Tap the heart to save your favorites.'
-                : 'No mantras found in this category.'}
-            </p>
+                : 'No mantras found in this category.'}')
           </Card>
         ) : (
           <div className="space-y-4">
@@ -259,24 +252,13 @@ export function MantraLibrary({ onBack }: MantraLibraryProps) {
                 className={`p-5 bg-gradient-to-br ${ENERGY_COLORS[mantra.energy]}`}
               >
                 <div className="flex items-start gap-4">
-                  <div className="text-3xl pt-1">
-                    {ENERGY_ICONS[mantra.energy]}
-                  </div>
+                  createElement('div', {className: 'text-3xl pt-1'}, '{ENERGY_ICONS[mantra.energy]}')
                   <div className="flex-1">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex-1">
-                        <Badge 
-                          variant="outline" 
-                          className="mb-2 text-xs border-primary/30 text-primary"
-                        >
-                          {mantra.energy}
-                        </Badge>
-                        <p className="text-foreground mb-1 italic leading-relaxed">
-                          "{mantra.text}"
-                        </p>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          {mantra.translation}
-                        </p>
+                        createElement('Badge', {className: 'mb-2 text-xs border-primary/30 text-primary', variant: 'outline'}, '{mantra.energy}')
+                        createElement('p', {className: 'text-foreground mb-1 italic leading-relaxed'}, '"{mantra.text}"')
+                        createElement('p', {className: 'text-sm text-muted-foreground mb-2'}, '{mantra.translation}')
                       </div>
                       <button
                         onClick={() => toggleFavorite(mantra.id)}
@@ -286,38 +268,32 @@ export function MantraLibrary({ onBack }: MantraLibraryProps) {
                             : 'bg-muted/30 text-muted-foreground hover:bg-muted/50'
                         }`}
                       >
-                        <Heart 
-                          className={`w-4 h-4 ${favorites.has(mantra.id) ? 'fill-current' : ''}`} 
-                        />
+                        createElement('Heart', null)
                       </button>
                     </div>
 
                     {mantra.pronunciation && (
                       <div className="mb-2 p-2 rounded bg-card/50">
                         <p className="text-xs text-muted-foreground">
-                          Pronunciation: <span className="text-foreground">{mantra.pronunciation}</span>
-                        </p>
-                      </div>
-                    )}
+                          Pronunciation: createElement('span', {className: 'text-foreground'}, '{mantra.pronunciation}')
+                        </p>')}
 
-                    <p className="text-sm text-foreground/80 mb-3 leading-relaxed">
-                      {mantra.description}
-                    </p>
+                    createElement('p', {className: 'text-sm text-foreground/80 mb-3 leading-relaxed'}, '{mantra.description}')
 
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">{mantra.origin}</span>
+                      createElement('span', {className: 'text-xs text-muted-foreground'}, '{mantra.origin}')
                       <button
                         onClick={() => copyMantra(mantra)}
                         className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-card/70 hover:bg-card transition-colors text-xs text-foreground"
                       >
                         {copiedId === mantra.id ? (
                           <>
-                            <Check className="w-3 h-3" />
+                            createElement('Check', {className: 'w-3 h-3'})
                             Copied
                           </>
                         ) : (
                           <>
-                            <Copy className="w-3 h-3" />
+                            createElement('Copy', {className: 'w-3 h-3'})
                             Copy
                           </>
                         )}
