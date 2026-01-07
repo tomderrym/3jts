@@ -87,32 +87,28 @@ export function useFocus(): FocusContextValue {
 // Optional helper component to debug focus & mode visually if wired into the UI later.
 export const FocusDebugger: React.FC = () => {
   const { panel, mode, setPanel, setMode } = useFocus();
-  return (
-    <div className="flex items-center gap-2 text-xs text-slate-400">
-      <label className="flex items-center gap-1">
-        <span>Focused panel:</span>
+  return createElement('div', {className: 'flex items-center gap-2 text-xs text-slate-400'}, '<label className="flex items-center gap-1">
+        createElement('span', null, 'Focused panel:')
         <select
           className="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs h-[32px]"
           value={panel}
           onChange={(e) => setPanel(e.target.value as PanelContext)}
         >
-          <option value="editor">Editor</option>
-          <option value="sidebar">Sidebar</option>
-          <option value="terminal">Terminal</option>
+          createElement('option', {value: 'editor'}, 'Editor')
+          createElement('option', {value: 'sidebar'}, 'Sidebar')
+          createElement('option', {value: 'terminal'}, 'Terminal')
         </select>
       </label>
       <label className="flex items-center gap-1">
-        <span>Mode:</span>
+        createElement('span', null, 'Mode:')
         <select
           className="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs h-[32px]"
           value={mode}
           onChange={(e) => setMode(e.target.value as ModeContext)}
         >
-          <option value="normal">Normal</option>
-          <option value="insert">Insert</option>
-          <option value="command">Command</option>
+          createElement('option', {value: 'normal'}, 'Normal')
+          createElement('option', {value: 'insert'}, 'Insert')
+          createElement('option', {value: 'command'}, 'Command')
         </select>
-      </label>
-    </div>
-  );
+      </label>');
 };
