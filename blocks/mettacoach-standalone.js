@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 import { MessageCircle, Send, Sparkles, Loader2 } from 'lucide-react';
 
 interface Message {
@@ -117,17 +118,13 @@ export default function MettaCoach: React.FC<MettaCoachProps> = ({
     "I feel disconnected from myself",
   ];
 
-  return (
-    <div className="space-y-4">
-      <Card className="p-4 bg-gradient-to-br from-violet-500/10 to-purple-500/10 border-violet-500/30">
+  return createElement('div', {className: 'space-y-4'}, '<Card className="p-4 bg-gradient-to-br from-violet-500/10 to-purple-500/10 border-violet-500/30">
         <div className="flex items-start gap-3">
-          <Sparkles className="w-6 h-6 text-violet-400 flex-shrink-0 mt-1" />
+          createElement('Sparkles', {className: 'w-6 h-6 text-violet-400 flex-shrink-0 mt-1'})
           <div>
-            <h3 className="text-lg mb-2">Your Metta Coach</h3>
-            <p className="text-sm text-slate-300">
-              I'm here to guide you with compassion and wisdom. Share what's on your heart,
-              and I'll offer reflections drawn from ancient wisdom and modern understanding.
-            </p>
+            createElement('h3', {className: 'text-lg mb-2'}, 'Your Metta Coach')
+            createElement('p', {className: 'text-sm text-slate-300'}, 'I'm here to guide you with compassion and wisdom. Share what's on your heart,
+              and I'll offer reflections drawn from ancient wisdom and modern understanding.')
           </div>
         </div>
       </Card>
@@ -146,9 +143,9 @@ export default function MettaCoach: React.FC<MettaCoachProps> = ({
                     : 'bg-blue-500'
                 }`}>
                   {message.role === 'coach' ? (
-                    <Sparkles className="w-4 h-4 text-white" />
+                    createElement('Sparkles', {className: 'w-4 h-4 text-white'})
                   ) : (
-                    <MessageCircle className="w-4 h-4 text-white" />
+                    createElement('MessageCircle', {className: 'w-4 h-4 text-white'})
                   )}
                 </div>
                 
@@ -158,24 +155,20 @@ export default function MettaCoach: React.FC<MettaCoachProps> = ({
                       ? 'bg-slate-800/50 text-slate-100'
                       : 'bg-blue-500/20 text-blue-100'
                   }`}>
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                    createElement('p', {className: 'text-sm leading-relaxed whitespace-pre-wrap'}, '{message.content}')
                   </div>
-                  <span className="text-xs text-slate-500 mt-1 block px-2">
-                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </span>
-                </div>
-              </div>
-            ))}
+                  createElement('span', {className: 'text-xs text-slate-500 mt-1 block px-2'}, '{new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}')
+                </div>'))}
             {isTyping && (
               <div className="flex gap-3 flex-row">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-violet-500 to-purple-500">
-                  <Sparkles className="w-4 h-4 text-white" />
+                  createElement('Sparkles', {className: 'w-4 h-4 text-white'})
                 </div>
                 <div className="bg-slate-800/50 text-slate-100 px-4 py-3 rounded-2xl">
                   <div className="flex items-center gap-1">
-                    <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    createElement('span', {className: 'w-2 h-2 bg-slate-400 rounded-full animate-bounce', style: {{ animationDelay: '0ms' }})
+                    createElement('span', {className: 'w-2 h-2 bg-slate-400 rounded-full animate-bounce', style: {{ animationDelay: '150ms' }})
+                    createElement('span', {className: 'w-2 h-2 bg-slate-400 rounded-full animate-bounce', style: {{ animationDelay: '300ms' }})
                   </div>
                 </div>
               </div>
@@ -187,14 +180,11 @@ export default function MettaCoach: React.FC<MettaCoachProps> = ({
           {messages.length <= 2 && (
             <div className="flex flex-wrap gap-2">
               {suggestedPrompts.map(prompt => (
-                <button
-                  key={prompt}
-                  onClick={() => sendMessage(prompt)}
+                createElement('button', null, 'sendMessage(prompt)}
                   disabled={isTyping}
                   className="text-xs px-3 py-2 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors disabled:opacity-50"
                 >
-                  {prompt}
-                </button>
+                  {prompt}')
               ))}
             </div>
           )}
@@ -213,7 +203,7 @@ export default function MettaCoach: React.FC<MettaCoachProps> = ({
               disabled={!input.trim() || isTyping}
               className="bg-violet-500 hover:bg-violet-600"
             >
-              {isTyping ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+              {isTyping ? createElement('Loader2', {className: 'w-4 h-4 animate-spin'}) : createElement('Send', {className: 'w-4 h-4'})}
             </Button>
           </div>
         </div>
