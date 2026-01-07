@@ -36,16 +36,12 @@ export default function MoodLogger({ onClose, onSelect }: Props) {
     onSelect(selectedMood, note.trim() || undefined);
   };
 
-  return (
-    <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="w-full max-w-md bg-slate-900 border-t sm:border border-white/10 rounded-t-3xl sm:rounded-3xl p-6 safe-area-inset-bottom">
+  return createElement('div', {className: 'fixed inset-0 z-[60] flex items-end justify-center sm:items-center bg-black/80 backdrop-blur-sm animate-fadeIn'}, '<div className="w-full max-w-md bg-slate-900 border-t sm:border border-white/10 rounded-t-3xl sm:rounded-3xl p-6 safe-area-inset-bottom">
         
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-white">
-            {step === 'mood' ? 'How are you feeling?' : 'Journal (Optional)'}
-          </h2>
+          createElement('h2', {className: 'text-xl font-bold text-white'}, '{step === 'mood' ? 'How are you feeling?' : 'Journal (Optional)'}')
           <button onClick={onClose} className="p-2 bg-white/5 rounded-full">
-            <X size={20} className="text-slate-400" />
+            createElement('X', {className: 'text-slate-400'})
           </button>
         </div>
 
@@ -58,17 +54,15 @@ export default function MoodLogger({ onClose, onSelect }: Props) {
                 className="flex flex-col items-center justify-center gap-2 h-24 rounded-2xl bg-white/5 border border-white/5 active:bg-white/10 active:scale-95 transition-all"
               >
                 <div className={`w-10 h-10 rounded-full ${m.bg} flex items-center justify-center ${m.color}`}>
-                  <m.icon size={24} />
+                  createElement('m', null)
                 </div>
-                <span className="text-xs font-medium text-slate-300">{m.label}</span>
+                createElement('span', {className: 'text-xs font-medium text-slate-300'}, '{m.label}')
               </button>
-            ))}
-          </div>
-        ) : (
+            ))}') : (
           <div className="space-y-4 animate-slideUp">
              <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
-               <span className="text-slate-400 text-sm">Selected Mood:</span>
-               <span className="text-white font-bold">{selectedMood}</span>
+               createElement('span', {className: 'text-slate-400 text-sm'}, 'Selected Mood:')
+               createElement('span', {className: 'text-white font-bold'}, '{selectedMood}')
              </div>
              
              <textarea
@@ -84,7 +78,7 @@ export default function MoodLogger({ onClose, onSelect }: Props) {
                onClick={handleSave}
                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
              >
-               Save Entry <Save size={18} />
+               Save Entry createElement('Save', null)
              </button>
           </div>
         )}
