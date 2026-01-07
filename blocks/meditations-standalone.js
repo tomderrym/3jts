@@ -1,3 +1,5 @@
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 /**
  * MEDITATIONS Component
 
@@ -105,15 +107,15 @@ export function MeditationLibrary({ onBack, onSelectMeditation }: MeditationLibr
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'calm':
-        return <Heart className="w-5 h-5 text-blue-400" />;
+        return createElement('Heart', {className: 'w-5 h-5 text-blue-400'});
       case 'focus':
-        return <Focus className="w-5 h-5 text-amber-400" />;
+        return createElement('Focus', {className: 'w-5 h-5 text-amber-400'});
       case 'sleep':
-        return <Moon className="w-5 h-5 text-purple-400" />;
+        return createElement('Moon', {className: 'w-5 h-5 text-purple-400'});
       case 'manifest':
-        return <Sparkles className="w-5 h-5 text-primary" />;
+        return createElement('Sparkles', {className: 'w-5 h-5 text-primary'});
       default:
-        return <Heart className="w-5 h-5 text-primary" />;
+        return createElement('Heart', {className: 'w-5 h-5 text-primary'});
     }
   };
 
@@ -136,31 +138,29 @@ export function MeditationLibrary({ onBack, onSelectMeditation }: MeditationLibr
     ? MEDITATIONS
     : MEDITATIONS.filter((m) => m.type === activeTab);
 
-  return (
-    <div className="min-h-screen p-6 pb-24">
-      <div className="max-w-2xl mx-auto">
+  return createElement('div', {className: 'min-h-screen p-6 pb-24'}, '<div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <button
             onClick={onBack}
             className="p-2 rounded-full bg-muted/30 hover:bg-muted/50 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 text-foreground" />
+            createElement('ArrowLeft', {className: 'w-5 h-5 text-foreground'})
           </button>
           <div className="flex-1">
-            <h1 className="text-foreground">Meditation Library</h1>
-            <p className="text-sm text-muted-foreground">Guided sessions for every need</p>
+            createElement('h1', {className: 'text-foreground'}, 'Meditation Library')
+            createElement('p', {className: 'text-sm text-muted-foreground'}, 'Guided sessions for every need')
           </div>
         </div>
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-6">
           <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="calm">Calm</TabsTrigger>
-            <TabsTrigger value="focus">Focus</TabsTrigger>
-            <TabsTrigger value="sleep">Sleep</TabsTrigger>
-            <TabsTrigger value="manifest">Manifest</TabsTrigger>
+            createElement('TabsTrigger', {value: 'all'}, 'All')
+            createElement('TabsTrigger', {value: 'calm'}, 'Calm')
+            createElement('TabsTrigger', {value: 'focus'}, 'Focus')
+            createElement('TabsTrigger', {value: 'sleep'}, 'Sleep')
+            createElement('TabsTrigger', {value: 'manifest'}, 'Manifest')
           </TabsList>
         </Tabs>
 
@@ -173,29 +173,23 @@ export function MeditationLibrary({ onBack, onSelectMeditation }: MeditationLibr
               onClick={() => onSelectMeditation(meditation.id)}
             >
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-card/50 group-hover:scale-110 transition-transform">
-                  {getTypeIcon(meditation.type)}
-                </div>
+                createElement('div', {className: 'p-3 rounded-full bg-card/50 group-hover:scale-110 transition-transform'}, '{getTypeIcon(meditation.type)}')
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h3 className="text-foreground mb-1">{meditation.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        {meditation.description}
-                      </p>
+                      createElement('h3', {className: 'text-foreground mb-1'}, '{meditation.title}')
+                      createElement('p', {className: 'text-sm text-muted-foreground mb-3'}, '{meditation.description}')
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 mb-3">
                     <div className="flex items-center gap-1 text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      <span className="text-xs">{meditation.duration}</span>
+                      createElement('Clock', {className: 'w-4 h-4'})
+                      createElement('span', {className: 'text-xs'}, '{meditation.duration}')
                     </div>
-                    <Badge variant="outline" className="text-xs border-primary/30 text-primary">
-                      {meditation.difficulty}
-                    </Badge>
+                    createElement('Badge', {className: 'text-xs border-primary/30 text-primary', variant: 'outline'}, '{meditation.difficulty}')
                     {meditation.narrator && (
-                      <span className="text-xs text-muted-foreground">with {meditation.narrator}</span>
+                      createElement('span', {className: 'text-xs text-muted-foreground'}, 'with {meditation.narrator}')
                     )}
                   </div>
 
@@ -206,7 +200,7 @@ export function MeditationLibrary({ onBack, onSelectMeditation }: MeditationLibr
                       onSelectMeditation(meditation.id);
                     }}
                   >
-                    <Play className="w-4 h-4" />
+                    createElement('Play', {className: 'w-4 h-4'})
                     Start Session
                   </button>
                 </div>
@@ -214,7 +208,5 @@ export function MeditationLibrary({ onBack, onSelectMeditation }: MeditationLibr
             </Card>
           ))}
         </div>
-      </div>
-    </div>
-  );
+      </div>');
 }
