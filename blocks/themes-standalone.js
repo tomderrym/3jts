@@ -1,5 +1,3 @@
-import React from 'https://esm.sh/react@18';
-import { createElement } from 'https://esm.sh/react@18';
 /**
  * THEMES Component
  * Props: { color?: any }
@@ -8,11 +6,12 @@ import { createElement } from 'https://esm.sh/react@18';
 // Note: This component uses Tailwind CSS utility classes only.
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 "use client";
 
 import * as React from "react";
-import * as RechartsPrimitive from "recharts";
-
+import * as RechartsPrimitive from "recharts@2.15.2";
 
 
 // Format: { THEME_NAME: CSS_SELECTOR }
