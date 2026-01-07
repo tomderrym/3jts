@@ -86,7 +86,7 @@ const writeFile = async (accessToken: string) => {
 ```json
 {
   "filePath": "/tmp/component.tsx",
-  "content": "export default function MyComponent = () => <div>Hello</div>;"
+  "content": "export default function MyComponent = () => createElement('div', null, 'Hello');"
 }
 ```
 
@@ -132,7 +132,8 @@ const writeFile = async (accessToken: string) => {
   "success": true,
   "message": "Read /tmp/component.tsx",
   "data": {
-    "content": "1\timport React from 'https://esm.sh/react@18';\n2\texport const...",
+    "content": "1\timport React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';\n2\texport const...",
     "totalLines": 150,
     "returnedLines": 50,
     "offset": 0,
@@ -263,7 +264,7 @@ const writeFile = async (accessToken: string) => {
             "context": [
               "export default function MyComponent() {",
               "  const [state, setState] = useState(0);",
-              "  return <div>{state}</div>;"
+              "  return createElement('div', null, '{state}');"
             ]
           }
         ]
@@ -501,24 +502,19 @@ export function FileManager({ accessToken }: { accessToken: string }) {
     loadDirectory();
   }, []);
 
-  return (
-    <div className="p-6">
-      <h2>File Manager</h2>
-      <button onClick={createNewFile}>Create New File</button>
+  return createElement('div', {className: 'p-6'}, 'createElement('h2', null, 'File Manager')
+      createElement('button', {onClick: createNewFile}, 'Create New File')
       <ul>
         {files.map(file => (
           <li key={file.name}>
             {file.name} 
             {file.isFile && (
-              <button onClick={() => fileTools.deleteFile(`/tmp/${file.name}`)}>
-                Delete
-              </button>
+              createElement('button', null, 'fileTools.deleteFile(`/tmp/${file.name}`)}>
+                Delete')
             )}
           </li>
         ))}
-      </ul>
-    </div>
-  );
+      </ul>');
 }
 ```
 
