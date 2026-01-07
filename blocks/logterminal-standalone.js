@@ -6,34 +6,46 @@
  */
 
 (function () {
-  // ---- Guard: prevent double mount ----
-  if (window.__BLOCK_LOGTERMINAL_MOUNTED__) return;
-  window.__BLOCK_LOGTERMINAL_MOUNTED__ = true;
+  // ---- Guard: prevent double definition ----
+  if (window.__BLOCK_LOGTERMINAL_DEFINED__) return;
+  window.__BLOCK_LOGTERMINAL_DEFINED__ = true;
 
-  const logs = (window.__BLOCK_PROPS__ && window.__BLOCK_PROPS__.logs) || undefined;
-  const type = (window.__BLOCK_PROPS__ && window.__BLOCK_PROPS__.type) || undefined;
-  const streamText = (window.__BLOCK_PROPS__ && window.__BLOCK_PROPS__.streamText) || undefined;
+  let root = null;
 
-  // ---- Root ----
-  const root = document.createElement("div");
-  root.style.padding = "2rem";
-  root.style.fontFamily = "system-ui, sans-serif";
-  root.textContent = "LogTerminal component (basic conversion - JSX not fully parsed)";
+  function mount(props = {}, host) {
+    if (root) return; // Already mounted
 
-  // ---- Mount ----
-  document.body.appendChild(root);
+    const logs = props.logs !== undefined ? props.logs : undefined;
+    const type = props.type !== undefined ? props.type : undefined;
+    const streamText = props.streamText !== undefined ? props.streamText : undefined;
+
+    // ---- Root ----
+    const root = document.createElement("div");
+    root.style.padding = "2rem";
+    root.style.fontFamily = "system-ui, sans-serif";
+    root.textContent = "LogTerminal component (basic conversion - JSX not fully parsed)";
 
 
-  // ---- Optional registry hook (safe if exists) ----
+    // Mount to provided host or fallback to document.body
+    const mountTarget = host || document.body;
+    mountTarget.appendChild(root);
+  }
+
+  function unmount() {
+    if (root && root.parentNode) {
+      root.remove();
+      root = null;
+    }
+  }
+
+  // ---- Register with BlockRegistry (if available) ----
   if (window.BlockRegistry && typeof window.BlockRegistry.register === "function") {
     window.BlockRegistry.register("logterminal", {
-      mount: () => {},
-      unmount: () => {
-        if (root && root.parentNode) {
-          root.remove();
-        }
-        window.__BLOCK_LOGTERMINAL_MOUNTED__ = false;
-      },
+      mount,
+      unmount,
     });
+  } else {
+    // Fallback: auto-mount if BlockRegistry is not available
+    mount(window.__BLOCK_PROPS__ || {}, window.__BLOCK_HOST__);
   }
 })();
