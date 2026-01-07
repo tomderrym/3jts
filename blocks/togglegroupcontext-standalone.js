@@ -1,3 +1,5 @@
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 /**
  * ToggleGroupContext Component
  * Props: { size?: any, variant?: any }
@@ -6,13 +8,13 @@
 // Note: This component uses Tailwind CSS utility classes only.
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
-import React from 'https://esm.sh/react@18';
-import { createElement } from 'https://esm.sh/react@18';
 "use client";
 
 import * as React from "react";
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group@1.1.2";
-import { type VariantProps } from "class-variance-authority@0.7.1";
+import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
+import { type VariantProps } from "class-variance-authority";
+
+
 
 
 export default function ToggleGroupContext = React.createContext<
