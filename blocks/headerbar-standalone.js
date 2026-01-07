@@ -1,4 +1,5 @@
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 
 interface HeaderBarProps {
   title?: string;
@@ -19,28 +20,15 @@ interface HeaderBarProps {
  * a centered title. Left and right slots can host back buttons, actions, etc.
  */
 const HeaderBar: React.FC<HeaderBarProps> = ({ title, leftSlot, rightSlot, sticky }) => {
-  return (
-    <header
-      className={[
-        'w-full flex items-center justify-between px-2 py-4 border-b border-slate-700 bg-slate-900/95 backdrop-blur',
-        sticky ? 'sticky top-0 z-10' : ''
-      ].join(' ')}
-    >
-      <div className="flex items-center min-h-[50px] min-w-[44px]">
-        {leftSlot ?? <div className="w-6" />}
-      </div>
+  return createElement('header', null, '<div className="flex items-center min-h-[50px] min-w-[44px]">
+        {leftSlot ?? createElement('div', {className: 'w-6'}, '}')
       {title ? (
-        <h1 className="text-xl md:text-2xl font-semibold text-white text-center flex-1 px-2 truncate">
-          {title}
-        </h1>
+        createElement('h1', {className: 'text-xl md:text-2xl font-semibold text-white text-center flex-1 px-2 truncate'}, '{title}')
       ) : (
-        <div className="flex-1" />
+        createElement('div', {className: 'flex-1'})
       )}
       <div className="flex items-center justify-end min-h-[50px] min-w-[44px]">
-        {rightSlot ?? <div className="w-6" />}
-      </div>
-    </header>
-  );
+        {rightSlot ?? createElement('div', {className: 'w-6'}, '}')');
 };
 
 export default HeaderBar;
