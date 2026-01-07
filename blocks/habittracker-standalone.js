@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 import { TrendingUp, Calendar, Smile, Frown, Meh } from 'lucide-react';
 
 interface HabitTrackerProps {
@@ -68,14 +69,14 @@ export default function HabitTracker: React.FC<HabitTrackerProps> = ({ energies,
     switch (mood) {
       case 'great':
       case 'good':
-        return <Smile className="w-5 h-5 text-green-400" />;
+        return createElement('Smile', {className: 'w-5 h-5 text-green-400'});
       case 'okay':
-        return <Meh className="w-5 h-5 text-yellow-400" />;
+        return createElement('Meh', {className: 'w-5 h-5 text-yellow-400'});
       case 'low':
       case 'difficult':
-        return <Frown className="w-5 h-5 text-red-400" />;
+        return createElement('Frown', {className: 'w-5 h-5 text-red-400'});
       default:
-        return <div className="w-5 h-5 rounded-full bg-slate-700" />;
+        return createElement('div', {className: 'w-5 h-5 rounded-full bg-slate-700'});
     }
   };
 
@@ -84,36 +85,31 @@ export default function HabitTracker: React.FC<HabitTrackerProps> = ({ energies,
     ? Object.values(checkIns).reduce((sum, c) => sum + c.centeredness, 0) / Object.values(checkIns).length
     : 0;
 
-  return (
-    <div className="space-y-6">
-      {/* Today's Check-in */}
+  return createElement('div', {className: 'space-y-6'}, '{/* Today's Check-in */}
       {!todayCheckIn ? (
         <Card className="p-6 bg-gradient-to-br from-blue-500/10 to-violet-500/10 border-blue-500/30">
-          <h2 className="text-xl mb-4">How centered do you feel today?</h2>
+          createElement('h2', {className: 'text-xl mb-4'}, 'How centered do you feel today?')
           
           <div className="mb-6">
             <div className="flex gap-2 mb-2">
               {[1, 2, 3, 4, 5].map(val => (
-                <button
-                  key={val}
-                  onClick={() => setTodayCenteredness(val)}
+                createElement('button', null, 'setTodayCenteredness(val)}
                   className={`flex-1 h-12 rounded-lg transition-all ${
                     todayCenteredness === val
                       ? 'bg-blue-500 text-white scale-105'
                       : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
                   }`}
                 >
-                  {val}
-                </button>
+                  {val}')
               ))}
             </div>
             <div className="flex justify-between text-xs text-slate-400">
-              <span>Not centered</span>
-              <span>Very centered</span>
+              createElement('span', null, 'Not centered')
+              createElement('span', null, 'Very centered')
             </div>
           </div>
 
-          <h3 className="text-lg mb-3">How's your overall mood?</h3>
+          createElement('h3', {className: 'text-lg mb-3'}, 'How's your overall mood?')
           <div className="grid grid-cols-5 gap-2 mb-6">
             {[
               { id: 'great', label: 'Great', emoji: '😊' },
@@ -127,8 +123,8 @@ export default function HabitTracker: React.FC<HabitTrackerProps> = ({ energies,
                 onClick={() => saveCheckIn(option.id as DailyCheckIn['mood'], todayCenteredness)}
                 className="flex flex-col items-center gap-2 p-3 rounded-lg bg-slate-800 hover:bg-slate-700 transition-all"
               >
-                <span className="text-2xl">{option.emoji}</span>
-                <span className="text-xs text-slate-400">{option.label}</span>
+                createElement('span', {className: 'text-2xl'}, '{option.emoji}')
+                createElement('span', {className: 'text-xs text-slate-400'}, '{option.label}')
               </button>
             ))}
           </div>
@@ -136,12 +132,10 @@ export default function HabitTracker: React.FC<HabitTrackerProps> = ({ energies,
       ) : (
         <Card className="p-6 bg-green-500/10 border-green-500/30">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
-              {getMoodIcon(todayCheckIn.mood)}
-            </div>
+            createElement('div', {className: 'w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center'}, '{getMoodIcon(todayCheckIn.mood)}')
             <div>
-              <h3 className="text-lg">Today's Check-in Complete ✓</h3>
-              <p className="text-sm text-slate-400">Centeredness: {todayCheckIn.centeredness}/5</p>
+              createElement('h3', {className: 'text-lg'}, 'Today's Check-in Complete ✓')
+              createElement('p', {className: 'text-sm text-slate-400'}, 'Centeredness: {todayCheckIn.centeredness}/5')
             </div>
           </div>
         </Card>
@@ -150,7 +144,7 @@ export default function HabitTracker: React.FC<HabitTrackerProps> = ({ energies,
       {/* Weekly Overview */}
       <Card className="p-6 bg-slate-800/50 border-slate-700/50">
         <h3 className="text-lg mb-4 flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-blue-400" />
+          createElement('Calendar', {className: 'w-5 h-5 text-blue-400'})
           Last 7 Days
         </h3>
         <div className="grid grid-cols-7 gap-2">
@@ -159,15 +153,12 @@ export default function HabitTracker: React.FC<HabitTrackerProps> = ({ energies,
             const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
             return (
               <div key={date} className="flex flex-col items-center gap-2">
-                <span className="text-xs text-slate-500">{dayName}</span>
+                createElement('span', {className: 'text-xs text-slate-500'}, '{dayName}')
                 <div className="w-12 h-12 rounded-lg bg-slate-900/50 flex items-center justify-center">
-                  {checkIn ? getMoodIcon(checkIn.mood) : <div className="w-2 h-2 rounded-full bg-slate-700" />}
-                </div>
+                  {checkIn ? getMoodIcon(checkIn.mood) : createElement('div', {className: 'w-2 h-2 rounded-full bg-slate-700'}, '}')
                 {checkIn && (
-                  <span className="text-xs text-slate-400">{checkIn.centeredness}/5</span>
-                )}
-              </div>
-            );
+                  createElement('span', {className: 'text-xs text-slate-400'}, '{checkIn.centeredness}/5')
+                )}');
           })}
         </div>
       </Card>
@@ -176,20 +167,20 @@ export default function HabitTracker: React.FC<HabitTrackerProps> = ({ energies,
       <div className="grid grid-cols-2 gap-4">
         <Card className="p-4 bg-slate-800/50 border-slate-700/50">
           <div className="flex items-center gap-3">
-            <TrendingUp className="w-8 h-8 text-blue-400" />
+            createElement('TrendingUp', {className: 'w-8 h-8 text-blue-400'})
             <div>
-              <div className="text-2xl">{avgCenteredness.toFixed(1)}</div>
-              <div className="text-xs text-slate-400">Avg Centeredness</div>
+              createElement('div', {className: 'text-2xl'}, '{avgCenteredness.toFixed(1)}')
+              createElement('div', {className: 'text-xs text-slate-400'}, 'Avg Centeredness')
             </div>
           </div>
         </Card>
 
         <Card className="p-4 bg-slate-800/50 border-slate-700/50">
           <div className="flex items-center gap-3">
-            <Calendar className="w-8 h-8 text-violet-400" />
+            createElement('Calendar', {className: 'w-8 h-8 text-violet-400'})
             <div>
-              <div className="text-2xl">{Object.keys(checkIns).length}</div>
-              <div className="text-xs text-slate-400">Total Check-ins</div>
+              createElement('div', {className: 'text-2xl'}, '{Object.keys(checkIns).length}')
+              createElement('div', {className: 'text-xs text-slate-400'}, 'Total Check-ins')
             </div>
           </div>
         </Card>
