@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 
 export type VoiceGuideType = 'male' | 'female' | 'none';
 export type VoiceLanguage = 'en' | 'es' | 'fr' | 'de';
