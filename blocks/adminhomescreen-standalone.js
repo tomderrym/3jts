@@ -47,34 +47,18 @@ const AdminHomeScreen = ({
 
   const renderDashboard = () => (
     <div className="flex flex-col items-center px-4 py-4 w-full h-full max-w-sm mx-auto space-y-6">
-      <h2 className="text-2xl font-semibold text-white">Admin Dashboard</h2>
-      <p className="text-slate-400 text-center">Manage users and bookings for FilOzAutoCare.</p>
-      <PrimaryButton onClick={() => setCurrentView('userManagement')}>
-        User Management
-      </PrimaryButton>
-      <PrimaryButton
-        onClick={() => setCurrentView('bookingsView')}
+      createElement('h2', {className: 'text-2xl font-semibold text-white'}, 'Admin Dashboard')
+      createElement('p', {className: 'text-slate-400 text-center'}, 'Manage users and bookings for FilOzAutoCare.')
+      createElement('PrimaryButton', null, 'setCurrentView('userManagement')}>
+        User Management')
+      createElement('PrimaryButton', null, 'setCurrentView('bookingsView')}
         className="bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-800 focus-visible:ring-emerald-500"
       >
-        View Bookings
-      </PrimaryButton>
+        View Bookings')
     </div>
   );
 
-  return (
-    <div className="flex flex-col items-stretch w-full h-full">
-      <HeaderBar
-        title="Admin Panel"
-        rightSlot={(
-          <button
-            onClick={onLogout}
-            className="px-4 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-semibold text-white shadow-md h-[52px] min-w-[88px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-          >
-            Logout
-          </button>
-        )}
-        sticky
-      />
+  return createElement('div', {className: 'flex flex-col items-stretch w-full h-full'}, 'createElement('HeaderBar', {title: 'Admin Panel'})
 
       {currentView === 'dashboard' && renderDashboard()}
       {currentView === 'userManagement' && (
@@ -93,9 +77,7 @@ const AdminHomeScreen = ({
           setBookings={setBookings}
           triggerToast={triggerToast}
         />
-      )}
-    </div>
-  );
+      )}');
 };
 
 export default AdminHomeScreen;
