@@ -1,50 +1,174 @@
 /**
- * Block ID: form
- * Category: component
- * Description: Form component
- * Runtime: Glue-Paste Safe (no imports, no JSX, no framework)
+ * Form Component
+
  */
 
-(function () {
-  // ---- Guard: prevent double definition ----
-  if (window.__BLOCK_FORM_DEFINED__) return;
-  window.__BLOCK_FORM_DEFINED__ = true;
+// Note: This component uses Tailwind CSS utility classes only.
+// No custom component library dependencies.
+// Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
+"use client";
 
-  let root = null;
+import * as React from "react";
+import * as LabelPrimitive from "@radix-ui/react-label";
+import { Slot } from "@radix-ui/react-slot";
+import {
+  Controller,
+  FormProvider,
+  useFormContext,
+  useFormState,
+  type ControllerProps,
+  type FieldPath,
+  type FieldValues,
+} from "react-hook-form";
 
-  function mount(props = {}, host) {
-    if (root) return; // Already mounted
 
-    const props = props.props !== undefined ? props.props : undefined;
-    const TName = props.TName !== undefined ? props.TName : undefined;
+export default function Form = FormProvider;
 
-    // ---- Root ----
-    root = document.createElement("div");
-    root.style.padding = "2rem";
-    root.style.fontFamily = "system-ui, sans-serif";
-    root.textContent = "Form component (basic conversion - JSX not fully parsed)";
+type FormFieldContextValue<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = {
+  name: TName;
+};
 
+export default function FormFieldContext = React.createContext<FormFieldContextValue>(
+  {} as FormFieldContextValue,
+);
 
-    // Mount to provided host or fallback to document.body
-    const mountTarget = host || document.body;
-    mountTarget.appendChild(root);
+export default function FormField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
+  ...props
+}: ControllerProps<TFieldValues, TName>) => {
+  return (
+    <FormFieldContext.Provider value={{ name: props.name }}>
+      <Controller {...props} />
+    </FormFieldContext.Provider>
+  );
+};
+
+const useFormField = () => {
+  const fieldContext = React.useContext(FormFieldContext);
+  const itemContext = React.useContext(FormItemContext);
+  const { getFieldState } = useFormContext();
+  const formState = useFormState({ name: fieldContext.name });
+  const fieldState = getFieldState(fieldContext.name, formState);
+
+  if (!fieldContext) {
+    throw new Error("useFormField should be used within <FormField>");
   }
 
-  function unmount() {
-    if (root && root.parentNode) {
-      root.remove();
-      root = null;
-    }
+  const { id } = itemContext;
+
+  return {
+    id,
+    name: fieldContext.name,
+    formItemId: `${id}-form-item`,
+    formDescriptionId: `${id}-form-item-description`,
+    formMessageId: `${id}-form-item-message`,
+    ...fieldState,
+  };
+};
+
+type FormItemContextValue = {
+  id: string;
+};
+
+export default function FormItemContext = React.createContext<FormItemContextValue>(
+  {} as FormItemContextValue,
+);
+
+export default function FormItem({ className, ...props }: React.ComponentProps<"div">) {
+  const id = React.useId();
+
+  return (
+    <FormItemContext.Provider value={{ id }}>
+      <div
+        data-slot="form-item"
+        className={cn("grid gap-2", className)}
+        {...props}
+      />
+    </FormItemContext.Provider>
+  );
+}
+
+export default function FormLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+  const { error, formItemId } = useFormField();
+
+  return (
+    <Label
+      data-slot="form-label"
+      data-error={!!error}
+      className={cn("data-[error=true]:text-destructive", className)}
+      htmlFor={formItemId}
+      {...props}
+    />
+  );
+}
+
+export default function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
+  const { error, formItemId, formDescriptionId, formMessageId } =
+    useFormField();
+
+  return (
+    <Slot
+      data-slot="form-control"
+      id={formItemId}
+      aria-describedby={
+        !error
+          ? `${formDescriptionId}`
+          : `${formDescriptionId} ${formMessageId}`
+      }
+      aria-invalid={!!error}
+      {...props}
+    />
+  );
+}
+
+export default function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
+  const { formDescriptionId } = useFormField();
+
+  return (
+    <p
+      data-slot="form-description"
+      id={formDescriptionId}
+      className={cn("text-muted-foreground text-sm", className)}
+      {...props}
+    />
+  );
+}
+
+export default function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
+  const { error, formMessageId } = useFormField();
+  const body = error ? String(error?.message ?? "") : props.children;
+
+  if (!body) {
+    return null;
   }
 
-  // ---- Register with BlockRegistry (if available) ----
-  if (window.BlockRegistry && typeof window.BlockRegistry.register === "function") {
-    window.BlockRegistry.register("form", {
-      mount,
-      unmount,
-    });
-  } else {
-    // Fallback: auto-mount if BlockRegistry is not available
-    mount(window.__BLOCK_PROPS__ || {}, window.__BLOCK_HOST__);
-  }
-})();
+  return (
+    <p
+      data-slot="form-message"
+      id={formMessageId}
+      className={cn("text-destructive text-sm", className)}
+      {...props}
+    >
+      {body}
+    </p>
+  );
+}
+
+export {
+  useFormField,
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  FormField,
+};
