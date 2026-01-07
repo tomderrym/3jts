@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 
 export default function CreditLimitsPanel: React.FC = () => {
   const [profiles, setProfiles] = React.useState<CreditProfileDto[]>([]);
@@ -138,12 +139,10 @@ export default function CreditLimitsPanel: React.FC = () => {
     setUsagePage(1);
   }
 
-  return (
-    <div className="h-full flex flex-col text-xs md:text-[11px] bg-slate-950 text-slate-100">
-      <div className="px-3 py-2 border-b border-slate-800 bg-slate-900/90 flex items-center justify-between">
+  return createElement('div', {className: 'h-full flex flex-col text-xs md:text-[11px] bg-slate-950 text-slate-100'}, '<div className="px-3 py-2 border-b border-slate-800 bg-slate-900/90 flex items-center justify-between">
         <div>
-          <div className="font-semibold text-[11px]">Credit Limits</div>
-          <div className="text-[10px] text-slate-400">Per-profile token budgets &amp; history</div>
+          createElement('div', {className: 'font-semibold text-[11px]'}, 'Credit Limits')
+          createElement('div', {className: 'text-[10px] text-slate-400'}, 'Per-profile token budgets &amp; history')
         </div>
         <select
           value={activeProfile?.id ?? ''}
@@ -155,18 +154,16 @@ export default function CreditLimitsPanel: React.FC = () => {
           className="bg-slate-900 border border-slate-700 rounded px-2 h-[32px] text-[11px]"
         >
           {profiles.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.name}
-            </option>
+            createElement('option', null, '{p.name}')
           ))}
         </select>
       </div>
 
       {profilesLoading && (
-        <div className="px-3 py-2 text-[10px] text-slate-400 border-b border-slate-800">Loading profiles...</div>
+        createElement('div', {className: 'px-3 py-2 text-[10px] text-slate-400 border-b border-slate-800'}, 'Loading profiles...')
       )}
       {profilesError && (
-        <div className="px-3 py-2 text-[10px] text-red-300 border-b border-slate-800">{profilesError}</div>
+        createElement('div', {className: 'px-3 py-2 text-[10px] text-red-300 border-b border-slate-800'}, '{profilesError}')
       )}
 
       {activeProfile && (
@@ -183,23 +180,17 @@ export default function CreditLimitsPanel: React.FC = () => {
                 className="mt-1 w-full bg-slate-900 border border-slate-700 rounded px-2 h-[32px] text-[11px] text-slate-100"
               />
             </label>
-            <button
-              type="submit"
-              disabled={saving}
-              className="px-3 h-[32px] rounded border border-emerald-500 bg-emerald-600 text-[11px] font-medium text-white hover:bg-emerald-500 disabled:bg-emerald-900 disabled:border-emerald-800 disabled:text-slate-300"
-            >
-              {saving ? 'Saving…' : 'Save'}
-            </button>
+            createElement('button', {className: 'px-3 h-[32px] rounded border border-emerald-500 bg-emerald-600 text-[11px] font-medium text-white hover:bg-emerald-500 disabled:bg-emerald-900 disabled:border-emerald-800 disabled:text-slate-300', type: 'submit'}, '{saving ? 'Saving…' : 'Save'}')
           </div>
-          {saveError && <div className="text-[10px] text-red-300">{saveError}</div>}
-          {savedMessage && <div className="text-[10px] text-emerald-300">{savedMessage}</div>}
+          {saveError && createElement('div', {className: 'text-[10px] text-red-300'}, '{saveError}')}
+          {savedMessage && createElement('div', {className: 'text-[10px] text-emerald-300'}, '{savedMessage}')}
         </form>
       )}
 
       <form onSubmit={handleFilterSubmit} className="px-3 py-2 border-b border-slate-800 flex flex-col gap-2 bg-slate-950/80">
         <div className="grid grid-cols-3 gap-2">
           <div>
-            <div className="text-[10px] text-slate-400">From</div>
+            createElement('div', {className: 'text-[10px] text-slate-400'}, 'From')
             <input
               type="date"
               value={fromDate}
@@ -208,7 +199,7 @@ export default function CreditLimitsPanel: React.FC = () => {
             />
           </div>
           <div>
-            <div className="text-[10px] text-slate-400">To</div>
+            createElement('div', {className: 'text-[10px] text-slate-400'}, 'To')
             <input
               type="date"
               value={toDate}
@@ -217,7 +208,7 @@ export default function CreditLimitsPanel: React.FC = () => {
             />
           </div>
           <div>
-            <div className="text-[10px] text-slate-400">Search</div>
+            createElement('div', {className: 'text-[10px] text-slate-400'}, 'Search')
             <input
               type="text"
               value={search}
@@ -228,9 +219,7 @@ export default function CreditLimitsPanel: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={() => {
+          createElement('button', {type: 'button'}, '{
               setFromDate('');
               setToDate('');
               setSearch('');
@@ -238,37 +227,31 @@ export default function CreditLimitsPanel: React.FC = () => {
             }}
             className="px-2 h-[26px] rounded border border-slate-700 text-[10px] text-slate-200 bg-slate-900 hover:bg-slate-800"
           >
-            Reset
-          </button>
-          <button
-            type="submit"
-            className="px-2 h-[26px] rounded border border-sky-600 bg-sky-600 text-[10px] text-white hover:bg-sky-500"
-          >
-            Apply
-          </button>
+            Reset')
+          createElement('button', {className: 'px-2 h-[26px] rounded border border-sky-600 bg-sky-600 text-[10px] text-white hover:bg-sky-500', type: 'submit'}, 'Apply')
         </div>
       </form>
 
       <div className="px-3 py-2 border-b border-slate-800 text-[11px] grid grid-cols-2 gap-2 bg-slate-950/80">
         <div>
-          <div className="text-slate-400 text-[10px]">Limit</div>
-          <div className="font-semibold text-slate-50">{activeProfile ? activeProfile.monthlyLimit.toLocaleString() : '—'} tokens</div>
+          createElement('div', {className: 'text-slate-400 text-[10px]'}, 'Limit')
+          createElement('div', {className: 'font-semibold text-slate-50'}, '{activeProfile ? activeProfile.monthlyLimit.toLocaleString() : '—'} tokens')
         </div>
         <div>
-          <div className="text-slate-400 text-[10px]">Used</div>
-          <div className="font-semibold text-slate-50">{profileUsage.total.toLocaleString()} tokens</div>
+          createElement('div', {className: 'text-slate-400 text-[10px]'}, 'Used')
+          createElement('div', {className: 'font-semibold text-slate-50'}, '{profileUsage.total.toLocaleString()} tokens')
         </div>
       </div>
 
       <div className="flex-1 overflow-auto">
         {usageLoading && (
-          <div className="px-3 py-3 text-[10px] text-slate-400">Loading usage…</div>
+          createElement('div', {className: 'px-3 py-3 text-[10px] text-slate-400'}, 'Loading usage…')
         )}
         {usageError && !usageLoading && (
-          <div className="px-3 py-3 text-[10px] text-red-300">{usageError}</div>
+          createElement('div', {className: 'px-3 py-3 text-[10px] text-red-300'}, '{usageError}')
         )}
         {!usageLoading && !usageError && profileUsage.entries.length === 0 && (
-          <div className="px-3 py-3 text-[10px] text-slate-400">No usage history for this profile.</div>
+          createElement('div', {className: 'px-3 py-3 text-[10px] text-slate-400'}, 'No usage history for this profile.')
         )}
         {!usageLoading && !usageError && profileUsage.entries.length > 0 && (
           <ul className="divide-y divide-slate-800">
@@ -277,15 +260,13 @@ export default function CreditLimitsPanel: React.FC = () => {
               return (
                 <li key={e.id} className="px-3 py-2 flex flex-col gap-0.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-slate-50">{e.tokens.toLocaleString()} tokens</span>
-                    <span className="text-[10px] text-slate-400">{e.date.slice(0, 10)}</span>
+                    createElement('span', {className: 'font-mono text-slate-50'}, '{e.tokens.toLocaleString()} tokens')
+                    createElement('span', {className: 'text-[10px] text-slate-400'}, '{e.date.slice(0, 10)}')
                   </div>
                   {e.description && (
-                    <div className="text-[10px] text-slate-300 truncate">{e.description}</div>
+                    createElement('div', {className: 'text-[10px] text-slate-300 truncate'}, '{e.description}')
                   )}
-                  <div className="text-[10px] text-slate-500">
-                    Est. remaining this profile: {remaining.toLocaleString()} tokens
-                  </div>
+                  createElement('div', {className: 'text-[10px] text-slate-500'}, 'Est. remaining this profile: {remaining.toLocaleString()} tokens')
                 </li>
               );
             })}
@@ -297,7 +278,7 @@ export default function CreditLimitsPanel: React.FC = () => {
         <div>
           Page {usage?.page ?? usagePage} of {totalPages}
           {usage && (
-            <span className="text-slate-500 ml-1">· {usage.total} entries</span>
+            createElement('span', {className: 'text-slate-500 ml-1'}, '· {usage.total} entries')
           )}
         </div>
         <div className="flex gap-1">
@@ -309,16 +290,11 @@ export default function CreditLimitsPanel: React.FC = () => {
           >
             Prev
           </button>
-          <button
-            type="button"
-            onClick={() => setUsagePage((p) => (p >= totalPages ? p : p + 1))}
+          createElement('button', {type: 'button'}, 'setUsagePage((p) => (p >= totalPages ? p : p + 1))}
             disabled={usagePage >= totalPages}
             className="px-2 h-[24px] rounded border border-slate-700 text-slate-200 disabled:opacity-40 disabled:cursor-not-allowed bg-slate-900 hover:bg-slate-800"
           >
-            Next
-          </button>
+            Next')
         </div>
-      </div>
-    </div>
-  );
+      </div>');
 };
