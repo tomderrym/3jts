@@ -6,12 +6,14 @@
 // Note: This component uses Tailwind CSS utility classes only.
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 "use client";
 
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { VariantProps, cva } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react";
+import { Slot } from "@radix-ui/react-slot@1.1.2";
+import { VariantProps, cva } from "class-variance-authority@0.7.1";
+import { PanelLeftIcon } from "lucide-react@0.487.0";
 
 import {
   Sheet,
@@ -131,23 +133,12 @@ function SidebarProvider({
   return (
     <SidebarContext.Provider value={contextValue}>
       <TooltipProvider delayDuration={0}>
-        <div
-          data-slot="sidebar-wrapper"
-          style={
+        createElement('div', {style: {
             {
               "--sidebar-width": SIDEBAR_WIDTH,
               "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
               ...style,
-            } as React.CSSProperties
-          }
-          className={cn(
-            "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
-            className,
-          )}
-          {...props}
-        >
-          {children}
-        </div>
+            }, slot: 'sidebar-wrapper'}, '{children}')
       </TooltipProvider>
     </SidebarContext.Provider>
   );
@@ -169,23 +160,12 @@ function Sidebar({
 
   if (collapsible === "none") {
     return (
-      <div
-        data-slot="sidebar"
-        className={cn(
-          "bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
-          className,
-        )}
-        {...props}
-      >
-        {children}
-      </div>
+      createElement('div', {slot: 'sidebar'}, '{children}')
     );
   }
 
   if (isMobile) {
-    return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        <SheetContent
+    return createElement('Sheet', {onOpenChange: setOpenMobile}, '<SheetContent
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
@@ -198,36 +178,15 @@ function Sidebar({
           side={side}
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+            createElement('SheetTitle', null, 'Sidebar')
+            createElement('SheetDescription', null, 'Displays the mobile sidebar.')
           </SheetHeader>
-          <div className="flex h-full w-full flex-col">{children}</div>
-        </SheetContent>
-      </Sheet>
-    );
+          createElement('div', {className: 'flex h-full w-full flex-col'}, '{children}')
+        </SheetContent>');
   }
 
-  return (
-    <div
-      className="group peer text-sidebar-foreground hidden md:block"
-      data-state={state}
-      data-collapsible={state === "collapsed" ? collapsible : ""}
-      data-variant={variant}
-      data-side={side}
-      data-slot="sidebar"
-    >
-      {/* This is what handles the sidebar gap on desktop */}
-      <div
-        data-slot="sidebar-gap"
-        className={cn(
-          "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
-          "group-data-[collapsible=offcanvas]:w-0",
-          "group-data-[side=right]:rotate-180",
-          variant === "floating" || variant === "inset"
-            ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
-        )}
-      />
+  return createElement('div', {className: 'group peer text-sidebar-foreground hidden md:block', slot: 'sidebar'}, '{/* This is what handles the sidebar gap on desktop */}
+      createElement('div', {slot: 'sidebar-gap'})
       <div
         data-slot="sidebar-container"
         className={cn(
@@ -243,16 +202,8 @@ function Sidebar({
         )}
         {...props}
       >
-        <div
-          data-sidebar="sidebar"
-          data-slot="sidebar-inner"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
-        >
-          {children}
-        </div>
-      </div>
-    </div>
-  );
+        createElement('div', {className: 'bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm', sidebar: 'sidebar', slot: 'sidebar-inner'}, '{children}')
+      </div>');
 }
 
 function SidebarTrigger({
@@ -262,61 +213,27 @@ function SidebarTrigger({
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar();
 
-  return (
-    <Button
-      data-sidebar="trigger"
-      data-slot="sidebar-trigger"
-      variant="ghost"
-      size="icon"
-      className={cn("size-7", className)}
-      onClick={(event) => {
+  return createElement('Button', {sidebar: 'trigger', slot: 'sidebar-trigger', variant: 'ghost', size: 'icon'}, '{
         onClick?.(event);
         toggleSidebar();
       }}
       {...props}
     >
-      <PanelLeftIcon />
-      <span className="sr-only">Toggle Sidebar</span>
-    </Button>
-  );
+      createElement('PanelLeftIcon', null)
+      createElement('span', {className: 'sr-only'}, 'Toggle Sidebar')');
 }
 
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <button
-      data-sidebar="rail"
-      data-slot="sidebar-rail"
-      aria-label="Toggle Sidebar"
-      tabIndex={-1}
-      onClick={toggleSidebar}
-      title="Toggle Sidebar"
-      className={cn(
-        "hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] sm:flex",
-        "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
-        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
-        "hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full",
-        "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
-        "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
-        className,
-      )}
-      {...props}
-    />
+    createElement('button', {sidebar: 'rail', slot: 'sidebar-rail', label: 'Toggle Sidebar', title: 'Toggle Sidebar', onClick: toggleSidebar})
   );
 }
 
 function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
-    <main
-      data-slot="sidebar-inset"
-      className={cn(
-        "bg-background relative flex w-full flex-1 flex-col",
-        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
-        className,
-      )}
-      {...props}
-    />
+    createElement('main', {slot: 'sidebar-inset'})
   );
 }
 
@@ -325,34 +242,19 @@ function SidebarInput({
   ...props
 }: React.ComponentProps<typeof Input>) {
   return (
-    <Input
-      data-slot="sidebar-input"
-      data-sidebar="input"
-      className={cn("bg-background h-8 w-full shadow-none", className)}
-      {...props}
-    />
+    createElement('Input', {slot: 'sidebar-input', sidebar: 'input'})
   );
 }
 
 function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="sidebar-header"
-      data-sidebar="header"
-      className={cn("flex flex-col gap-2 p-2", className)}
-      {...props}
-    />
+    createElement('div', {slot: 'sidebar-header', sidebar: 'header'})
   );
 }
 
 function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="sidebar-footer"
-      data-sidebar="footer"
-      className={cn("flex flex-col gap-2 p-2", className)}
-      {...props}
-    />
+    createElement('div', {slot: 'sidebar-footer', sidebar: 'footer'})
   );
 }
 
@@ -361,37 +263,19 @@ function SidebarSeparator({
   ...props
 }: React.ComponentProps<typeof Separator>) {
   return (
-    <Separator
-      data-slot="sidebar-separator"
-      data-sidebar="separator"
-      className={cn("bg-sidebar-border mx-2 w-auto", className)}
-      {...props}
-    />
+    createElement('Separator', {slot: 'sidebar-separator', sidebar: 'separator'})
   );
 }
 
 function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="sidebar-content"
-      data-sidebar="content"
-      className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
-        className,
-      )}
-      {...props}
-    />
+    createElement('div', {slot: 'sidebar-content', sidebar: 'content'})
   );
 }
 
 function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="sidebar-group"
-      data-sidebar="group"
-      className={cn("relative flex w-full min-w-0 flex-col p-2", className)}
-      {...props}
-    />
+    createElement('div', {slot: 'sidebar-group', sidebar: 'group'})
   );
 }
 
@@ -444,34 +328,19 @@ function SidebarGroupContent({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="sidebar-group-content"
-      data-sidebar="group-content"
-      className={cn("w-full text-sm", className)}
-      {...props}
-    />
+    createElement('div', {slot: 'sidebar-group-content', sidebar: 'group-content'})
   );
 }
 
 function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
   return (
-    <ul
-      data-slot="sidebar-menu"
-      data-sidebar="menu"
-      className={cn("flex w-full min-w-0 flex-col gap-1", className)}
-      {...props}
-    />
+    createElement('ul', {slot: 'sidebar-menu', sidebar: 'menu'})
   );
 }
 
 function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
-    <li
-      data-slot="sidebar-menu-item"
-      data-sidebar="menu-item"
-      className={cn("group/menu-item relative", className)}
-      {...props}
-    />
+    createElement('li', {slot: 'sidebar-menu-item', sidebar: 'menu-item'})
   );
 }
 
@@ -514,14 +383,7 @@ function SidebarMenuButton({
   const { isMobile, state } = useSidebar();
 
   const button = (
-    <Comp
-      data-slot="sidebar-menu-button"
-      data-sidebar="menu-button"
-      data-size={size}
-      data-active={isActive}
-      className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
-      {...props}
-    />
+    createElement('Comp', {slot: 'sidebar-menu-button', sidebar: 'menu-button'})
   );
 
   if (!tooltip) {
@@ -536,14 +398,8 @@ function SidebarMenuButton({
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent
-        side="right"
-        align="center"
-        hidden={state !== "collapsed" || isMobile}
-        {...tooltip}
-      />
-    </Tooltip>
+      createElement('TooltipTrigger', null, '{button}')
+      createElement('Tooltip', {side: 'right', align: 'center'}, null)
   );
 }
 
@@ -584,20 +440,7 @@ function SidebarMenuBadge({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="sidebar-menu-badge"
-      data-sidebar="menu-badge"
-      className={cn(
-        "text-sidebar-foreground pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums select-none",
-        "peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
-        "peer-data-[size=sm]/menu-button:top-1",
-        "peer-data-[size=default]/menu-button:top-1.5",
-        "peer-data-[size=lg]/menu-button:top-2.5",
-        "group-data-[collapsible=icon]:hidden",
-        className,
-      )}
-      {...props}
-    />
+    createElement('div', {slot: 'sidebar-menu-badge', sidebar: 'menu-badge'})
   );
 }
 
@@ -613,44 +456,18 @@ function SidebarMenuSkeleton({
     return `${Math.floor(Math.random() * 40) + 50}%`;
   }, []);
 
-  return (
-    <div
-      data-slot="sidebar-menu-skeleton"
-      data-sidebar="menu-skeleton"
-      className={cn("flex h-8 items-center gap-2 rounded-md px-2", className)}
-      {...props}
-    >
-      {showIcon && (
-        <Skeleton
-          className="size-4 rounded-md"
-          data-sidebar="menu-skeleton-icon"
-        />
+  return createElement('div', {slot: 'sidebar-menu-skeleton', sidebar: 'menu-skeleton'}, '{showIcon && (
+        createElement('Skeleton', {className: 'size-4 rounded-md', sidebar: 'menu-skeleton-icon'})
       )}
-      <Skeleton
-        className="h-4 max-w-(--skeleton-width) flex-1"
-        data-sidebar="menu-skeleton-text"
-        style={
+      createElement('Skeleton', {className: 'h-4 max-w-(--skeleton-width) flex-1', style: {
           {
             "--skeleton-width": width,
-          } as React.CSSProperties
-        }
-      />
-    </div>
-  );
+          }, sidebar: 'menu-skeleton-text'})');
 }
 
 function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
   return (
-    <ul
-      data-slot="sidebar-menu-sub"
-      data-sidebar="menu-sub"
-      className={cn(
-        "border-sidebar-border mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5",
-        "group-data-[collapsible=icon]:hidden",
-        className,
-      )}
-      {...props}
-    />
+    createElement('ul', {slot: 'sidebar-menu-sub', sidebar: 'menu-sub'})
   );
 }
 
@@ -659,12 +476,7 @@ function SidebarMenuSubItem({
   ...props
 }: React.ComponentProps<"li">) {
   return (
-    <li
-      data-slot="sidebar-menu-sub-item"
-      data-sidebar="menu-sub-item"
-      className={cn("group/menu-sub-item relative", className)}
-      {...props}
-    />
+    createElement('li', {slot: 'sidebar-menu-sub-item', sidebar: 'menu-sub-item'})
   );
 }
 
