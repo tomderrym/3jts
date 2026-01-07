@@ -114,9 +114,7 @@ const MechanicHomeScreen = ({
     : 'N/A';
   const reviewCount = mechanicReviews.length;
 
-  return (
-    <div className="flex flex-col items-stretch w-full h-full">
-      <HeaderBar
+  return createElement('div', {className: 'flex flex-col items-stretch w-full h-full'}, '<HeaderBar
         title="FilOzAutoCare"
         leftSlot={(
           <button
@@ -124,7 +122,7 @@ const MechanicHomeScreen = ({
             className="h-[50px] w-[50px] bg-gray-600 hover:bg-gray-500 text-white rounded-xl shadow-md flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             aria-label="Edit Profile"
           >
-            <Settings size={20} />
+            createElement('Settings', null)
           </button>
         )}
         rightSlot={(
@@ -135,53 +133,36 @@ const MechanicHomeScreen = ({
             >
               Messages
               {totalUnreadMessages > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  {totalUnreadMessages}
-                </span>
+                createElement('span', {className: 'absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'}, '{totalUnreadMessages}')
               )}
             </button>
-            <button
-              onClick={onLogout}
-              className="px-4 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-semibold text-white shadow-md h-[52px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-            >
-              Logout
-            </button>
-          </div>
-        )}
+            createElement('button', {className: 'px-4 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-semibold text-white shadow-md h-[52px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900', onClick: onLogout}, 'Logout')')}
         sticky
       />
 
       {mechanicCurrentView === 'dashboard' && (
         <div className="w-full max-w-sm mx-auto text-center space-y-6 px-4 py-4">
-          <p className="text-xl text-slate-200">Welcome, {userEmail.split('@')[0]}!</p>
-          <h2 className="text-2xl font-semibold text-white">Mechanic Dashboard</h2>
-          <p className="text-slate-400">Manage your services, appointments, and profile here.</p>
+          createElement('p', {className: 'text-xl text-slate-200'}, 'Welcome, {userEmail.split('@')[0]}!')
+          createElement('h2', {className: 'text-2xl font-semibold text-white'}, 'Mechanic Dashboard')
+          createElement('p', {className: 'text-slate-400'}, 'Manage your services, appointments, and profile here.')
 
           <div className="flex items-center justify-center text-yellow-400 text-lg">
-            <Star size={24} className="mr-2 fill-yellow-400" />
-            <span>{averageRating} ({reviewCount} reviews)</span>
+            createElement('Star', {className: 'mr-2 fill-yellow-400'})
+            createElement('span', null, '{averageRating} ({reviewCount} reviews)')
           </div>
 
-          <PrimaryButton onClick={() => setMechanicCurrentView('myAppointments')}>
-            View My Appointments
-          </PrimaryButton>
-          <PrimaryButton
-            onClick={onEditProfile}
-            className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-800 focus-visible:ring-indigo-500"
-          >
-            Edit Profile & Services
-          </PrimaryButton>
-          <PrimaryButton
-            onClick={() => setMechanicCurrentView('maintenanceLogs')}
+          createElement('PrimaryButton', null, 'setMechanicCurrentView('myAppointments')}>
+            View My Appointments')
+          createElement('PrimaryButton', {className: 'bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-800 focus-visible:ring-indigo-500', onClick: onEditProfile}, 'Edit Profile & Services')
+          createElement('PrimaryButton', null, 'setMechanicCurrentView('maintenanceLogs')}
             className="bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-800 focus-visible:ring-emerald-500"
           >
-            View & Update Maintenance Logs
-          </PrimaryButton>
+            View & Update Maintenance Logs')
           <PrimaryButton
             onClick={() => setMechanicCurrentView('myAvailability')}
             className="bg-orange-600 hover:bg-orange-500 disabled:bg-orange-800 focus-visible:ring-orange-500 flex items-center justify-center"
           >
-            <Clock size={20} className="mr-2" /> Manage My Availability
+            createElement('Clock', {className: 'mr-2'}) Manage My Availability
           </PrimaryButton>
         </div>
       )}
