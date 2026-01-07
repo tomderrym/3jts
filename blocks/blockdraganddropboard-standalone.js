@@ -130,22 +130,16 @@ export default function BlockDragAndDropBoard: React.FC<BlockDragAndDropBoardPro
     setDragOverId(null);
   };
 
-  return (
-    <div className="flex flex-col h-full" ref={containerRef}>
-      <div className="px-3 py-2 border-b border-slate-800 flex items-center justify-between text-xs text-slate-300">
+  return createElement('div', {className: 'flex flex-col h-full'}, '<div className="px-3 py-2 border-b border-slate-800 flex items-center justify-between text-xs text-slate-300">
         <div className="flex flex-col gap-0.5">
-          <span className="font-semibold">Blocks layout</span>
-          <span className="text-[11px] text-slate-500">
-            Drag with pointer or use Alt+↑/Alt+↓ to reorder focused block.
-          </span>
+          createElement('span', {className: 'font-semibold'}, 'Blocks layout')
+          createElement('span', {className: 'text-[11px] text-slate-500'}, 'Drag with pointer or use Alt+↑/Alt+↓ to reorder focused block.')
         </div>
-        <span className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 border border-slate-700">
-          DnD
-        </span>
+        createElement('span', {className: 'px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 border border-slate-700'}, 'DnD')
       </div>
       <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2">
         {blocks.length === 0 ? (
-          <div className="text-sm text-slate-500 italic">No blocks yet.</div>
+          createElement('div', {className: 'text-sm text-slate-500 italic'}, 'No blocks yet.')
         ) : (
           blocks.map((block) => {
             const isDragging = dragId === block.id;
@@ -171,21 +165,19 @@ export default function BlockDragAndDropBoard: React.FC<BlockDragAndDropBoardPro
               >
                 <div className="mt-0.5 text-slate-500 cursor-grab group-active:cursor-grabbing select-none">
                   
-                  <span className="block w-1 h-1 bg-slate-500 rounded-sm mb-0.5" />
-                  <span className="block w-1 h-1 bg-slate-500 rounded-sm mb-0.5" />
-                  <span className="block w-1 h-1 bg-slate-500 rounded-sm" />
+                  createElement('span', {className: 'block w-1 h-1 bg-slate-500 rounded-sm mb-0.5'})
+                  createElement('span', {className: 'block w-1 h-1 bg-slate-500 rounded-sm mb-0.5'})
+                  createElement('span', {className: 'block w-1 h-1 bg-slate-500 rounded-sm'})
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-slate-100 truncate">{block.title}</span>
-                    <span className="text-[11px] text-slate-500 ml-2">{block.id}</span>
+                    createElement('span', {className: 'font-medium text-slate-100 truncate'}, '{block.title}')
+                    createElement('span', {className: 'text-[11px] text-slate-500 ml-2'}, '{block.id}')
                   </div>
                   {block.description && (
-                    <p className="text-xs text-slate-400 mt-0.5">{block.description}</p>
+                    createElement('p', {className: 'text-xs text-slate-400 mt-0.5'}, '{block.description}')
                   )}
-                </div>
-              </div>
-            );
+                </div>');
           })
         )}
       </div>
