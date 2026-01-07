@@ -1,49 +1,33 @@
 /**
- * Block ID: toaster
- * Category: component
- * Description: Toaster component
- * Runtime: Glue-Paste Safe (no imports, no JSX, no framework)
+ * Toaster Component
+
  */
 
-(function () {
-  // ---- Guard: prevent double definition ----
-  if (window.__BLOCK_TOASTER_DEFINED__) return;
-  window.__BLOCK_TOASTER_DEFINED__ = true;
+// Note: This component uses Tailwind CSS utility classes only.
+// No custom component library dependencies.
+// Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
+"use client";
 
-  let root = null;
+import { useTheme } from "next-themes";
+import { Toaster as Sonner, ToasterProps } from "sonner";
 
-  function mount(props = {}, host) {
-    if (root) return; // Already mounted
+export default function Toaster = ({ ...props }: ToasterProps) => {
+  const { theme = "system" } = useTheme();
 
-    const props = props.props !== undefined ? props.props : undefined;
+  return (
+    <Sonner
+      theme={theme as ToasterProps["theme"]}
+      className="toaster group"
+      style={
+        {
+          "--normal-bg": "var(--popover)",
+          "--normal-text": "var(--popover-foreground)",
+          "--normal-border": "var(--border)",
+        } as React.CSSProperties
+      }
+      {...props}
+    />
+  );
+};
 
-    // ---- Root ----
-    root = document.createElement("div");
-    root.style.padding = "2rem";
-    root.style.fontFamily = "system-ui, sans-serif";
-    root.textContent = "Toaster component (basic conversion - JSX not fully parsed)";
-
-
-    // Mount to provided host or fallback to document.body
-    const mountTarget = host || document.body;
-    mountTarget.appendChild(root);
-  }
-
-  function unmount() {
-    if (root && root.parentNode) {
-      root.remove();
-      root = null;
-    }
-  }
-
-  // ---- Register with BlockRegistry (if available) ----
-  if (window.BlockRegistry && typeof window.BlockRegistry.register === "function") {
-    window.BlockRegistry.register("toaster", {
-      mount,
-      unmount,
-    });
-  } else {
-    // Fallback: auto-mount if BlockRegistry is not available
-    mount(window.__BLOCK_PROPS__ || {}, window.__BLOCK_HOST__);
-  }
-})();
+export { Toaster };
