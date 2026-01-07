@@ -55,22 +55,20 @@ export default function ConverterModal: React.FC<ConverterModalProps> = ({ onClo
     setImages(prev => prev.filter((_, i) => i !== index));
   };
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-[#111114] border border-white/10 w-full max-w-5xl h-[85vh] rounded-3xl flex flex-col shadow-2xl overflow-hidden scale-in-center relative">
+  return createElement('div', {className: 'fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200'}, '<div className="bg-[#111114] border border-white/10 w-full max-w-5xl h-[85vh] rounded-3xl flex flex-col shadow-2xl overflow-hidden scale-in-center relative">
         
         <div className="p-6 border-b border-white/5 flex items-center justify-between bg-gradient-to-r from-indigo-500/10 to-transparent">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-indigo-500/20 rounded-xl flex items-center justify-center">
-              <Wand2 className="text-indigo-400" size={20} />
+              createElement('Wand2', {className: 'text-indigo-400'})
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white tracking-tight">Convert to React Project</h2>
-              <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black">Legacy Code & Design Refactoring</p>
+              createElement('h2', {className: 'text-lg font-bold text-white tracking-tight'}, 'Convert to React Project')
+              createElement('p', {className: 'text-[10px] text-slate-500 uppercase tracking-widest font-black'}, 'Legacy Code & Design Refactoring')
             </div>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-full text-slate-400 hover:text-white transition-all">
-            <X size={20} />
+            createElement('X', null)
           </button>
         </div>
 
@@ -83,7 +81,7 @@ export default function ConverterModal: React.FC<ConverterModalProps> = ({ onClo
                 {/* Code Input */}
                 <div className="flex-1 flex flex-col p-6 border-b md:border-b-0 md:border-r border-white/5 min-h-[200px]">
                     <label className="text-xs font-bold text-slate-400 uppercase mb-2 flex items-center gap-2">
-                        <FileCode2 size={14} /> Paste HTML / Component Code
+                        createElement('FileCode2', null) Paste HTML / Component Code
                     </label>
                     <textarea 
                     value={code}
@@ -96,7 +94,7 @@ export default function ConverterModal: React.FC<ConverterModalProps> = ({ onClo
                 {/* Image Input */}
                 <div className="flex-1 flex flex-col p-6 bg-[#0c0c0e]/50 min-h-[200px]">
                     <label className="text-xs font-bold text-slate-400 uppercase mb-2 flex items-center gap-2">
-                        <ImageIcon size={14} /> Upload Mockups / Screenshots
+                        createElement('ImageIcon', null) Upload Mockups / Screenshots
                     </label>
                     
                     <div 
@@ -108,42 +106,33 @@ export default function ConverterModal: React.FC<ConverterModalProps> = ({ onClo
                             <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 h-full overflow-y-auto content-start">
                                 {images.map((img, idx) => (
                                     <div key={idx} className="relative aspect-square group rounded-lg overflow-hidden border border-white/10 bg-black">
-                                        <img src={img} alt={`Upload ${idx}`} className="w-full h-full object-cover" />
+                                        createElement('img', {className: 'w-full h-full object-cover'})
                                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                             <button 
                                                 onClick={() => removeImage(idx)}
                                                 className="p-1.5 bg-red-500/80 text-white rounded-md hover:bg-red-600 transition-colors"
                                             >
-                                                <Trash2 size={14} />
+                                                createElement('Trash2', null)
                                             </button>
-                                        </div>
-                                    </div>
-                                ))}
+                                        </div>'))}
                                 <button 
                                     onClick={() => fileInputRef.current?.click()}
                                     className="aspect-square flex flex-col items-center justify-center border border-white/10 border-dashed rounded-lg hover:bg-white/5 text-slate-500 hover:text-indigo-400 transition-all"
                                 >
-                                    <Plus size={24} />
-                                    <span className="text-[10px] font-bold mt-1">ADD MORE</span>
+                                    createElement('Plus', null)
+                                    createElement('span', {className: 'text-[10px] font-bold mt-1'}, 'ADD MORE')
                                 </button>
                             </div>
                         ) : (
                             <div className="text-center p-6 cursor-pointer" onClick={() => fileInputRef.current?.click()}>
                                 <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-3">
-                                    <Upload size={20} className="text-slate-500" />
+                                    createElement('Upload', {className: 'text-slate-500'})
                                 </div>
-                                <p className="text-xs font-bold text-slate-400 mb-1">Click to upload or drag & drop</p>
-                                <p className="text-[10px] text-slate-600">PNG, JPG, WEBP up to 5MB</p>
+                                createElement('p', {className: 'text-xs font-bold text-slate-400 mb-1'}, 'Click to upload or drag & drop')
+                                createElement('p', {className: 'text-[10px] text-slate-600'}, 'PNG, JPG, WEBP up to 5MB')
                             </div>
                         )}
-                        <input 
-                            ref={fileInputRef}
-                            type="file" 
-                            accept="image/*" 
-                            multiple
-                            className="hidden" 
-                            onChange={handleImageUpload}
-                        />
+                        createElement('input', {className: 'hidden', type: 'file', accept: 'image/*', onChange: handleImageUpload})
                     </div>
                 </div>
             </div>
@@ -152,10 +141,10 @@ export default function ConverterModal: React.FC<ConverterModalProps> = ({ onClo
           {/* Right: Configuration */}
           <div className="w-full md:w-80 flex flex-col p-6 bg-[#0c0c0e]">
              <div className="mb-6">
-                <h3 className="text-sm font-bold text-white mb-4">Instructions</h3>
+                createElement('h3', {className: 'text-sm font-bold text-white mb-4'}, 'Instructions')
                 <div className="space-y-4">
                     <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase mb-1 block">Additional Context</label>
+                        createElement('label', {className: 'text-[10px] font-bold text-slate-500 uppercase mb-1 block'}, 'Additional Context')
                         <textarea 
                             value={instructions}
                             onChange={(e) => setInstructions(e.target.value)}
@@ -168,11 +157,11 @@ export default function ConverterModal: React.FC<ConverterModalProps> = ({ onClo
 
              <div className="mt-auto">
                  <div className="p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-xl mb-4">
-                    <h4 className="text-[10px] font-bold text-indigo-400 uppercase mb-2">Capabilities</h4>
+                    createElement('h4', {className: 'text-[10px] font-bold text-indigo-400 uppercase mb-2'}, 'Capabilities')
                     <ul className="space-y-2 text-[10px] text-slate-400 list-disc pl-3">
-                        <li><strong>Vision:</strong> Analyzes screenshots/mockups.</li>
-                        <li><strong>Refactor:</strong> Modernizes legacy HTML/JS.</li>
-                        <li><strong>Stack:</strong> React 18, Vite, Tailwind CSS.</li>
+                        <li>createElement('strong', null, 'Vision:') Analyzes screenshots/mockups.</li>
+                        <li>createElement('strong', null, 'Refactor:') Modernizes legacy HTML/JS.</li>
+                        <li>createElement('strong', null, 'Stack:') React 18, Vite, Tailwind CSS.</li>
                     </ul>
                  </div>
 
@@ -183,14 +172,14 @@ export default function ConverterModal: React.FC<ConverterModalProps> = ({ onClo
                  >
                     {isLoading ? (
                         <>
-                            <Loader2 size={16} className="animate-spin" />
-                            <span>Processing...</span>
+                            createElement('Loader2', {className: 'animate-spin'})
+                            createElement('span', null, 'Processing...')
                         </>
                     ) : (
                         <>
-                            <Wand2 size={16} />
-                            <span>Magic Convert</span>
-                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                            createElement('Wand2', null)
+                            createElement('span', null, 'Magic Convert')
+                            createElement('ArrowRight', {className: 'group-hover:translate-x-1 transition-transform'})
                         </>
                     )}
                  </button>
