@@ -187,9 +187,7 @@ const BrowseMechanicsScreen = ({
       .sort((a, b) => new Date(a.date + ' ' + a.startTime).getTime() - new Date(b.date + ' ' + b.startTime).getTime());
 
     if (showBookingForm) {
-      return (
-        <div className="flex flex-col items-stretch p-0 w-full h-full overflow-y-auto">
-          <HeaderBar
+      return createElement('div', {className: 'flex flex-col items-stretch p-0 w-full h-full overflow-y-auto'}, '<HeaderBar
             title="Request Appointment"
             leftSlot={(
               <button
@@ -197,7 +195,7 @@ const BrowseMechanicsScreen = ({
                 className="h-[50px] w-[50px] flex items-center justify-center text-indigo-400 hover:text-indigo-300 active:text-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                 aria-label="Back"
               >
-                <ArrowLeft size={24} />
+                createElement('ArrowLeft', null)
               </button>
             )}
             sticky
@@ -205,12 +203,12 @@ const BrowseMechanicsScreen = ({
 
           <div className="w-full max-w-sm mx-auto space-y-4 px-4 py-4">
             <Card>
-              <h3 className="text-xl font-bold text-white mb-2">Booking with {getDisplayName(selectedMechanic.email)}</h3>
-              <p className="text-slate-400 text-sm mb-4">Services: {selectedMechanic.profileData?.services?.join(', ') || 'N/A'}</p>
+              createElement('h3', {className: 'text-xl font-bold text-white mb-2'}, 'Booking with {getDisplayName(selectedMechanic.email)}')
+              createElement('p', {className: 'text-slate-400 text-sm mb-4'}, 'Services: {selectedMechanic.profileData?.services?.join(', ') || 'N/A'}')
               
               <div className="space-y-3">
                 <div>
-                  <label htmlFor="serviceType" className="block text-slate-300 text-sm font-medium mb-1">Service Type</label>
+                  createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'serviceType'}, 'Service Type')
                   <input
                     type="text"
                     id="serviceType"
@@ -222,9 +220,9 @@ const BrowseMechanicsScreen = ({
                   />
                 </div>
                 <div>
-                  <label htmlFor="availabilitySlot" className="block text-slate-300 text-sm font-medium mb-1">Select an Available Slot</label>
+                  createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'availabilitySlot'}, 'Select an Available Slot')
                   {relevantAvailability.length === 0 ? (
-                    <p className="text-slate-400 text-sm">No available slots for this mechanic.</p>
+                    createElement('p', {className: 'text-slate-400 text-sm'}, 'No available slots for this mechanic.')
                   ) : (
                     <div className="space-y-2">
                       {relevantAvailability.map(slot => (
@@ -236,33 +234,23 @@ const BrowseMechanicsScreen = ({
                           `}
                         >
                           <div>
-                            <p className="font-semibold flex items-center text-sm"><CalendarDays size={16} className="mr-2" />{slot.date}</p>
-                            <p className="text-xs text-slate-300 flex items-center mt-1"><Clock size={14} className="mr-2" />{slot.startTime} - {slot.endTime}</p>
+                            <p className="font-semibold flex items-center text-sm">createElement('CalendarDays', {className: 'mr-2'}){slot.date}</p>
+                            <p className="text-xs text-slate-300 flex items-center mt-1">createElement('Clock', {className: 'mr-2'}){slot.startTime} - {slot.endTime}</p>
                           </div>
-                          {selectedSlotForBooking?.id === slot.id && <CheckCircle size={20} className="text-green-300" />}
+                          {selectedSlotForBooking?.id === slot.id && createElement('CheckCircle', {className: 'text-green-300'})}
                         </button>
-                      ))}
-                    </div>
-                  )}
+                      ))}')}
                 </div>
               </div>
 
-              <PrimaryButton
-                onClick={handleRequestAppointment}
-                className="mt-6 disabled:bg-indigo-800"
-                disabled={!selectedSlotForBooking}
-              >
-                Submit Appointment Request
-              </PrimaryButton>
+              createElement('PrimaryButton', {className: 'mt-6 disabled:bg-indigo-800', onClick: handleRequestAppointment}, 'Submit Appointment Request')
             </Card>
           </div>
         </div>
       );
     }
 
-    return (
-      <div className="flex flex-col items-stretch p-0 w-full h-full overflow-y-auto">
-        <HeaderBar
+    return createElement('div', {className: 'flex flex-col items-stretch p-0 w-full h-full overflow-y-auto'}, '<HeaderBar
           title="Mechanic Profile"
           leftSlot={(
             <button
@@ -270,7 +258,7 @@ const BrowseMechanicsScreen = ({
               className="h-[50px] w-[50px] flex items-center justify-center text-indigo-400 hover:text-indigo-300 active:text-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               aria-label="Back"
             >
-              <ArrowLeft size={24} />
+              createElement('ArrowLeft', null)
             </button>
           )}
           sticky
@@ -278,61 +266,55 @@ const BrowseMechanicsScreen = ({
 
         <div className="w-full max-w-sm mx-auto space-y-4 px-4 py-4">
           <Card>
-            <h3 className="text-xl font-bold text-white mb-2">{getDisplayName(selectedMechanic.email)}</h3>
-            <p className="text-slate-400 text-sm flex items-center mb-1"><MapPin size={16} className="mr-2" />{selectedMechanic.profileData?.distance || 'N/A'} - {selectedMechanic.profileData?.address || 'N/A'}</p>
-            <p className="text-slate-400 text-sm">Services: {selectedMechanic.profileData?.services?.join(', ') || 'N/A'}</p>
+            createElement('h3', {className: 'text-xl font-bold text-white mb-2'}, '{getDisplayName(selectedMechanic.email)}')
+            <p className="text-slate-400 text-sm flex items-center mb-1">createElement('MapPin', {className: 'mr-2'}){selectedMechanic.profileData?.distance || 'N/A'} - {selectedMechanic.profileData?.address || 'N/A'}</p>
+            createElement('p', {className: 'text-slate-400 text-sm'}, 'Services: {selectedMechanic.profileData?.services?.join(', ') || 'N/A'}')
             <p className="text-yellow-400 text-sm flex items-center mt-2 mb-4">
-              <Star size={16} className="mr-1 fill-yellow-400" />
+              createElement('Star', {className: 'mr-1 fill-yellow-400'})
               {averageRating} ({reviewCount} reviews)
             </p>
             
-            <PrimaryButton
-              onClick={() => setShowBookingForm(true)}
+            createElement('PrimaryButton', null, 'setShowBookingForm(true)}
               className="bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 disabled:bg-emerald-800 focus-visible:ring-emerald-500 mb-4"
             >
-              Request Appointment
-            </PrimaryButton>
+              Request Appointment')
 
             <div className="mt-6 pt-4 border-t border-slate-700">
-              <h4 className="text-xl font-semibold text-white mb-3">Available Slots</h4>
+              createElement('h4', {className: 'text-xl font-semibold text-white mb-3'}, 'Available Slots')
               {relevantAvailability.length === 0 ? (
-                <p className="text-slate-400 text-sm italic">No upcoming availability slots.</p>
+                createElement('p', {className: 'text-slate-400 text-sm italic'}, 'No upcoming availability slots.')
               ) : (
                 <div className="space-y-2">
                   {relevantAvailability.map(slot => (
                     <div key={slot.id} className="bg-slate-700 p-3 rounded-lg flex items-center justify-between">
                       <div>
-                        <p className="font-semibold flex items-center text-white text-base"><CalendarDays size={16} className="mr-2" />{slot.date}</p>
-                        <p className="text-slate-300 text-sm flex items-center mt-1"><Clock size={14} className="mr-2" />{slot.startTime} - {slot.endTime}</p>
+                        <p className="font-semibold flex items-center text-white text-base">createElement('CalendarDays', {className: 'mr-2'}){slot.date}</p>
+                        <p className="text-slate-300 text-sm flex items-center mt-1">createElement('Clock', {className: 'mr-2'}){slot.startTime} - {slot.endTime}</p>
                       </div>
-                      <button
-                        onClick={() => { setSelectedSlotForBooking(slot); setShowBookingForm(true); }}
+                      createElement('button', null, '{ setSelectedSlotForBooking(slot); setShowBookingForm(true); }}
                         className="px-3 py-1 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-xs font-medium rounded-lg shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800 min-h-[32px]"
                       >
-                        Book
-                      </button>
-                    </div>
-                  ))}
+                        Book')'))}
                 </div>
               )}
             </div>
 
             <div className="mt-6 pt-4 border-t border-slate-700">
-              <h4 className="text-xl font-semibold text-white mb-3">Customer Reviews</h4>
+              createElement('h4', {className: 'text-xl font-semibold text-white mb-3'}, 'Customer Reviews')
               {reviewCount === 0 ? (
-                <p className="text-slate-400 text-sm italic">No reviews yet. Be the first to review!</p>
+                createElement('p', {className: 'text-slate-400 text-sm italic'}, 'No reviews yet. Be the first to review!')
               ) : (
                 <div className="space-y-4">
                   {mechanicReviews.map(review => (
                     <div key={review.id} className="bg-slate-700 p-3 rounded-lg">
                       <div className="flex items-center mb-1">
                         {Array.from({ length: 5 }).map((_, i) => (
-                          <Star key={i} size={16} className={`mr-1 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-slate-500'}`} />
+                          createElement('Star', null)
                         ))}
-                        <p className="text-sm font-semibold text-white ml-2">{getDisplayName(review.customerEmail)}</p>
+                        createElement('p', {className: 'text-sm font-semibold text-white ml-2'}, '{getDisplayName(review.customerEmail)}')
                       </div>
-                      <p className="text-slate-300 text-sm mb-1">{review.comment}</p>
-                      <p className="text-xs text-slate-500 text-right">{new Date(review.timestamp).toLocaleDateString()}</p>
+                      createElement('p', {className: 'text-slate-300 text-sm mb-1'}, '{review.comment}')
+                      createElement('p', {className: 'text-xs text-slate-500 text-right'}, '{new Date(review.timestamp).toLocaleDateString()}')
                     </div>
                   ))}
                 </div>
@@ -340,17 +322,15 @@ const BrowseMechanicsScreen = ({
             </div>
 
             <div className="mt-6 pt-4 border-t border-slate-700">
-              <button
-                onClick={() => setShowReviewForm(!showReviewForm)}
+              createElement('button', null, 'setShowReviewForm(!showReviewForm)}
                 className="w-full h-12 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800 flex items-center justify-center"
               >
-                {showReviewForm ? 'Cancel Review' : 'Write a Review'}
-              </button>
+                {showReviewForm ? 'Cancel Review' : 'Write a Review'}')
 
               {showReviewForm && ( 
                 <div className="mt-4 space-y-3">
                   <div>
-                    <label className="block text-slate-300 text-sm font-medium mb-1">Your Rating</label>
+                    createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1'}, 'Your Rating')
                     <div className="flex items-center">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star
@@ -363,22 +343,13 @@ const BrowseMechanicsScreen = ({
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="reviewComment" className="block text-slate-300 text-sm font-medium mb-1">Your Comment</label>
-                    <textarea
-                      id="reviewComment"
-                      placeholder="Share your experience..."
-                      value={newReviewComment}
-                      onChange={(e) => setNewReviewComment(e.target.value)}
+                    createElement('label', {className: 'block text-slate-300 text-sm font-medium mb-1', htmlFor: 'reviewComment'}, 'Your Comment')
+                    createElement('textarea', {id: 'reviewComment', placeholder: 'Share your experience...'}, 'setNewReviewComment(e.target.value)}
                       rows={3}
                       className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
-                    ></textarea>
+                    >')
                   </div>
-                  <button
-                    onClick={handleSubmitReview}
-                    className="w-full h-12 bg-green-600 hover:bg-green-500 active:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800"
-                  >
-                    Submit Review
-                  </button>
+                  createElement('button', {className: 'w-full h-12 bg-green-600 hover:bg-green-500 active:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800', onClick: handleSubmitReview}, 'Submit Review')
                 </div>
               )}
             </div>
@@ -388,9 +359,7 @@ const BrowseMechanicsScreen = ({
     );
   }
 
-  return (
-    <div className="flex flex-col items-stretch p-0 w-full h-full overflow-y-auto">
-      <HeaderBar
+  return createElement('div', {className: 'flex flex-col items-stretch p-0 w-full h-full overflow-y-auto'}, '<HeaderBar
         title="Browse Mechanics"
         leftSlot={(
           <button
@@ -398,7 +367,7 @@ const BrowseMechanicsScreen = ({
             className="h-[50px] w-[50px] flex items-center justify-center text-indigo-400 hover:text-indigo-300 active:text-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             aria-label="Back"
           >
-            <ArrowLeft size={24} />
+            createElement('ArrowLeft', null)
           </button>
         )}
         sticky
@@ -413,7 +382,7 @@ const BrowseMechanicsScreen = ({
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full h-12 px-4 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base pr-10"
           />
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
+          createElement('Search', {className: 'absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none'})
         </div>
       </div>
 
@@ -423,23 +392,19 @@ const BrowseMechanicsScreen = ({
             {Array.from({ length: 3 }).map((_, idx) => (
               <Card key={idx}>
                 <div className="space-y-3">
-                  <Skeleton className="h-4 w-40" />
-                  <Skeleton className="h-3 w-52" />
-                  <Skeleton className="h-3 w-44" />
-                  <Skeleton className="h-3 w-32" />
+                  createElement('Skeleton', {className: 'h-4 w-40'})
+                  createElement('Skeleton', {className: 'h-3 w-52'})
+                  createElement('Skeleton', {className: 'h-3 w-44'})
+                  createElement('Skeleton', {className: 'h-3 w-32'})
                 </div>
               </Card>
-            ))}
-          </div>
-        ) : filteredMechanics.length === 0 ? (
+            ))}') : filteredMechanics.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-10 text-center text-slate-400 space-y-3">
             <div className="h-12 w-12 rounded-full bg-slate-800 flex items-center justify-center mb-1">
-              <Inbox size={24} className="text-slate-500" />
+              createElement('Inbox', {className: 'text-slate-500'})
             </div>
-            <p className="font-medium text-slate-200">No mechanics found</p>
-            <p className="text-sm max-w-sm">
-              Try adjusting your search or check again later as new mechanics join the platform.
-            </p>
+            createElement('p', {className: 'font-medium text-slate-200'}, 'No mechanics found')
+            createElement('p', {className: 'text-sm max-w-sm'}, 'Try adjusting your search or check again later as new mechanics join the platform.')
           </div>
         ) : (
           <div className="space-y-4 animate-[fadeIn_220ms_ease-out]">
@@ -450,21 +415,16 @@ const BrowseMechanicsScreen = ({
                 : 'N/A';
               const reviewCount = mechanicReviews.length;
 
-              return (
-                <button
-                  key={mechanic.email}
-                  onClick={() => setSelectedMechanic(mechanic)}
+              return createElement('button', null, 'setSelectedMechanic(mechanic)}
                   className="w-full bg-slate-800 p-4 rounded-lg shadow-lg text-left hover:bg-slate-700 active:bg-slate-600 transition-colors duration-150 border border-slate-700 min-h-[68px] focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                 >
-                  <h3 className="text-lg font-bold text-white mb-1">{getDisplayName(mechanic.email)}</h3>
-                  <p className="text-slate-400 text-sm flex items-center mb-1"><MapPin size={16} className="mr-2" />{mechanic.profileData?.distance || 'N/A'} - {mechanic.profileData?.address || 'N/A'}</p>
-                  <p className="text-slate-400 text-sm">Services: {mechanic.profileData?.services?.join(', ') || 'N/A'}</p>
+                  createElement('h3', {className: 'text-lg font-bold text-white mb-1'}, '{getDisplayName(mechanic.email)}')
+                  <p className="text-slate-400 text-sm flex items-center mb-1">createElement('MapPin', {className: 'mr-2'}){mechanic.profileData?.distance || 'N/A'} - {mechanic.profileData?.address || 'N/A'}</p>
+                  createElement('p', {className: 'text-slate-400 text-sm'}, 'Services: {mechanic.profileData?.services?.join(', ') || 'N/A'}')
                   <p className="text-yellow-400 text-sm flex items-center mt-2">
-                    <Star size={16} className="mr-1 fill-yellow-400" />
+                    createElement('Star', {className: 'mr-1 fill-yellow-400'})
                     {averageRating} ({reviewCount} reviews)
-                  </p>
-                </button>
-              );
+                  </p>');
             })}
           </div>
         )}
