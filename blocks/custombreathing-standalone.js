@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 import { ArrowLeft, Play, Save, Trash2 } from 'lucide-react';
 
 interface CustomPattern {
@@ -127,9 +128,7 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
   const totalCycleTime = inhale + inhaleHold + exhale + exhaleHold;
   const totalSessionTime = totalCycleTime * rounds;
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white p-6">
-      <div className="max-w-4xl mx-auto">
+  return createElement('div', {className: 'min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white p-6'}, '<div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <Button
@@ -138,51 +137,45 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
             onClick={onBack}
             className="text-slate-400 hover:text-white"
           >
-            <ArrowLeft className="w-5 h-5" />
+            createElement('ArrowLeft', {className: 'w-5 h-5'})
           </Button>
           <div className="flex-1 text-center">
-            <h1 className="text-3xl mb-2">Custom Breathing</h1>
-            <p className="text-slate-400">Create your perfect breathing pattern</p>
+            createElement('h1', {className: 'text-3xl mb-2'}, 'Custom Breathing')
+            createElement('p', {className: 'text-slate-400'}, 'Create your perfect breathing pattern')
           </div>
-          <div className="w-10" />
-        </div>
+          createElement('div', {className: 'w-10'}, null)
 
         {!isCreating && savedPatterns.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-slate-400 mb-4">No custom patterns yet</p>
-            <Button onClick={() => setIsCreating(true)} className="bg-blue-500 hover:bg-blue-600">
-              Create Your First Pattern
-            </Button>
-          </div>
-        )}
+            createElement('p', {className: 'text-slate-400 mb-4'}, 'No custom patterns yet')
+            createElement('Button', null, 'setIsCreating(true)} className="bg-blue-500 hover:bg-blue-600">
+              Create Your First Pattern')')}
 
         {!isCreating && savedPatterns.length > 0 && (
           <>
-            <Button
-              onClick={() => setIsCreating(true)}
+            createElement('Button', null, 'setIsCreating(true)}
               className="w-full mb-6 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700"
             >
-              Create New Pattern
-            </Button>
+              Create New Pattern')
 
             <div className="space-y-4">
               {savedPatterns.map((pattern) => (
                 <Card key={pattern.id} className="p-4 bg-slate-800/50 border-slate-700/50">
                   <div className="flex items-start gap-4">
                     <div className="flex-1">
-                      <h3 className="text-lg mb-1">{pattern.name}</h3>
+                      createElement('h3', {className: 'text-lg mb-1'}, '{pattern.name}')
                       {pattern.description && (
-                        <p className="text-sm text-slate-400 mb-2">{pattern.description}</p>
+                        createElement('p', {className: 'text-sm text-slate-400 mb-2'}, '{pattern.description}')
                       )}
                       <div className="flex items-center gap-2 text-sm text-slate-400">
-                        <span>{pattern.inhale}s inhale</span>
-                        <span>→</span>
-                        <span>{pattern.inhaleHold}s hold</span>
-                        <span>→</span>
-                        <span>{pattern.exhale}s exhale</span>
-                        <span>→</span>
-                        <span>{pattern.exhaleHold}s hold</span>
-                        <span className="ml-2">({pattern.rounds} rounds)</span>
+                        createElement('span', null, '{pattern.inhale}s inhale')
+                        createElement('span', null, '→')
+                        createElement('span', null, '{pattern.inhaleHold}s hold')
+                        createElement('span', null, '→')
+                        createElement('span', null, '{pattern.exhale}s exhale')
+                        createElement('span', null, '→')
+                        createElement('span', null, '{pattern.exhaleHold}s hold')
+                        createElement('span', {className: 'ml-2'}, '({pattern.rounds} rounds)')
                       </div>
                     </div>
                     <div className="flex gap-2">
@@ -192,7 +185,7 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
                         onClick={() => startPreview(pattern)}
                         className="text-blue-400 hover:text-blue-300"
                       >
-                        <Play className="w-4 h-4" />
+                        createElement('Play', {className: 'w-4 h-4'})
                       </Button>
                       <Button
                         size="icon"
@@ -200,7 +193,7 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
                         onClick={() => deletePattern(pattern.id)}
                         className="text-red-400 hover:text-red-300"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        createElement('Trash2', {className: 'w-4 h-4'})
                       </Button>
                     </div>
                   </div>
@@ -215,7 +208,7 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
             <Card className="p-6 bg-slate-800/50 border-slate-700/50">
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="name">Pattern Name *</Label>
+                  createElement('Label', {htmlFor: 'name'}, 'Pattern Name *')
                   <Input
                     id="name"
                     value={name}
@@ -226,7 +219,7 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
                 </div>
 
                 <div>
-                  <Label htmlFor="description">Description (optional)</Label>
+                  createElement('Label', {htmlFor: 'description'}, 'Description (optional)')
                   <Input
                     id="description"
                     value={description}
@@ -239,13 +232,13 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
             </Card>
 
             <Card className="p-6 bg-slate-800/50 border-slate-700/50">
-              <h3 className="text-lg mb-4">Breathing Pattern</h3>
+              createElement('h3', {className: 'text-lg mb-4'}, 'Breathing Pattern')
               
               <div className="space-y-6">
                 <div>
                   <div className="flex justify-between mb-2">
-                    <Label>Inhale Duration</Label>
-                    <span className="text-blue-400">{inhale}s</span>
+                    createElement('Label', null, 'Inhale Duration')
+                    createElement('span', {className: 'text-blue-400'}, '{inhale}s')
                   </div>
                   <Slider
                     value={[inhale]}
@@ -259,8 +252,8 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
 
                 <div>
                   <div className="flex justify-between mb-2">
-                    <Label>Inhale Hold</Label>
-                    <span className="text-violet-400">{inhaleHold}s</span>
+                    createElement('Label', null, 'Inhale Hold')
+                    createElement('span', {className: 'text-violet-400'}, '{inhaleHold}s')
                   </div>
                   <Slider
                     value={[inhaleHold]}
@@ -274,8 +267,8 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
 
                 <div>
                   <div className="flex justify-between mb-2">
-                    <Label>Exhale Duration</Label>
-                    <span className="text-cyan-400">{exhale}s</span>
+                    createElement('Label', null, 'Exhale Duration')
+                    createElement('span', {className: 'text-cyan-400'}, '{exhale}s')
                   </div>
                   <Slider
                     value={[exhale]}
@@ -289,8 +282,8 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
 
                 <div>
                   <div className="flex justify-between mb-2">
-                    <Label>Exhale Hold</Label>
-                    <span className="text-slate-400">{exhaleHold}s</span>
+                    createElement('Label', null, 'Exhale Hold')
+                    createElement('span', {className: 'text-slate-400'}, '{exhaleHold}s')
                   </div>
                   <Slider
                     value={[exhaleHold]}
@@ -304,8 +297,8 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
 
                 <div>
                   <div className="flex justify-between mb-2">
-                    <Label>Number of Rounds</Label>
-                    <span className="text-amber-400">{rounds}</span>
+                    createElement('Label', null, 'Number of Rounds')
+                    createElement('span', {className: 'text-amber-400'}, '{rounds}')
                   </div>
                   <Slider
                     value={[rounds]}
@@ -320,36 +313,33 @@ export default function CustomBreathing: React.FC<CustomBreathingProps> = ({ onB
 
               <div className="mt-6 p-4 rounded-lg bg-slate-900/50">
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-400">Cycle Duration:</span>
-                  <span className="text-white">{totalCycleTime}s</span>
+                  createElement('span', {className: 'text-slate-400'}, 'Cycle Duration:')
+                  createElement('span', {className: 'text-white'}, '{totalCycleTime}s')
                 </div>
                 <div className="flex justify-between text-sm mt-2">
-                  <span className="text-slate-400">Total Session:</span>
-                  <span className="text-white">{Math.floor(totalSessionTime / 60)}m {totalSessionTime % 60}s</span>
+                  createElement('span', {className: 'text-slate-400'}, 'Total Session:')
+                  createElement('span', {className: 'text-white'}, '{Math.floor(totalSessionTime / 60)}m {totalSessionTime % 60}s')
                 </div>
               </div>
             </Card>
 
             <div className="flex gap-4">
-              <Button
-                variant="outline"
-                onClick={() => setIsCreating(false)}
+              createElement('Button', {variant: 'outline'}, 'setIsCreating(false)}
                 className="flex-1"
               >
-                Cancel
-              </Button>
+                Cancel')
               <Button
                 onClick={() => startPreview()}
                 className="flex-1 bg-blue-500 hover:bg-blue-600"
               >
-                <Play className="w-4 h-4 mr-2" />
+                createElement('Play', {className: 'w-4 h-4 mr-2'})
                 Preview
               </Button>
               <Button
                 onClick={savePattern}
                 className="flex-1 bg-green-500 hover:bg-green-600"
               >
-                <Save className="w-4 h-4 mr-2" />
+                createElement('Save', {className: 'w-4 h-4 mr-2'})
                 Save
               </Button>
             </div>
