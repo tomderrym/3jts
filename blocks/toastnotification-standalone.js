@@ -33,25 +33,20 @@ const ToastNotification = ({ message, type, show, onClose }: ToastNotificationPr
   const Icon = () => {
     switch (type) {
       case 'success':
-        return <CheckCircle size={20} className="mr-2" />;
+        return createElement('CheckCircle', {className: 'mr-2'});
       case 'error':
-        return <XCircle size={20} className="mr-2" />;
+        return createElement('XCircle', {className: 'mr-2'});
       case 'warning':
-        return <AlertTriangle size={20} className="mr-2" />;
+        return createElement('AlertTriangle', {className: 'mr-2'});
       case 'info':
       default:
-        return <Info size={20} className="mr-2" />;
+        return createElement('Info', {className: 'mr-2'});
     }
   };
 
   if (!isVisible) return null;
 
-  return (
-    <div
-      className={`fixed left-1/2 -translate-x-1/2 max-w-xs w-full z-50 px-4 pb-4`}
-      style={{ bottom: 'env(safe-area-inset-bottom, 0px)' }}
-    >
-      <div
+  return createElement('div', {style: {{ bottom: 'env(safe-area-inset-bottom, 0px)' }}, '<div
         className={`p-4 rounded-lg shadow-xl text-white border flex items-center justify-between transition-all duration-300 transform min-h-[50px]
         ${typeClasses[type]}
         ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}
@@ -59,19 +54,17 @@ const ToastNotification = ({ message, type, show, onClose }: ToastNotificationPr
         aria-live="assertive"
       >
         <div className="flex items-center mr-2">
-          <Icon />
-          <p className="text-sm font-semibold flex-1 break-words">{message}</p>
+          createElement('Icon', null)
+          createElement('p', {className: 'text-sm font-semibold flex-1 break-words'}, '{message}')
         </div>
         <button
           onClick={onClose}
           className="ml-2 h-[40px] w-[40px] flex items-center justify-center rounded-full bg-black/10 hover:bg-black/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:ring-white"
           aria-label="Close notification"
         >
-          <XCircle size={18} />
+          createElement('XCircle', null)
         </button>
-      </div>
-    </div>
-  );
+      </div>');
 };
 
 export default ToastNotification;
