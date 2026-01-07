@@ -1,5 +1,3 @@
-import React from 'https://esm.sh/react@18';
-import { createElement } from 'https://esm.sh/react@18';
 /**
  * CarouselContext Component
  * Props: { api?: any }
@@ -8,13 +6,15 @@ import { createElement } from 'https://esm.sh/react@18';
 // Note: This component uses Tailwind CSS utility classes only.
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 "use client";
 
 import * as React from "react";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
-} from "embla-carousel-react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+} from "embla-carousel-react@8.6.0";
+import { ArrowLeft, ArrowRight } from "lucide-react@0.487.0";
 
 
 type CarouselApi = UseEmblaCarouselType[1];
