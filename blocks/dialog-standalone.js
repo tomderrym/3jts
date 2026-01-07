@@ -1,3 +1,5 @@
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 /**
  * Dialog Component
  * Props: { props?: any }
@@ -14,18 +16,14 @@ export default function DialogTrigger = DialogPrimitive.Trigger;
 export default function DialogClose = DialogPrimitive.Close;
 
 export default function DialogPortal = (props: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal {...props} />
+  createElement('DialogPrimitive', null)
 );
 
 export default function DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
-    ref={ref}
-    className={cn('fixed inset-0 bg-black/50', className)}
-    {...props}
-  />
+  createElement('DialogPrimitive', null)
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
@@ -33,19 +31,12 @@ export default function DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Content
-    ref={ref}
-    className={cn(
-      'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-card p-6 rounded-lg shadow-lg max-w-md w-full',
-      className
-    )}
-    {...props}
-  />
+  createElement('DialogPrimitive', null)
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 export default function DialogHeader = (props: React.ComponentPropsWithoutRef<'div'>) => (
-  <div className="space-y-1 text-center sm:text-left" {...props} />
+  createElement('div', {className: 'space-y-1 text-center sm:text-left'})
 );
 DialogHeader.displayName = 'DialogHeader';
 
@@ -53,11 +44,7 @@ export default function DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title
-    ref={ref}
-    className={cn('text-lg font-semibold', className)}
-    {...props}
-  />
+  createElement('DialogPrimitive', null)
 ));
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
@@ -65,11 +52,7 @@ export default function DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description
-    ref={ref}
-    className={cn('text-sm text-muted-foreground', className)}
-    {...props}
-  />
+  createElement('DialogPrimitive', null)
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
