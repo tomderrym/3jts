@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 import { ArrowLeft, Play, Pause, SkipForward, Volume2, VolumeX } from 'lucide-react';
 
 interface MeditationTrack {
@@ -277,9 +278,7 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
   const progress = selectedTrack ? (currentTime / selectedTrack.duration) * 100 : 0;
 
   if (selectedTrack) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white p-6">
-        <div className="max-w-2xl mx-auto">
+    return createElement('div', {className: 'min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white p-6'}, '<div className="max-w-2xl mx-auto">
           <Button
             variant="ghost"
             size="icon"
@@ -289,34 +288,30 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
             }}
             className="mb-6 text-slate-400 hover:text-white"
           >
-            <ArrowLeft className="w-5 h-5" />
+            createElement('ArrowLeft', {className: 'w-5 h-5'})
           </Button>
 
           <div className="text-center mb-12">
-            <h1 className="text-3xl mb-3">{selectedTrack.title}</h1>
-            <p className="text-slate-400">{selectedTrack.description}</p>
-            <div className="mt-2 text-sm text-slate-500">
-              {selectedTrack.category.replace('-', ' ').toUpperCase()} • {Math.floor(selectedTrack.duration / 60)} MIN
-            </div>
+            createElement('h1', {className: 'text-3xl mb-3'}, '{selectedTrack.title}')
+            createElement('p', {className: 'text-slate-400'}, '{selectedTrack.description}')
+            createElement('div', {className: 'mt-2 text-sm text-slate-500'}, '{selectedTrack.category.replace('-', ' ').toUpperCase()} • {Math.floor(selectedTrack.duration / 60)} MIN')
           </div>
 
           {/* Meditation Circle */}
           <div className="relative w-64 h-64 mx-auto mb-12">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 to-violet-500/20 animate-pulse" />
-            <div className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-500/30 to-blue-500/30 animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-500/40 to-violet-500/40 animate-pulse" style={{ animationDelay: '1s' }} />
+            createElement('div', {className: 'absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 to-violet-500/20 animate-pulse'})
+            createElement('div', {className: 'absolute inset-4 rounded-full bg-gradient-to-br from-cyan-500/30 to-blue-500/30 animate-pulse', style: {{ animationDelay: '0.5s' }})
+            createElement('div', {className: 'absolute inset-8 rounded-full bg-gradient-to-br from-blue-500/40 to-violet-500/40 animate-pulse', style: {{ animationDelay: '1s' }})
             <div className="absolute inset-12 rounded-full bg-slate-900 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-4xl mb-2">{formatTime(currentTime)}</div>
-                <div className="text-sm text-slate-400">
-                  {formatTime(selectedTrack.duration - currentTime)} left
-                </div>
+                createElement('div', {className: 'text-4xl mb-2'}, '{formatTime(currentTime)}')
+                createElement('div', {className: 'text-sm text-slate-400'}, '{formatTime(selectedTrack.duration - currentTime)} left')
               </div>
             </div>
           </div>
 
           {/* Progress */}
-          <Progress value={progress} className="mb-6" />
+          createElement('Progress', {className: 'mb-6'})
 
           {/* Controls */}
           <div className="flex items-center justify-center gap-6 mb-8">
@@ -326,7 +321,7 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
               onClick={handleStop}
               className="text-slate-400 hover:text-white"
             >
-              <SkipForward className="w-5 h-5 rotate-180" />
+              createElement('SkipForward', {className: 'w-5 h-5 rotate-180'})
             </Button>
             
             <Button
@@ -334,7 +329,7 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
               onClick={handlePlayPause}
               className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700"
             >
-              {isPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
+              {isPlaying ? createElement('Pause', {className: 'w-8 h-8'}) : createElement('Play', {className: 'w-8 h-8 ml-1'})}
             </Button>
 
             <Button
@@ -346,7 +341,7 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
               }}
               className="text-slate-400 hover:text-white"
             >
-              <SkipForward className="w-5 h-5" />
+              createElement('SkipForward', {className: 'w-5 h-5'})
             </Button>
           </div>
 
@@ -359,7 +354,7 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
                 onClick={() => setIsMuted(!isMuted)}
                 className="text-slate-400 hover:text-white"
               >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                {isMuted ? createElement('VolumeX', {className: 'w-5 h-5'}) : createElement('Volume2', {className: 'w-5 h-5'})}
               </Button>
               <Slider
                 value={[isMuted ? 0 : volume * 100]}
@@ -373,14 +368,10 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
               />
             </div>
           </Card>
-        </div>
-      </div>
-    );
+        </div>');
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white p-6">
-      <div className="max-w-4xl mx-auto">
+  return createElement('div', {className: 'min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white p-6'}, '<div className="max-w-4xl mx-auto">
         {onBack && (
           <Button
             variant="ghost"
@@ -388,13 +379,13 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
             onClick={onBack}
             className="mb-6 text-slate-400 hover:text-white"
           >
-            <ArrowLeft className="w-5 h-5" />
+            createElement('ArrowLeft', {className: 'w-5 h-5'})
           </Button>
         )}
 
         <div className="text-center mb-8">
-          <h1 className="text-4xl mb-3">Guided Meditation</h1>
-          <p className="text-slate-400">Journey inward with compassionate guidance</p>
+          createElement('h1', {className: 'text-4xl mb-3'}, 'Guided Meditation')
+          createElement('p', {className: 'text-slate-400'}, 'Journey inward with compassionate guidance')
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -404,18 +395,14 @@ export default function Meditation: React.FC<MeditationProps> = ({ onBack }) => 
               className="p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-slate-700/50 cursor-pointer hover:scale-[1.02] transition-transform"
               onClick={() => handleTrackSelect(track)}
             >
-              <h3 className="text-lg mb-2">{track.title}</h3>
-              <p className="text-sm text-slate-400 mb-4">{track.description}</p>
+              createElement('h3', {className: 'text-lg mb-2'}, '{track.title}')
+              createElement('p', {className: 'text-sm text-slate-400 mb-4'}, '{track.description}')
               <div className="flex items-center justify-between text-xs">
-                <span className="px-2 py-1 rounded bg-blue-500/20 text-blue-400">
-                  {track.category.replace('-', ' ')}
-                </span>
-                <span className="text-slate-500">{Math.floor(track.duration / 60)} min</span>
+                createElement('span', {className: 'px-2 py-1 rounded bg-blue-500/20 text-blue-400'}, '{track.category.replace('-', ' ')}')
+                createElement('span', {className: 'text-slate-500'}, '{Math.floor(track.duration / 60)} min')
               </div>
             </Card>
           ))}
         </div>
-      </div>
-    </div>
-  );
+      </div>');
 };
