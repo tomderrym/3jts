@@ -103,15 +103,13 @@ const MessagingScreen = ({
           key={idx}
           className={`flex ${idx % 2 === 0 ? 'justify-start' : 'justify-end'}`}
         >
-          <Skeleton className="h-16 w-40" />
+          createElement('Skeleton', {className: 'h-16 w-40'})
         </div>
       ))}
     </div>
   );
 
-  return (
-    <div className="flex flex-col w-full h-full bg-slate-900 text-white">
-      <HeaderBar
+  return createElement('div', {className: 'flex flex-col w-full h-full bg-slate-900 text-white'}, '<HeaderBar
         title="Messages"
         leftSlot={(
           <button
@@ -119,7 +117,7 @@ const MessagingScreen = ({
             className="flex items-center justify-center h-[50px] w-[50px] text-indigo-400 hover:text-indigo-300 active:text-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             aria-label="Back"
           >
-            <ArrowLeft size={24} />
+            createElement('ArrowLeft', null)
           </button>
         )}
         sticky
@@ -128,19 +126,17 @@ const MessagingScreen = ({
       <div className="flex flex-1 overflow-hidden">
         <div className="w-1/3 bg-slate-800 border-r border-slate-700 overflow-y-auto hidden md:block">
           <div className="p-4 border-b border-slate-700 flex items-center space-x-2">
-            <MessageCircle size={18} className="text-slate-300" />
-            <h2 className="text-xl font-semibold">Conversations</h2>
+            createElement('MessageCircle', {className: 'text-slate-300'})
+            createElement('h2', {className: 'text-xl font-semibold'}, 'Conversations')
           </div>
           {isLoading ? (
             <div className="space-y-2 p-4">
               {Array.from({ length: 4 }).map((_, idx) => (
-                <Skeleton key={idx} className="h-10 w-full" />
-              ))}
-            </div>
-          ) : conversationPartners.length === 0 ? (
+                createElement('Skeleton', {className: 'h-10 w-full'})
+              ))}') : conversationPartners.length === 0 ? (
             <div className="p-4 text-slate-400 text-sm flex flex-col items-center text-center space-y-2">
-              <Inbox size={20} className="text-slate-500" />
-              <p>No active conversations yet.</p>
+              createElement('Inbox', {className: 'text-slate-500'})
+              createElement('p', null, 'No active conversations yet.')
             </div>
           ) : (
             <div className="space-y-2 p-4 animate-[fadeIn_220ms_ease-out]">
@@ -153,11 +149,9 @@ const MessagingScreen = ({
                     focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800
                   `}
                 >
-                  <p className="font-semibold">{partnerEmail.split('@')[0]}</p>
+                  createElement('p', {className: 'font-semibold'}, '{partnerEmail.split('@')[0]}')
                   {unreadCounts && unreadCounts[partnerEmail] > 0 && (
-                    <span className="absolute top-1 right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                      {unreadCounts[partnerEmail]}
-                    </span>
+                    createElement('span', {className: 'absolute top-1 right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'}, '{unreadCounts[partnerEmail]}')
                   )}
                 </button>
               ))}
@@ -174,16 +168,16 @@ const MessagingScreen = ({
                    className="absolute left-4 text-indigo-400 hover:text-indigo-300 active:text-indigo-200 h-[44px] w-[44px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                    aria-label="Back"
                  >
-                   <ArrowLeft size={20} />
+                   createElement('ArrowLeft', null)
                  </button>
-                 <h2 className="text-lg font-bold">{currentChatPartnerEmail.split('@')[0]}</h2>
+                 createElement('h2', {className: 'text-lg font-bold'}, '{currentChatPartnerEmail.split('@')[0]}')
               </div>
               {isLoading ? (
                 renderConversationSkeleton()
               ) : (
                 <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-900 animate-[fadeIn_220ms_ease-out]">
                   {currentConversation.length === 0 ? (
-                    <p className="text-slate-400 text-center">Start a conversation with {currentChatPartnerEmail.split('@')[0]}.</p>
+                    createElement('p', {className: 'text-slate-400 text-center'}, 'Start a conversation with {currentChatPartnerEmail.split('@')[0]}.')
                   ) : (
                     currentConversation.map((msg) => (
                       <div
@@ -199,19 +193,14 @@ const MessagingScreen = ({
                               : 'bg-slate-700 rounded-bl-none'
                           }`}
                         >
-                          <p className="text-sm font-semibold mb-1">
-                            {msg.senderEmail === currentUserEmail ? 'You' : msg.senderEmail.split('@')[0]}
-                          </p>
-                          <p className="text-base">{msg.text}</p>
-                          <p className="text-xs text-slate-300 mt-1 text-right">
-                            {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </p>
+                          createElement('p', {className: 'text-sm font-semibold mb-1'}, '{msg.senderEmail === currentUserEmail ? 'You' : msg.senderEmail.split('@')[0]}')
+                          createElement('p', {className: 'text-base'}, '{msg.text}')
+                          createElement('p', {className: 'text-xs text-slate-300 mt-1 text-right'}, '{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}')
                         </div>
                       </div>
                     ))
                   )}
-                  <div ref={messagesEndRef} />
-                </div>
+                  createElement('div', null, null)
               )}
               <div className="p-4 border-t border-slate-700 bg-slate-800 flex items-center space-x-2">
                 <input
@@ -227,7 +216,7 @@ const MessagingScreen = ({
                   className="h-12 w-12 flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white rounded-lg shadow-md transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800"
                   aria-label="Send message"
                 >
-                  <Send size={20} />
+                  createElement('Send', null)
                 </button>
               </div>
             </>
@@ -236,23 +225,23 @@ const MessagingScreen = ({
               {isLoading ? (
                 <div className="w-full max-w-sm space-y-2 md:hidden">
                   {Array.from({ length: 4 }).map((_, idx) => (
-                    <Skeleton key={idx} className="h-10 w-full" />
+                    createElement('Skeleton', {className: 'h-10 w-full'})
                   ))}
                 </div>
               ) : (
                 <>
                   <div className="h-12 w-12 rounded-full bg-slate-800 flex items-center justify-center mb-3">
-                    <MessageCircle size={26} className="text-slate-400" />
+                    createElement('MessageCircle', {className: 'text-slate-400'})
                   </div>
-                  <h2 className="text-xl font-semibold mb-2">Select a Conversation</h2>
-                  <p className="text-slate-400 mb-6 max-w-sm">Choose a contact from the list or respond to a new message to start chatting.</p>
+                  createElement('h2', {className: 'text-xl font-semibold mb-2'}, 'Select a Conversation')
+                  createElement('p', {className: 'text-slate-400 mb-6 max-w-sm'}, 'Choose a contact from the list or respond to a new message to start chatting.')
                 </>
               )}
               <div className="w-full max-w-sm space-y-2 md:hidden">
                 {!isLoading && conversationPartners.length === 0 && (
                   <p className="text-slate-400 text-sm flex flex-col items-center space-y-2">
-                    <Inbox size={18} className="text-slate-500" />
-                    <span>No active conversations yet.</span>
+                    createElement('Inbox', {className: 'text-slate-500'})
+                    createElement('span', null, 'No active conversations yet.')
                   </p>
                 )}
                 {!isLoading && conversationPartners.length > 0 && conversationPartners.map((partnerEmail) => (
@@ -261,11 +250,9 @@ const MessagingScreen = ({
                     onClick={() => setCurrentChatPartnerEmail(partnerEmail)}
                     className="relative w-full text-left p-3 rounded-lg bg-slate-700 hover:bg-slate-600 active:bg-slate-500 transition-colors duration-150 min-h-[50px] focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                   >
-                    <p className="font-semibold">{partnerEmail.split('@')[0]}</p>
+                    createElement('p', {className: 'font-semibold'}, '{partnerEmail.split('@')[0]}')
                     {unreadCounts && unreadCounts[partnerEmail] > 0 && (
-                      <span className="absolute top-1 right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                        {unreadCounts[partnerEmail]}
-                      </span>
+                      createElement('span', {className: 'absolute top-1 right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center'}, '{unreadCounts[partnerEmail]}')
                     )}
                   </button>
                 ))}
