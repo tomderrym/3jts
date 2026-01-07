@@ -7,6 +7,7 @@
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
 import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 import { Code2, Cloud, Clock, ArrowRight } from 'lucide-react';
 
 
@@ -21,9 +22,7 @@ export default function AppsListView: React.FC<AppsListViewProps> = ({ apps, onA
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
-  return (
-    <div className="space-y-2">
-      {apps.map((app) => (
+  return createElement('div', {className: 'space-y-2'}, '{apps.map((app) => (
         <div
           key={app.id}
           onClick={() => onAppClick(app.id)}
@@ -31,27 +30,23 @@ export default function AppsListView: React.FC<AppsListViewProps> = ({ apps, onA
         >
           <div className="flex items-center gap-4 flex-1">
             <div className="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-lg flex items-center justify-center shrink-0">
-              <Code2 size={20} className="text-white" />
+              createElement('Code2', {className: 'text-white'})
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="text-base font-bold group-hover:text-indigo-400 transition-colors">
-                  {app.name}
-                </h3>
+                createElement('h3', {className: 'text-base font-bold group-hover:text-indigo-400 transition-colors'}, '{app.name}')
                 {app.isCloud && (
                   <div className="flex items-center gap-1 text-xs text-emerald-400">
-                    <Cloud size={12} />
-                    <span>Cloud</span>
-                  </div>
-                )}
+                    createElement('Cloud', null)
+                    createElement('span', null, 'Cloud')')}
               </div>
               <div className="flex items-center gap-2 text-xs text-slate-400">
-                <Clock size={12} />
-                <span>Created {formatDate(app.createdAt)}</span>
+                createElement('Clock', null)
+                createElement('span', null, 'Created {formatDate(app.createdAt)}')
               </div>
             </div>
           </div>
-          <ArrowRight size={16} className="text-slate-400 group-hover:text-indigo-400 transition-colors" />
+          createElement('ArrowRight', {className: 'text-slate-400 group-hover:text-indigo-400 transition-colors'})
         </div>
       ))}
     </div>
