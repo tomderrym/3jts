@@ -22,20 +22,14 @@ const ProfileSetupScreen = ({ userRole, onProfileSetupComplete }: { userRole: 'c
     onProfileSetupComplete(profileData);
   };
 
-  return (
-    <div className="flex flex-col w-full h-full bg-slate-950 text-white">
-      <HeaderBar title={`Setup Your ${userRole === 'customer' ? 'Customer' : 'Mechanic'} Profile`} />
+  return createElement('div', {className: 'flex flex-col w-full h-full bg-slate-950 text-white'}, 'createElement('HeaderBar', null)
 
       <div className="flex flex-col items-center justify-center p-4 w-full h-full overflow-y-auto">
         <div className="w-full max-w-sm mx-auto">
           <Card>
             <div className="flex flex-col items-center space-y-4">
-              <h2 className="text-2xl font-bold text-white text-center">
-                Tell us a bit about you
-              </h2>
-              <p className="text-slate-300 text-center text-sm">
-                Just a few more details to get started.
-              </p>
+              createElement('h2', {className: 'text-2xl font-bold text-white text-center'}, 'Tell us a bit about you')
+              createElement('p', {className: 'text-slate-300 text-center text-sm'}, 'Just a few more details to get started.')
 
               <div className="w-full space-y-3">
                 <input
@@ -54,25 +48,18 @@ const ProfileSetupScreen = ({ userRole, onProfileSetupComplete }: { userRole: 'c
                 />
 
                 {userRole === 'mechanic' && (
-                  <textarea
-                    placeholder="Services (e.g., Oil Change, Brakes, Diagnostics)"
-                    value={services}
-                    onChange={(e) => setServices(e.target.value)}
+                  createElement('textarea', {placeholder: 'Services (e.g., Oil Change, Brakes, Diagnostics)'}, 'setServices(e.target.value)}
                     rows={3}
                     className="w-full h-auto min-h-[80px] px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-base"
-                  ></textarea>
+                  >')
                 )}
               </div>
 
-              <PrimaryButton onClick={handleCompleteProfile}>
-                Complete Profile
-              </PrimaryButton>
+              createElement('PrimaryButton', {onClick: handleCompleteProfile}, 'Complete Profile')
             </div>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+      </div>');
 };
 
 export default ProfileSetupScreen;
