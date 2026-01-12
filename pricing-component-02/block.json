@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pricing-component-02",
+  "type": "registry:block",
+  "description": "Comprehensive pricing table with avatars, detailed features list, and clear plan differentiation",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "button",
+    "card"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/pricing-component/pricing-component-02/page.tsx",
+      "content": "import { ComponentIcon, UserIcon, CloudUploadIcon, SparkleIcon, Share2Icon, MessageSquareTextIcon } from 'lucide-react'\n\nimport Pricing from '@/components/shadcn-studio/blocks/pricing-component-02/pricing-component-02'\n\nconst features = [\n  [\n    {\n      icon: CloudUploadIcon,\n      title: 'Cloud Storage',\n      description: 'Up to 100GB for works'\n    },\n    {\n      icon: ComponentIcon,\n      title: 'API Access',\n      description: 'Create anything you want'\n    },\n    {\n      icon: MessageSquareTextIcon,\n      title: 'Live Chat',\n      description: 'Connect with your customers'\n    }\n  ],\n  [\n    {\n      icon: UserIcon,\n      title: 'Unlimited Accounts',\n      description: \"We don't limit you to create accounts\"\n    },\n    {\n      icon: SparkleIcon,\n      title: 'Custom Domain',\n      description: 'Add your custom domain'\n    },\n    {\n      icon: Share2Icon,\n      title: 'Share Information',\n      description: 'Easily share your message'\n    }\n  ]\n]\n\nconst PricingPage = () => {\n  return <Pricing features={features} />\n}\n\nexport default PricingPage\n",
+      "type": "registry:page",
+      "target": "app/pricing-component-02/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/pricing-component-02/pricing-component-02.tsx",
+      "content": "import type { ComponentType } from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent } from '@/components/ui/card'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\n\ntype Feature = {\n  icon: ComponentType\n  title: string\n  description: string\n}[][]\n\nconst Pricing = ({ features }: { features: Feature }) => {\n  return (\n    <div className='bg-muted py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='mb-12 flex flex-col gap-4 sm:mb-16 lg:mb-24'>\n          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Make the best investment</h2>\n          <p className='text-muted-foreground w-2/3 text-xl'>\n            Select from best plans, ensuring a perfect match. Need more or less? Customize your subscription for a\n            seamless fit!\n          </p>\n        </div>\n\n        <Card className='py-0'>\n          <CardContent className='grid grid-cols-1 justify-between divide-y px-0 lg:grid-cols-3 lg:divide-x'>\n            <div className='flex gap-10 p-6 max-md:flex-col lg:col-span-2'>\n              {features.map((column, columnIndex) => (\n                <div key={columnIndex} className='space-y-6'>\n                  {column.map((feature, index) => (\n                    <div key={index} className='flex items-center gap-4'>\n                      <Avatar className='bg-primary/10 size-12 rounded-md border'>\n                        <AvatarFallback className='rounded-md'>\n                          <feature.icon />\n                        </AvatarFallback>\n                      </Avatar>\n                      <div>\n                        <h3 className='text-lg font-medium'>{feature.title}</h3>\n                        <p className='text-muted-foreground'>{feature.description}</p>\n                      </div>\n                    </div>\n                  ))}\n                </div>\n              ))}\n            </div>\n\n            <div className='flex flex-col items-center justify-center gap-3 p-6 text-center'>\n              <h3 className='text-primary text-5xl font-bold'>$99</h3>\n              <span className='text-sm font-medium'>Lifetime Account</span>\n              <Button size='lg'>Subscribe Now</Button>\n              <span className='text-muted-foreground text-sm'>30 Days Money back Guarantee</span>\n            </div>\n          </CardContent>\n        </Card>\n      </div>\n    </div>\n  )\n}\n\nexport default Pricing\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/pricing-component-02/pricing-component-02.tsx"
+    }
+  ]
+}

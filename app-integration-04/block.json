@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-integration-04",
+  "type": "registry:block",
+  "description": "Designer-focused app integration grid with colorful blur effects, tool cards featuring icons, titles, and interactive arrow buttons",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "card",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/app-integration/app-integration-04/page.tsx",
+      "content": "import AppIntegration from '@/components/shadcn-studio/blocks/app-integration-04/app-integration-04'\n\nconst designTools = [\n  {\n    name: 'Sketch',\n    description: 'Easily connect your design files across platforms',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/sketch-logo.png',\n    classNames: 'bg-[#FDB300]',\n    toolLink: '#'\n  },\n  {\n    name: 'Figma',\n    description: 'integrate your design files and collabs effortlessly',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/figma-icon.png',\n    classNames: 'bg-gradient-to-r from-[#7357CB] via-[#1ABCFE] to-[#A259FF]',\n    toolLink: '#'\n  },\n  {\n    name: 'Framer',\n    description: 'Integrate your design files & enhance collabs',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/framer-logo.png',\n    classNames: 'bg-[#1FB6FF]',\n    toolLink: '#'\n  },\n  {\n    name: 'Marvel',\n    description: 'Simplify your design process with high integrations',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/marvel-logo.png',\n    classNames: 'bg-[#1FB6FF]',\n    toolLink: '#'\n  },\n  {\n    name: 'Procreate',\n    description: 'Bring your designs to life with seamless integration',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/procreate-logo.png',\n    classNames: 'bg-[#7357CB]',\n    toolLink: '#'\n  },\n  {\n    name: 'Zeplin',\n    description: 'Connect your design and development workflows',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/zeplin-logo.png',\n    classNames: 'bg-[#FDB300]',\n    toolLink: '#'\n  }\n]\n\nconst AppIntegrationPage = () => {\n  return <AppIntegration designTools={designTools} />\n}\n\nexport default AppIntegrationPage\n",
+      "type": "registry:page",
+      "target": "app/app-integration-04/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/app-integration-04/app-integration-04.tsx",
+      "content": "import { CircleArrowRightIcon } from 'lucide-react'\n\nimport { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'\n\nimport { cn } from '@/lib/utils'\n\ntype DesignTools = {\n  name: string\n  description: string\n  image: string\n  classNames: string\n  toolLink: string\n}[]\n\nconst AppIntegration = ({ designTools }: { designTools: DesignTools }) => {\n  return (\n    <section className='bg-muted py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        {/* Header */}\n        <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>\n          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Designer&apos;s App Integration</h2>\n          <p className='text-muted-foreground text-xl'>Perfect for designer - all in one integration tool</p>\n        </div>\n\n        {/* Apps */}\n        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>\n          {designTools.map((tool, index) => (\n            <Card key={index} className='group relative overflow-hidden border-none shadow-none'>\n              <div className={cn('absolute top-1 left-0 size-22 rounded-full blur-3xl', tool.classNames)} />\n              <CardContent className='flex flex-col gap-6'>\n                <img src={tool.image} alt={tool.name} className='h-15 w-16 object-contain' />\n                <div className='flex items-center gap-3.5'>\n                  <CardTitle className='text-2xl'>{tool.name}</CardTitle>\n                  <a href={tool.toolLink}>\n                    <CircleArrowRightIcon className='size-6 transition-all duration-300 group-hover:-rotate-45' />\n                  </a>\n                </div>\n                <CardDescription className='text-base'>{tool.description}</CardDescription>\n              </CardContent>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default AppIntegration\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/app-integration-04/app-integration-04.tsx"
+    }
+  ]
+}

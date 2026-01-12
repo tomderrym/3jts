@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-dropdown-04",
+  "type": "registry:block",
+  "description": "An application launcher dropdown with app icons, quick access to applications, and integrated navigation for multi-app environments.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "dropdown-menu"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/dashboard-dropdown/dashboard-dropdown-04/page.tsx",
+      "content": "import { CirclePlusIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\n\nimport AppDropdown from '@/components/shadcn-studio/blocks/dashboard-dropdown-04/app-dropdown'\n\nconst DropdownPage = () => {\n  return (\n    <div className='flex h-120 items-start justify-center p-8'>\n      <AppDropdown\n        defaultOpen\n        align='center'\n        trigger={\n          <Button className='bg-primary/10 text-primary hover:bg-primary/20 size-12.5 shadow-none'>\n            <CirclePlusIcon className='size-6.5' />\n          </Button>\n        }\n      />\n    </div>\n  )\n}\n\nexport default DropdownPage\n",
+      "type": "registry:page",
+      "target": "app/dashboard-dropdown-04/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/dashboard-dropdown-04/app-dropdown.tsx",
+      "content": "import type { ReactNode } from 'react'\n\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\ntype Props = {\n  trigger: ReactNode\n  defaultOpen?: boolean\n  align?: 'start' | 'center' | 'end'\n}\n\nconst listItems = [\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-1.png',\n    imgAlt: 'google',\n    app: 'search'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-2.png',\n    imgAlt: 'youtube',\n    app: 'Youtube'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-3.png',\n    imgAlt: 'map',\n    app: 'maps'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-4.png',\n    imgAlt: 'gmail',\n    app: 'gmail'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-5.png',\n    imgAlt: 'drive',\n    app: 'drive'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-6.png',\n    imgAlt: 'play',\n    app: 'play'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-7.png',\n    imgAlt: 'calendar',\n    app: 'calendar'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-8.png',\n    imgAlt: 'news',\n    app: 'news'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-9.png',\n    imgAlt: 'meet',\n    app: 'meet'\n  }\n]\n\nconst MoreDropdown = ({ defaultOpen, align, trigger }: Props) => {\n  return (\n    <DropdownMenu defaultOpen={defaultOpen}>\n      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>\n      <DropdownMenuContent className='w-64' align={align || 'end'}>\n        <div className='bg-muted text-muted-foreground grid grid-cols-3 gap-6 rounded-lg px-4 py-6'>\n          {listItems.map((item, index) => (\n            <DropdownMenuItem key={index} className='flex flex-col items-center gap-2 p-0'>\n              <img src={item.image} alt={item.imgAlt} className='h-8' />\n              <span className='text-sm font-medium capitalize'>{item.app}</span>\n            </DropdownMenuItem>\n          ))}\n        </div>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport default MoreDropdown\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/dashboard-dropdown-04/app-dropdown.tsx"
+    }
+  ]
+}

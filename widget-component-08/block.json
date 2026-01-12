@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-component-08",
+  "type": "registry:block",
+  "description": "Your accounts widget with avatar displays, separators, interactive controls, and comprehensive account management",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "button",
+    "card",
+    "dropdown-menu",
+    "separator",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/widgets-component/widget-component-08/page.tsx",
+      "content": "import YourAccountsCard from '@/components/shadcn-studio/blocks/widget-your-accounts'\n\nconst userData = [\n  {\n    name: 'jackwilliams',\n    accountType: 'Business',\n    isVerified: true,\n    avatarUrl: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png'\n  },\n  {\n    name: 'jacktherider',\n    accountType: 'User',\n    avatarUrl: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png'\n  }\n]\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-16'>\n      <div className='flex justify-center'>\n        <YourAccountsCard title='Your accounts' userData={userData} className='w-full max-w-100' />\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/widget-component-08/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/widget-your-accounts.tsx",
+      "content": "import { CheckIcon, EllipsisIcon, PlusIcon } from 'lucide-react'\n\nimport { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\nimport { Separator } from '@/components/ui/separator'\n\nimport { cn } from '@/lib/utils'\n\nconst listItems = ['Edit', 'Make Admin', 'Delete']\n\ntype Props = {\n  title: string\n  userData: {\n    name: string\n    accountType: string\n    avatarUrl: string\n    isVerified?: boolean\n  }[]\n  className?: string\n}\n\nconst YourAccountsCard = ({ title, userData, className }: Props) => {\n  return (\n    <Card className={cn('gap-4', className)}>\n      <CardHeader className='flex justify-between gap-2'>\n        <div className='flex flex-col gap-1'>\n          <span className='text-lg font-semibold'>{title}</span>\n          <span className='text-muted-foreground text-sm'>You have {userData.length} accounts</span>\n        </div>\n        <Button variant='outline' size='sm' className='rounded-full'>\n          <PlusIcon className='size-4' />\n          Add accounts\n        </Button>\n      </CardHeader>\n      <CardContent className='flex flex-1 flex-col gap-4'>\n        {userData.map((user, index) => (\n          <div key={index} className='flex flex-1 flex-col justify-between gap-4'>\n            <div className='flex justify-between gap-4'>\n              <div className='flex items-center gap-4'>\n                {user.isVerified ? (\n                  <div className='relative w-fit'>\n                    <Avatar className='ring-offset-background ring-2 ring-green-600 dark:ring-green-400'>\n                      <AvatarImage src={user.avatarUrl} alt={user.name} />\n                      <AvatarFallback className='text-xs uppercase'>{user.name.charAt(0)}</AvatarFallback>\n                    </Avatar>\n                    <span className='absolute -right-1.5 -bottom-1.5 inline-flex size-4 items-center justify-center rounded-full bg-green-600 dark:bg-green-400'>\n                      <CheckIcon className='size-3 text-white' />\n                    </span>\n                  </div>\n                ) : (\n                  <div className='relative w-fit'>\n                    <Avatar>\n                      <AvatarImage src={user.avatarUrl} alt={user.name} />\n                      <AvatarFallback className='text-xs uppercase'>{user.name.charAt(0)}</AvatarFallback>\n                    </Avatar>\n                    <span className='border-background absolute -right-0.5 -bottom-0.5 size-3 rounded-full border-2 bg-green-600 dark:bg-green-400'>\n                      <span className='sr-only'>Available</span>\n                    </span>\n                  </div>\n                )}\n                <div className='flex flex-col'>\n                  <span className='text-lg'>@{user.name}</span>\n                  <span className='text-muted-foreground text-sm'>{user.accountType}</span>\n                </div>\n              </div>\n              <DropdownMenu>\n                <DropdownMenuTrigger asChild>\n                  <Button variant='ghost' size='icon' className='text-muted-foreground size-6 rounded-full'>\n                    <EllipsisIcon />\n                    <span className='sr-only'>Edit menu</span>\n                  </Button>\n                </DropdownMenuTrigger>\n                <DropdownMenuContent align='start'>\n                  <DropdownMenuGroup>\n                    {listItems.map((item, idx) => (\n                      <DropdownMenuItem key={idx}>{item}</DropdownMenuItem>\n                    ))}\n                  </DropdownMenuGroup>\n                </DropdownMenuContent>\n              </DropdownMenu>\n            </div>\n            {index !== userData.length - 1 && <Separator />}\n          </div>\n        ))}\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default YourAccountsCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/widget-your-accounts.tsx"
+    }
+  ]
+}

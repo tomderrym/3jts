@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "social-proof-07",
+  "type": "registry:block",
+  "description": "Clean performance metrics grid with centered icons and values. Features a contained layout with consistent card design for displaying key business metrics.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "card"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/social-proof/social-proof-07/page.tsx",
+      "content": "import { BookOpenIcon, FoldersIcon, TicketIcon, UsersIcon } from 'lucide-react'\n\nimport SocialProof from '@/components/shadcn-studio/blocks/social-proof-07/social-proof-07'\n\nconst metricsData = [\n  {\n    icon: BookOpenIcon,\n    value: '110+',\n    label: 'Blocks'\n  },\n  {\n    icon: FoldersIcon,\n    value: '29',\n    label: 'Template'\n  },\n  {\n    icon: UsersIcon,\n    value: '3400',\n    label: 'Customers'\n  },\n  {\n    icon: TicketIcon,\n    value: '2844+',\n    label: 'Support Ticket'\n  }\n]\n\nconst SocialProofPage = () => {\n  return <SocialProof metrics={metricsData} />\n}\n\nexport default SocialProofPage\n",
+      "type": "registry:page",
+      "target": "app/social-proof-07/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/social-proof-07/social-proof-07.tsx",
+      "content": "import type { ComponentType } from 'react'\n\nimport { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'\n\ntype MetricItem = {\n  icon: ComponentType\n  value: string\n  label: string\n}\n\nconst SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='bg-muted rounded-md px-4 py-10 sm:px-6 lg:px-8'>\n          <div className='mb-12 space-y-4 sm:mb-16 lg:mb-24'>\n            <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Key Performance Metrics</h2>\n            <p className='text-muted-foreground max-w-4xl text-xl'>\n              Unlock your business potential with our expert guidance. Discover innovative strategies to elevate your\n              success.\n            </p>\n          </div>\n\n          <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>\n            {metrics.map((metric, index) => (\n              <Card key={index}>\n                <CardContent className='[&>svg]:text-muted-foreground flex flex-col items-center [&>svg]:size-7'>\n                  <metric.icon />\n                  <CardTitle className='mt-4 mb-3 text-2xl md:text-3xl lg:text-4xl'>{metric.value}</CardTitle>\n                  <CardDescription className='text-xl font-medium'>{metric.label}</CardDescription>\n                </CardContent>\n              </Card>\n            ))}\n          </div>\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default SocialProof\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/social-proof-07/social-proof-07.tsx"
+    }
+  ]
+}

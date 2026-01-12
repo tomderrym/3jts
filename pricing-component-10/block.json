@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pricing-component-10",
+  "type": "registry:block",
+  "description": "Simplified two-tier pricing with emphasis on value proposition and clear call-to-action buttons.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "badge",
+    "button",
+    "card",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/pricing-component/pricing-component-10/page.tsx",
+      "content": "import Pricing from '@/components/shadcn-studio/blocks/pricing-component-10/pricing-component-10'\n\nconst plans = [\n  {\n    name: 'Starter',\n    price: 99,\n    badge: 'Popular'\n  },\n  {\n    name: 'Professional',\n    price: 199,\n    badge: null\n  }\n]\n\nconst features = [\n  {\n    title: 'Unlimited Components',\n    description: 'Shadcn/studio gives you access to a vast library of customizable components to enhance your projects.'\n  },\n  {\n    title: 'Collaborative Workspace',\n    description: 'Work seamlessly with your team using our collaborative tools and resources.'\n  },\n  {\n    title: 'Performance Analytics',\n    description: 'Track your UI performance and user engagement with built-in analytics tools.'\n  },\n  {\n    title: 'Responsive Design Framework',\n    description: 'Optimize your UI for all devices with our responsive design options.'\n  },\n  {\n    title: 'Theming and Customization',\n    description: 'Customize components effortlessly with consistent branding using custom themes.'\n  }\n]\n\nconst PricingPage = () => {\n  return <Pricing plans={plans} features={features} />\n}\n\nexport default PricingPage\n",
+      "type": "registry:page",
+      "target": "app/pricing-component-10/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/pricing-component-10/pricing-component-10.tsx",
+      "content": "import { CircleCheckIcon } from 'lucide-react'\n\nimport { Badge } from '@/components/ui/badge'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent } from '@/components/ui/card'\n\nimport { cn } from '@/lib/utils'\n\ntype Plans = {\n  name: string\n  price: number\n  badge: string | null\n}[]\n\ntype Features = {\n  title: string\n  description: string\n}[]\n\nconst Pricing = ({ plans, features }: { plans: Plans; features: Features }) => {\n  return (\n    <div className='bg-muted py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl space-y-12 px-4 sm:space-y-16 sm:px-6 lg:space-y-24 lg:px-8'>\n        <div className='flex flex-col items-center gap-4 text-center'>\n          <Badge variant='outline' className='rounded-full text-sm font-normal'>\n            PRICING\n          </Badge>\n          <h2 className='text-2xl font-semibold sm:text-3xl lg:text-4xl'>Gain A Competitive Edge With Better UI!</h2>\n          <p className='text-muted-foreground text-xl'>Gain A Competitive Edge With Better UI!</p>\n        </div>\n        <Card className='border-none shadow-none'>\n          <CardContent className='grid grid-cols-1 gap-0 md:grid-cols-2'>\n            <div className='flex items-center border-b pb-10 md:border-r md:border-b-0 md:pr-10 md:pb-0'>\n              <div className='flex flex-col items-center gap-6'>\n                <div className='flex flex-col items-center gap-4'>\n                  <h3 className='text-2xl font-semibold'>Access All Features</h3>\n                  <p className='text-muted-foreground'>\n                    provides you with the tools & resources you need to build a stunning e-commerce site, portfolio, or\n                    dashboard for your business.\n                  </p>\n                </div>\n                <div className='flex w-full flex-col gap-6 lg:flex-row'>\n                  {plans.map((plan, index) => (\n                    <Card\n                      key={index}\n                      className={cn('flex-1 shadow-none', { 'border-primary': plan.name === 'Starter' })}\n                    >\n                      <CardContent className='flex flex-col gap-2'>\n                        <div className='flex items-center justify-between'>\n                          <h3 className='text-2xl font-semibold'>{plan.name}</h3>\n                          {plan.badge && <Badge className='bg-primary text-primary-foreground'>{plan.badge}</Badge>}\n                        </div>\n                        <div className='flex items-end gap-0.5'>\n                          <span className='text-3xl font-bold'>${plan.price}</span>\n                          <span className='text-muted-foreground text-lg'>/month</span>\n                        </div>\n                      </CardContent>\n                    </Card>\n                  ))}\n                </div>\n                <Button size='lg' className='w-full'>\n                  Start 14 days free trial\n                </Button>\n              </div>\n            </div>\n\n            <div className='flex items-center pt-10 md:pt-0 md:pl-10'>\n              <div className='flex flex-col gap-6'>\n                {features.map((feature, idx) => (\n                  <div key={idx} className='flex items-start gap-2'>\n                    <CircleCheckIcon className='mt-1 size-5 shrink-0' />\n                    <div>\n                      <span className='text-lg font-semibold'>{feature.title}: </span>\n                      <span>{feature.description}</span>\n                    </div>\n                  </div>\n                ))}\n              </div>\n            </div>\n          </CardContent>\n        </Card>\n      </div>\n    </div>\n  )\n}\n\nexport default Pricing\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/pricing-component-10/pricing-component-10.tsx"
+    }
+  ]
+}

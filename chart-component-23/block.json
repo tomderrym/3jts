@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-component-23",
+  "type": "registry:block",
+  "description": "Website visitor analytics with traffic patterns, user demographics, and engagement metrics visualization.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "badge",
+    "button",
+    "card",
+    "separator",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/charts-component/chart-component-23/page.tsx",
+      "content": "import TotalVisitorsCard from '@/components/shadcn-studio/blocks/chart-total-visitors'\n\nconst visitorData = [\n  {\n    product: 'Desktop',\n    percentage: 17,\n    amount: 23.8,\n    trend: 'up',\n    heightClass: 'h-[17%]',\n    color: 'bg-primary'\n  },\n  {\n    product: 'Tablet',\n    percentage: 65,\n    amount: 13.604,\n    trend: 'down',\n    heightClass: 'h-[65%]',\n    color: 'bg-secondary'\n  },\n  {\n    product: 'Mobile',\n    percentage: 18,\n    amount: 47.146,\n    trend: 'up',\n    heightClass: 'h-[18%]',\n    color: 'bg-primary/60'\n  }\n]\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='flex justify-center'>\n          <TotalVisitorsCard\n            title='Total visitors'\n            totalVisitors='23.02K'\n            percentage={-6}\n            visitorData={visitorData}\n            className='w-full max-w-85'\n          />\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/chart-component-23/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/chart-total-visitors.tsx",
+      "content": "import { ArrowDownLeftIcon, ArrowUpRightIcon, UsersRoundIcon } from 'lucide-react'\n\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Badge } from '@/components/ui/badge'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport { Separator } from '@/components/ui/separator'\n\nimport { cn } from '@/lib/utils'\n\ntype Props = {\n  title: string\n  totalVisitors: string\n  percentage: number\n  visitorData: {\n    product: string\n    percentage: number\n    amount: number\n    trend: string\n    heightClass: string\n    color: string\n  }[]\n  className?: string\n}\n\nconst TotalVisitorsCard = ({ title, totalVisitors, percentage, visitorData, className }: Props) => {\n  return (\n    <Card className={cn('gap-4', className)}>\n      <CardHeader className='flex flex-col gap-2'>\n        <div className='flex w-full items-center justify-between gap-2'>\n          <div className='flex items-center gap-2'>\n            <Avatar className='size-8 rounded-sm'>\n              <AvatarFallback className='bg-primary/10 text-primary shrink-0 rounded-sm'>\n                <UsersRoundIcon className='size-4' />\n              </AvatarFallback>\n            </Avatar>\n            <span>{title}</span>\n          </div>\n          <Button variant='outline' className='h-7 px-2 py-1 text-xs'>\n            Details\n          </Button>\n        </div>\n\n        <div className='flex items-center gap-2'>\n          <span className='text-2xl font-semibold'>{totalVisitors}</span>\n          <Badge className='bg-primary/10 [a&]:hover:bg-primary/5 focus-visible:ring-primary/20 dark:focus-visible:ring-primary/40 text-primary focus-visible:outline-none'>\n            {percentage > 0 && '+'}\n            {percentage}%\n          </Badge>\n        </div>\n      </CardHeader>\n      <CardContent className='flex flex-1 flex-col gap-4'>\n        <Separator />\n        <div className='flex flex-1'>\n          {visitorData.map((item, index) => (\n            <div key={index} className='flex grow flex-col gap-2.5 border-dashed p-2 not-last:border-r'>\n              <span className='text-muted-foreground text-sm'>{item.product}</span>\n\n              <div className='text-2xl font-medium'>{item.percentage}%</div>\n              <div className='flex min-h-35 flex-1 items-end'>\n                <div className={cn('bg-primary grow rounded-xl', item.heightClass, item.color)}></div>\n              </div>\n              <div className='flex items-center justify-between gap-2'>\n                <span className='text-muted-foreground text-sm'>{item.amount}</span>\n                {item.trend === 'up' ? (\n                  <ArrowUpRightIcon className='size-4' />\n                ) : (\n                  <ArrowDownLeftIcon className='size-4' />\n                )}\n              </div>\n            </div>\n          ))}\n        </div>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default TotalVisitorsCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/chart-total-visitors.tsx"
+    }
+  ]
+}

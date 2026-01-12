@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "statistics-component-02",
+  "type": "registry:block",
+  "description": "Business metrics dashboard with time-period filtering (5/10/20/30 days) displaying Total Revenue, Orders, Used Storage, and Saved items with TrendingUp/TrendingDown icons and percentage changes",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "badge",
+    "card",
+    "dropdown-menu",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/statistics-component/statistics-component-02/page.tsx",
+      "content": "import { BookMarkedIcon, BoxIcon, DollarSignIcon, HardDriveIcon } from 'lucide-react'\n\nimport StatisticsCard, { type StatisticsCardProps } from '@/components/shadcn-studio/blocks/statistics-card-02'\n\n// Statistics card data\nconst StatisticsCardData: StatisticsCardProps[] = [\n  {\n    icon: <DollarSignIcon className='size-3.5' />,\n    title: 'Total Revenue',\n    value: '$12,345',\n    changePercentage: 15\n  },\n  {\n    icon: <BoxIcon className='size-3.5' />,\n    title: 'Orders',\n    value: '24',\n    changePercentage: -60\n  },\n  {\n    icon: <HardDriveIcon className='size-3.5' />,\n    title: 'Used Storage',\n    value: '49 GB',\n    changePercentage: 14.5\n  },\n  {\n    icon: <BookMarkedIcon className='size-3.5' />,\n    title: 'Saved items',\n    value: '2200',\n    changePercentage: -12.5\n  }\n]\n\nconst StatisticsCardPreview = () => {\n  return (\n    <div className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8'>\n        {StatisticsCardData.map((card, index) => (\n          <StatisticsCard\n            key={index}\n            icon={card.icon}\n            title={card.title}\n            value={card.value}\n            changePercentage={card.changePercentage}\n          />\n        ))}\n      </div>\n    </div>\n  )\n}\n\nexport default StatisticsCardPreview\n",
+      "type": "registry:page",
+      "target": "app/statistics-component-02/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/statistics-card-02.tsx",
+      "content": "'use client'\n\nimport { type ReactNode, useState } from 'react'\n\nimport { CheckIcon, ChevronDownIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'\n\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Badge } from '@/components/ui/badge'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\nimport { cn } from '@/lib/utils'\n\nconst days = [5, 10, 20, 30]\n\n// Statistics card data type\nexport type StatisticsCardProps = {\n  icon: ReactNode\n  title: string\n  value: string\n  changePercentage: number\n  className?: string\n  iconClassName?: string\n}\n\nconst StatisticsCard = ({ icon, title, value, changePercentage, className, iconClassName }: StatisticsCardProps) => {\n  const [selectedDays, setSelectedDays] = useState(days[days.length - 1])\n\n  return (\n    <Card className={cn('from-primary/20 to-card justify-between gap-3 bg-radial-[at_150%_90%] to-60%', className)}>\n      <CardHeader className='flex items-center justify-between gap-4'>\n        <div className='flex items-center gap-2'>\n          <Avatar className='size-7'>\n            <AvatarFallback\n              className={cn('bg-primary/10 text-primary size-7 shrink-0 [&>svg]:size-3.5', iconClassName)}\n            >\n              {icon}\n            </AvatarFallback>\n          </Avatar>\n          <span className='text-sm'>{title}</span>\n        </div>\n        <DropdownMenu>\n          <DropdownMenuTrigger className='flex items-center gap-2 rounded-sm px-2 py-1.5'>\n            <span className='max-w-[17ch] truncate text-sm leading-none'>{selectedDays} Days</span>\n            <ChevronDownIcon className='text-muted-foreground size-4' />\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align='center'>\n            {days.map(day => (\n              <DropdownMenuItem key={day} onClick={() => setSelectedDays(day)}>\n                <span className='text-sm'>{day} Days</span>\n                {selectedDays === day && <CheckIcon className='ml-auto' />}\n              </DropdownMenuItem>\n            ))}\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </CardHeader>\n      <CardContent className='flex items-center gap-2'>\n        <span className='text-2xl font-semibold'>{value}</span>\n        <Badge className='bg-primary/10 text-primary rounded-full'>\n          {changePercentage > 0 ? <TrendingUpIcon className='size-3' /> : <TrendingDownIcon className='size-3' />}\n          {changePercentage}%\n        </Badge>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default StatisticsCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/statistics-card-02.tsx"
+    }
+  ]
+}

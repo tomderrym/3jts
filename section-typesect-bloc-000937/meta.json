@@ -1,0 +1,9 @@
+{
+  "block": "section",
+  "pattern": {
+    "type": "section",
+    "layout": "single",
+    "padding": "none",
+    "background": "transparent"
+  }
+}

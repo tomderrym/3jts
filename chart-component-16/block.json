@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-component-16",
+  "type": "registry:block",
+  "description": "Energy consumption analytics with usage patterns, cost analysis, and sustainability metrics.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "badge",
+    "button",
+    "card",
+    "chart",
+    "separator",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/charts-component/chart-component-16/page.tsx",
+      "content": "import TotalSalesCard from '@/components/shadcn-studio/blocks/chart-total-sales'\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='flex justify-center'>\n          <TotalSalesCard className='sm:w-full sm:max-w-100' />\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/chart-component-16/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/chart-total-sales.tsx",
+      "content": "'use client'\n\nimport { GlobeIcon, StoreIcon, TrendingUpIcon } from 'lucide-react'\n\nimport { Bar, ComposedChart, Line, XAxis } from 'recharts'\n\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Badge } from '@/components/ui/badge'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'\nimport { Separator } from '@/components/ui/separator'\n\nimport { cn } from '@/lib/utils'\n\nconst chartData = [\n  {\n    time: '09:00',\n    uv: 88,\n    pv: 88\n  },\n  {\n    time: '10:00',\n    uv: 88,\n    pv: 88\n  },\n  {\n    time: '11:00',\n    uv: 144,\n    pv: 144\n  },\n  {\n    time: '12:00',\n    uv: 144,\n    pv: 144\n  },\n  {\n    time: '13:00',\n    uv: 109,\n    pv: 109\n  },\n  {\n    time: '14:00',\n    uv: 102,\n    pv: 109\n  },\n  {\n    time: '15:00',\n    uv: 62,\n    pv: 62\n  },\n  {\n    time: '16:00',\n    uv: 62,\n    pv: 62\n  },\n  {\n    time: '17:00',\n    uv: 128,\n    pv: 144\n  },\n  {\n    time: '18:00',\n    uv: 144,\n    pv: 144\n  },\n  {\n    time: '19:00',\n    uv: 183,\n    pv: 200\n  },\n  {\n    time: '20:00',\n    uv: 200,\n    pv: 200\n  }\n]\n\nconst totalEarningChartConfig = {\n  uv: {\n    label: 'Online Store',\n    color: 'color-mix(in oklab, var(--chart-2) 10%, background)'\n  },\n  pv: {\n    label: 'Offline Store',\n    color: 'var(--chart-2)'\n  }\n} satisfies ChartConfig\n\nconst data = [\n  {\n    icon: <GlobeIcon className='size-4' />,\n    platform: 'Online Store',\n    sales: '$20k',\n    growth: '+12.6%'\n  },\n  {\n    icon: <StoreIcon className='size-4' />,\n    platform: 'Offline Store',\n    sales: '$20k',\n    growth: '-4.2%'\n  }\n]\n\nconst TotalSalesCard = ({ className }: { className?: string }) => {\n  return (\n    <Card className={cn('justify-between gap-4', className)}>\n      <CardHeader className='flex flex-col gap-2'>\n        <div className='flex w-full items-center justify-between gap-2'>\n          <div className='flex items-center gap-2'>\n            <Avatar className='size-8 rounded-sm'>\n              <AvatarFallback className='bg-chart-2/10 text-chart-2 shrink-0 rounded-sm'>\n                <TrendingUpIcon className='size-4' />\n              </AvatarFallback>\n            </Avatar>\n            <span>Total sales</span>\n          </div>\n          <Button variant='outline' className='h-7 px-2 py-1 text-xs'>\n            Details\n          </Button>\n        </div>\n\n        <div className='flex items-center gap-2'>\n          <span className='text-2xl font-semibold'>$2,150.00</span>\n          <Badge className='bg-primary/10 [a&]:hover:bg-primary/5 focus-visible:ring-primary/20 dark:focus-visible:ring-primary/40 text-primary focus-visible:outline-none'>\n            +5%\n          </Badge>\n        </div>\n      </CardHeader>\n      <CardContent className='space-y-4'>\n        <Separator />\n\n        <div className='space-y-1'>\n          {data.map((item, index) => (\n            <div key={index} className='flex items-center justify-between gap-2 py-2'>\n              <div className='text-muted-foreground flex items-center gap-2'>\n                {item.icon}\n                <span className='text-sm'>{item.platform}</span>\n              </div>\n\n              <div className='flex items-center gap-2 text-sm'>\n                <span className='text-muted-foreground'>{item.sales}</span>\n                <span>{item.growth}</span>\n              </div>\n            </div>\n          ))}\n        </div>\n\n        <Separator />\n\n        <ChartContainer config={totalEarningChartConfig} className='h-40 w-full'>\n          <ComposedChart data={chartData} margin={{ top: 4, right: 6 }}>\n            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />\n            <XAxis\n              dataKey='time'\n              tickLine={false}\n              axisLine={false}\n              tickMargin={8}\n              minTickGap={15}\n              tick={{ fontSize: 14, fill: 'var(--muted-foreground)' }}\n            />\n            <Bar dataKey='uv' barSize={16} fill='var(--color-uv)' radius={2} />\n            <Line type='linear' dataKey='pv' stroke='var(--color-pv)' dot={false} strokeWidth={3} />\n          </ComposedChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default TotalSalesCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/chart-total-sales.tsx"
+    }
+  ]
+}

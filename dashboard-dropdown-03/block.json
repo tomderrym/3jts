@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-dropdown-03",
+  "type": "registry:block",
+  "description": "A balance display dropdown with account information, current balance, and quick financial actions for wallet or account management.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "dropdown-menu"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/dashboard-dropdown/dashboard-dropdown-03/page.tsx",
+      "content": "import { Button } from '@/components/ui/button'\n\nimport BalanceDropdown from '@/components/shadcn-studio/blocks/dashboard-dropdown-03/dropdown-balance'\n\nconst DropdownPage = () => {\n  return (\n    <div className='flex h-70 items-start justify-center p-8'>\n      <BalanceDropdown defaultOpen align='center' trigger={<Button>Balance</Button>} />\n    </div>\n  )\n}\n\nexport default DropdownPage\n",
+      "type": "registry:page",
+      "target": "app/dashboard-dropdown-03/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/dashboard-dropdown-03/dropdown-balance.tsx",
+      "content": "import type { ReactNode } from 'react'\n\nimport { BanknoteIcon, CircleDollarSignIcon, HandCoinsIcon } from 'lucide-react'\n\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuLabel,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\ntype Props = {\n  trigger: ReactNode\n  defaultOpen?: boolean\n  align?: 'start' | 'center' | 'end'\n}\n\nconst listItems = [\n  {\n    icon: BanknoteIcon,\n    report: 'deposit'\n  },\n  {\n    icon: CircleDollarSignIcon,\n    report: 'withdraw'\n  },\n  {\n    icon: HandCoinsIcon,\n    report: 'payment info'\n  }\n]\n\nconst BalanceDropdown = ({ defaultOpen, align, trigger }: Props) => {\n  return (\n    <DropdownMenu defaultOpen={defaultOpen}>\n      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>\n      <DropdownMenuContent className='w-60' align={align || 'end'}>\n        <DropdownMenuLabel className='text-muted-foreground font-normal uppercase'>Your Balance</DropdownMenuLabel>\n        <DropdownMenuGroup className='space-y-0.5'>\n          {listItems.map((item, index) => (\n            <DropdownMenuItem key={index} className='px-4 py-2.5 text-base capitalize'>\n              <item.icon className='size-5' />\n              <span>{item.report}</span>\n            </DropdownMenuItem>\n          ))}\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport default BalanceDropdown\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/dashboard-dropdown-03/dropdown-balance.tsx"
+    }
+  ]
+}

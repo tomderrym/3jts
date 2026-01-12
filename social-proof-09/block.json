@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "social-proof-09",
+  "type": "registry:block",
+  "description": "Compact statistics showcase with badge branding and call-to-action button. Features small metric cards in a grid alongside an illustrative image.",
+  "registryDependencies": [
+    "badge",
+    "button",
+    "card"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/social-proof/social-proof-09/page.tsx",
+      "content": "import SocialProof from '@/components/shadcn-studio/blocks/social-proof-09/social-proof-09'\n\nconst features = [\n  {\n    value: '40k',\n    label: 'Customer'\n  },\n  {\n    value: '50k',\n    label: 'New Sign-ups'\n  },\n  {\n    value: '20k',\n    label: 'Monthly inquiry '\n  }\n]\n\nconst SocialProofPage = () => {\n  return <SocialProof features={features} />\n}\n\nexport default SocialProofPage\n",
+      "type": "registry:page",
+      "target": "app/social-proof-09/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/social-proof-09/social-proof-09.tsx",
+      "content": "import { Badge } from '@/components/ui/badge'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'\n\ntype Features = {\n  value: string\n  label: string\n}\n\nconst SocialProof = ({ features }: { features: Features[] }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='grid gap-x-20 gap-y-6 lg:grid-cols-2'>\n          <div className='space-y-6'>\n            <div className='space-y-4'>\n              <Badge variant='outline' className='rounded-full text-sm font-normal'>\n                Social Proof\n              </Badge>\n              <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Real value, real success!</h2>\n              <p className='text-muted-foreground text-xl'>\n                In construction, success stems from collaboration and shared commitment. By combining diverse skills,\n                teams create innovative solutions that achieve project goals and foster lasting relationships.\n              </p>\n            </div>\n\n            <div className='grid grid-cols-1 gap-6 sm:grid-cols-3'>\n              {features.map((feature, index) => (\n                <Card key={index} className='bg-muted rounded-md shadow-none'>\n                  <CardHeader className='gap-6 text-center'>\n                    <CardTitle className='text-2xl font-semibold md:text-3xl lg:text-4xl'>{feature.value}</CardTitle>\n                    <CardDescription className='text-base'>{feature.label}</CardDescription>\n                  </CardHeader>\n                </Card>\n              ))}\n            </div>\n\n            <Button className='rounded-full text-base shadow-sm' size='lg'>\n              Learn More\n            </Button>\n          </div>\n\n          {/* Right Column - Image */}\n          <div className='my-auto h-fit'>\n            <img\n              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/social-proof/image-3.png'\n              alt='Social Widget'\n              className='w-full rounded-md'\n            />\n          </div>\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default SocialProof\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/social-proof-09/social-proof-09.tsx"
+    }
+  ]
+}

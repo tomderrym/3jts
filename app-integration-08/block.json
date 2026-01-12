@@ -1,0 +1,62 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-integration-08",
+  "type": "registry:block",
+  "description": "Industry leaders showcase with marquee animation and transformation stories for partnership displays",
+  "registryDependencies": [
+    "badge",
+    "button",
+    "card",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/app-integration/app-integration-08/page.tsx",
+      "content": "import AppIntegration from '@/components/shadcn-studio/blocks/app-integration-08/app-integration-08'\n\nconst apps = [\n  {\n    name: 'Ola',\n    description: 'Ola Tech reshapes our access to information.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/ola-icon.png'\n  },\n  {\n    name: 'Apple',\n    description: 'Apple has transformed our tech connections.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/apple-icon.png'\n  },\n  {\n    name: 'Notion',\n    description: 'Google changed how we find information.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/notion-white.png'\n  },\n  {\n    name: 'Meta',\n    description: 'Meta changed how we connect.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/meta-icon.png'\n  },\n  {\n    name: 'Zoom',\n    description: 'Zoom changed how we connect.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/camera-icon.png'\n  },\n  {\n    name: 'Framer',\n    description: 'Framer revolutionized our data collection.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/framer-logo.png'\n  },\n  {\n    name: 'Slack',\n    description: 'Team collaboration tool.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/slack-icon.png'\n  },\n  {\n    name: 'Github',\n    description: 'GitHub enhances collaboration.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/github-white.png'\n  },\n  {\n    name: 'Discord',\n    description: 'Discord transforms our connections.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/discord-icon.png'\n  },\n  {\n    name: 'Figma',\n    description: 'Figma transformed our connections.',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/figma-icon.png'\n  }\n]\n\nconst AppIntegrationPage = () => {\n  return <AppIntegration apps={apps} />\n}\n\nexport default AppIntegrationPage\n",
+      "type": "registry:page",
+      "target": "app/app-integration-08/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/app-integration-08/app-integration-08.tsx",
+      "content": "import { Marquee } from '@/components/ui/marquee'\n\nimport IntegrationCard from '@/components/shadcn-studio/blocks/app-integration-08/integration-card'\n\ntype App = {\n  name: string\n  description: string\n  image: string\n}[]\n\nconst AppIntegration = ({ apps }: { apps: App }) => {\n  return (\n    <section className='bg-muted py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        {/* Header */}\n        <div className='mb-12 space-y-4 sm:mb-16 lg:mb-24'>\n          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Building the future with industry leaders</h2>\n          <p className='text-muted-foreground text-xl'>Join 50,000+ companies transforming their industries with us.</p>\n        </div>\n      </div>\n\n      {/* Marquee */}\n      <div className='w-full overflow-hidden'>\n        <Marquee pauseOnHover duration={25} gap={1.5}>\n          {apps.slice(0, 5).map((app, index) => (\n            <IntegrationCard key={index} app={app} />\n          ))}\n        </Marquee>\n      </div>\n\n      <div className='w-full overflow-hidden'>\n        <Marquee pauseOnHover duration={25} gap={1.5} reverse>\n          {apps.slice(5).map((app, index) => (\n            <IntegrationCard key={index} app={app} />\n          ))}\n        </Marquee>\n      </div>\n    </section>\n  )\n}\n\nexport default AppIntegration\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/app-integration-08/app-integration-08.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/app-integration-08/integration-card.tsx",
+      "content": "import { Badge } from '@/components/ui/badge'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent } from '@/components/ui/card'\n\ntype App = {\n  name: string\n  description: string\n  image: string\n}\n\nconst IntegrationCard = ({ app }: { app: App }) => {\n  return (\n    <Card className='w-80 border-none shadow-none'>\n      <CardContent className='flex flex-col gap-2'>\n        <div className='flex items-center gap-2.5'>\n          <div className='flex size-17 shrink-0 items-center justify-center rounded-md border'>\n            <img src={app.image} alt={app.name} className='size-9' />\n          </div>\n          <div className='bg-muted rounded-md p-2.5'>\n            <p className='text-wrap'>{app.description}</p>\n          </div>\n        </div>\n        <div className='flex items-center gap-2.5'>\n          <Badge className='bg-primary/10 [a&]:hover:bg-primary/5 focus-visible:ring-primary/20 dark:focus-visible:ring-primary/40 text-primary rounded-full px-3 py-1 focus-visible:outline-none'>\n            {app.name}\n          </Badge>\n          <div className='w-full'>\n            <Button variant='outline' size='sm' className='w-full rounded-full'>\n              Connect\n            </Button>\n          </div>\n        </div>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default IntegrationCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/app-integration-08/integration-card.tsx"
+    },
+    {
+      "path": "src/registry/new-york/ui/marquee.tsx",
+      "content": "import * as React from 'react'\n\nimport { cn } from '@/lib/utils'\n\ninterface MarqueeProps extends React.ComponentPropsWithoutRef<'div'> {\n  children: React.ReactNode\n  className?: string\n  duration?: number\n  delay?: number\n  gap?: number\n  pauseOnHover?: boolean\n  repeat?: number\n  reverse?: boolean\n  vertical?: boolean\n}\n\nfunction Marquee(props: MarqueeProps) {\n  const {\n    children,\n    className,\n    duration = 40,\n    delay = 0,\n    gap = 1,\n    pauseOnHover = false,\n    repeat = 4,\n    reverse = false,\n    vertical = false,\n    ...rest\n  } = props\n\n  return (\n    <div\n      style={\n        {\n          '--marquee-duration': `${duration}s`,\n          '--marquee-delay': `${delay}s`,\n          '--marquee-gap': `${gap}rem`\n        } as React.CSSProperties\n      }\n      className={cn(\n        'group flex gap-(--marquee-gap) overflow-hidden p-3',\n        {\n          'flex-row': !vertical,\n          'flex-col': vertical\n        },\n        className\n      )}\n      {...rest}\n    >\n      {Array(repeat)\n        .fill(0)\n        .map((_, i) => (\n          <div\n            key={i}\n            className={cn('flex shrink-0 justify-around gap-(--marquee-gap) [animation-delay:var(--marquee-delay)]', {\n              'animate-marquee-horizontal flex-row': !vertical,\n              'animate-marquee-vertical flex-col': vertical,\n              'group-hover:[animation-play-state:paused]': pauseOnHover,\n              '[animation-direction:reverse]': reverse\n            })}\n          >\n            {children}\n          </div>\n        ))}\n    </div>\n  )\n}\n\nexport { Marquee, type MarqueeProps }\n",
+      "type": "registry:ui",
+      "target": "components/ui/marquee.tsx"
+    }
+  ],
+  "cssVars": {
+    "theme": {
+      "animate-marquee-horizontal": "marquee-horizontal var(--marquee-duration) infinite linear",
+      "animate-marquee-vertical": "marquee-vertical var(--marquee-duration) infinite linear"
+    }
+  },
+  "css": {
+    "@keyframes marquee-horizontal": {
+      "from": {
+        "transform": "translateX(0)"
+      },
+      "to": {
+        "transform": "translateX(calc(-100% - var(--marquee-gap)))"
+      }
+    },
+    "@keyframes marquee-vertical": {
+      "from": {
+        "transform": "translateY(0)"
+      },
+      "to": {
+        "transform": "translateY(calc(-100% - var(--marquee-gap)))"
+      }
+    }
+  }
+}

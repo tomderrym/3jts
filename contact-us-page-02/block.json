@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "contact-us-page-02",
+  "type": "registry:block",
+  "description": "Contact card with colored sidebar containing contact information and white form section with input fields and send message button",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "input",
+    "label",
+    "textarea"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/contact-us-page/contact-us-page-02/page.tsx",
+      "content": "import ContactUs from '@/components/shadcn-studio/blocks/contact-us-page-02/contact-us-page-02'\n\nconst ContactUsPage = () => {\n  return <ContactUs />\n}\n\nexport default ContactUsPage\n",
+      "type": "registry:page",
+      "target": "app/contact-us-page-02/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/contact-us-page-02/contact-form.tsx",
+      "content": "'use client'\n\nimport { SendIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\nimport { Textarea } from '@/components/ui/textarea'\n\nconst ContactForm = () => {\n  return (\n    <form className='space-y-6' onSubmit={e => e.preventDefault()}>\n      <div className='flex w-full flex-wrap gap-6'>\n        {/* Name Input */}\n        <div className='w-auto grow space-y-2'>\n          <Label htmlFor='name'>Your Name</Label>\n          <Input type='text' id='name' className='h-10' placeholder='Enter your name here...' />\n        </div>\n\n        {/* Email Input */}\n        <div className='w-auto grow space-y-2'>\n          <Label htmlFor='email'>Your Email</Label>\n          <Input type='email' id='email' className='h-10' placeholder='Enter your email here...' />\n        </div>\n      </div>\n\n      {/* Subject Input */}\n      <div className='w-full space-y-2'>\n        <Label htmlFor='subject'>Your Subject</Label>\n        <Input type='text' id='subject' className='h-10' placeholder='Enter your subject here...' />\n      </div>\n\n      {/* Message Input */}\n      <div className='space-y-2'>\n        <Label htmlFor='message'>Message</Label>\n        <Textarea id='message' className='h-28 resize-none' placeholder='Type here' />\n      </div>\n\n      {/* Submit Button */}\n      <Button type='submit' size='lg' className='rounded-lg text-base shadow-sm has-[>svg]:px-6'>\n        Send Message\n        <SendIcon />\n      </Button>\n    </form>\n  )\n}\n\nexport default ContactForm\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/contact-us-page-02/contact-form.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/contact-us-page-02/contact-us-page-02.tsx",
+      "content": "import { PhoneIcon, MailIcon, MapPinIcon } from 'lucide-react'\n\nimport { Card, CardContent } from '@/components/ui/card'\n\nimport ContactForm from '@/components/shadcn-studio/blocks/contact-us-page-02/contact-form'\n\nconst ContactUs = () => {\n  return (\n    <section className='bg-muted py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>\n          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>How Can We Help?</h2>\n          <p className='text-muted-foreground text-xl'>\n            Have a question or need assistance? Contact us and let&apos;s find a solution together!\n          </p>\n        </div>\n\n        <Card className='border shadow-none'>\n          <CardContent className='grid gap-6 md:grid-cols-6'>\n            <Card className='bg-primary py-8 shadow-none md:col-span-3 xl:col-span-2'>\n              <CardContent className='text-primary-foreground space-y-7'>\n                <div className='space-y-2'>\n                  <h2 className='text-2xl font-semibold'>Contact Information</h2>\n                  <p>Explore new destinations, indulge in local cuisines, and immerse yourself in diverse cultures.</p>\n                </div>\n\n                <div className='space-y-7'>\n                  {/* Phone */}\n                  <div className='flex items-start gap-4 text-lg font-semibold'>\n                    <PhoneIcon className='size-7 shrink-0' />\n                    +1-316-555-1258\n                  </div>\n\n                  {/* Email */}\n                  <div className='flex items-start gap-4'>\n                    <MailIcon className='size-7 shrink-0' />\n                    <a className='text-lg font-semibold' href='mailto:hadams@gmail.com'>\n                      hadams@gmail.com\n                    </a>\n                  </div>\n\n                  {/* Address */}\n                  <div className='flex items-start gap-4 text-lg font-semibold'>\n                    <MapPinIcon className='size-7 shrink-0' />\n                    <address className='not-italic'>802 Pension Rd, Maine 96812, USA</address>\n                  </div>\n                </div>\n              </CardContent>\n            </Card>\n\n            {/* Form Section */}\n            <div className='md:col-span-3 xl:col-span-4'>\n              <ContactForm />\n            </div>\n          </CardContent>\n        </Card>\n      </div>\n    </section>\n  )\n}\n\nexport default ContactUs\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/contact-us-page-02/contact-us-page-02.tsx"
+    }
+  ]
+}

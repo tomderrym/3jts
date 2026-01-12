@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-component-05",
+  "type": "registry:block",
+  "description": "Popular product widget with interactive controls, dropdown menus, and comprehensive product performance tracking",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "dropdown-menu",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/widgets-component/widget-component-05/page.tsx",
+      "content": "import PopularProductCard from '@/components/shadcn-studio/blocks/widget-popular-product'\n\n// Popular products data\nconst Products = [\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/image 1.png',\n    productName: 'Nike Vision Low Shoes',\n    price: '$5,600',\n    visits: '10.6K'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/image 2.png',\n    productName: 'Adidas Ultraboost 21',\n    price: '$4,500',\n    visits: '4.5K'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/image 3.png',\n    productName: 'Puma RS-X Toys',\n    price: '$3,200',\n    visits: '2K'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/image 4.png',\n    productName: 'New Balance 550',\n    price: '$2,800',\n    visits: '1.8K'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/image 5.png',\n    productName: 'Reebok Classic Leather',\n    price: '$2,200',\n    visits: '1.2K'\n  }\n]\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-16'>\n      <div className='flex justify-center'>\n        <PopularProductCard\n          title='Popular product'\n          subTitle='Total 10.4K visitors'\n          productsData={Products}\n          className='w-full max-w-100'\n        />\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/widget-component-05/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/widget-popular-product.tsx",
+      "content": "import { EllipsisVerticalIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\nimport { cn } from '@/lib/utils'\n\nconst listItems = ['Share', 'Update', 'Refresh']\n\ntype Props = {\n  title: string\n  subTitle: string\n  productsData: {\n    img: string\n    productName: string\n    price: string\n    visits: string\n  }[]\n  className?: string\n}\n\nconst PopularProductCard = ({ title, subTitle, productsData, className }: Props) => {\n  return (\n    <Card className={cn('gap-3', className)}>\n      <CardHeader className='flex justify-between gap-2'>\n        <div className='flex flex-col gap-1'>\n          <span className='text-lg font-semibold'>{title}</span>\n          <span className='text-muted-foreground text-sm'>{subTitle}</span>\n        </div>\n        <DropdownMenu>\n          <DropdownMenuTrigger asChild>\n            <Button variant='ghost' size='icon' className='text-muted-foreground size-6 rounded-full'>\n              <EllipsisVerticalIcon />\n              <span className='sr-only'>Menu</span>\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align='end'>\n            <DropdownMenuGroup>\n              {listItems.map((item, index) => (\n                <DropdownMenuItem key={index}>{item}</DropdownMenuItem>\n              ))}\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </CardHeader>\n      <CardContent className='flex flex-1 flex-col justify-between gap-3'>\n        {productsData.map((product, index) => (\n          <div key={index} className='flex items-center justify-between gap-2'>\n            <div className='flex items-center justify-between gap-2'>\n              <div className='p-2'>\n                <img src={product.img} alt={product.productName} className='size-10.5' />\n              </div>\n              <div className='flex flex-col gap-0.5'>\n                <span className='font-medium'>{product.productName}</span>\n                <span className='text-muted-foreground text-xs'>{product.price}</span>\n              </div>\n            </div>\n            <span className='text-muted-foreground text-sm'>{product.visits}</span>\n          </div>\n        ))}\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default PopularProductCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/widget-popular-product.tsx"
+    }
+  ]
+}

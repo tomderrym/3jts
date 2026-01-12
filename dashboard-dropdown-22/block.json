@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-dropdown-22",
+  "type": "registry:block",
+  "description": "A drag-and-drop dropdown with sortable functionality, checkboxes, labels, and interactive item reordering for customizable list management.",
+  "dependencies": [
+    "@dnd-kit/core",
+    "@dnd-kit/modifiers",
+    "@dnd-kit/sortable",
+    "@dnd-kit/utilities",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "checkbox",
+    "dropdown-menu",
+    "label"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/dashboard-dropdown/dashboard-dropdown-22/page.tsx",
+      "content": "import { LayoutPanelTopIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\n\nimport DragDropdown from '@/components/shadcn-studio/blocks/dashboard-dropdown-22/drag-dropdown'\n\nconst DropdownPage = () => {\n  return (\n    <div className='flex h-132 items-start justify-center p-8'>\n      <DragDropdown\n        defaultOpen\n        align='center'\n        trigger={\n          <Button variant='outline' size='lg'>\n            <LayoutPanelTopIcon className='size-5' />\n            Select Columns\n          </Button>\n        }\n      />\n    </div>\n  )\n}\n\nexport default DropdownPage\n",
+      "type": "registry:page",
+      "target": "app/dashboard-dropdown-22/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/dashboard-dropdown-22/drag-dropdown.tsx",
+      "content": "'use client'\n\nimport { useState } from 'react'\nimport type { ReactNode, CSSProperties } from 'react'\n\nimport { GripVerticalIcon } from 'lucide-react'\n\nimport {\n  closestCenter,\n  DndContext,\n  KeyboardSensor,\n  PointerSensor,\n  TouchSensor,\n  useSensor,\n  useSensors,\n  type DragEndEvent\n} from '@dnd-kit/core'\nimport { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers'\nimport { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'\nimport { CSS } from '@dnd-kit/utilities'\n\nimport { Checkbox } from '@/components/ui/checkbox'\nimport {\n  DropdownMenu,\n  DropdownMenuCheckboxItem,\n  DropdownMenuContent,\n  DropdownMenuLabel,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\nimport { Label } from '@/components/ui/label'\n\ntype Props = {\n  trigger: ReactNode\n  defaultOpen?: boolean\n  align?: 'start' | 'center' | 'end'\n}\n\nconst columns = [\n  {\n    id: '2-columns',\n    name: '2 Columns',\n    value: 2\n  },\n  {\n    id: '4-columns',\n    name: '4 Columns',\n    value: 4\n  },\n  {\n    id: '6-columns',\n    name: '6 Columns',\n    value: 6\n  },\n  {\n    id: '8-columns',\n    name: '8 Columns',\n    value: 8\n  }\n]\n\nconst DragDropdown = ({ defaultOpen, align, trigger }: Props) => {\n  const [selected, setSelected] = useState<string[]>(['4-columns', '6-columns'])\n  const [columnOrder, setColumnOrder] = useState<string[]>(columns.map(column => column.id))\n\n  const orderedColumns = columnOrder.map(id => columns.find(column => column.id === id)!).filter(Boolean)\n\n  const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor), useSensor(TouchSensor))\n\n  const handleDragEnd = (event: DragEndEvent) => {\n    const { active, over } = event\n\n    if (active && over && active.id !== over.id) {\n      setColumnOrder(currentOrder => {\n        const oldIndex = currentOrder.indexOf(active.id as string)\n        const newIndex = currentOrder.indexOf(over.id as string)\n\n        return arrayMove(currentOrder, oldIndex, newIndex)\n      })\n    }\n  }\n\n  return (\n    <DropdownMenu defaultOpen={defaultOpen}>\n      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>\n      <DropdownMenuContent className='w-72.5 space-y-0.5 overflow-hidden' align={align || 'end'}>\n        <DropdownMenuLabel className='text-muted-foreground font-normal'>Select Columns</DropdownMenuLabel>\n        <DndContext\n          collisionDetection={closestCenter}\n          onDragEnd={handleDragEnd}\n          sensors={sensors}\n          modifiers={[restrictToVerticalAxis, restrictToParentElement]}\n        >\n          <SortableContext items={columnOrder} strategy={verticalListSortingStrategy}>\n            {orderedColumns.map(column => (\n              <SortableColumnItem\n                key={column.id}\n                column={column}\n                isSelected={selected.includes(column.id)}\n                onToggle={() => {\n                  const isChecked = selected.includes(column.id)\n\n                  if (!isChecked) {\n                    setSelected([...selected, column.id])\n                  } else {\n                    setSelected(selected.filter(id => id !== column.id))\n                  }\n                }}\n              />\n            ))}\n          </SortableContext>\n        </DndContext>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\ntype SortableColumnItemProps = {\n  column: (typeof columns)[0]\n  isSelected: boolean\n  onToggle: () => void\n}\n\nconst SortableColumnItem = ({ column, isSelected, onToggle }: SortableColumnItemProps) => {\n  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({\n    id: column.id\n  })\n\n  const style: CSSProperties = {\n    transform: CSS.Transform.toString(transform),\n    transition,\n    opacity: isDragging ? 0.8 : 1\n  }\n\n  return (\n    <DropdownMenuCheckboxItem\n      ref={setNodeRef}\n      style={style}\n      className='justify-between px-3 py-2.5 text-base [&>span]:hidden'\n      onClick={e => {\n        e.preventDefault()\n        onToggle()\n      }}\n    >\n      <div className='flex items-center gap-2'>\n        <div>\n          <Checkbox\n            id={column.id}\n            checked={isSelected}\n            onCheckedChange={checked => {\n              if (checked) {\n                onToggle()\n              } else {\n                onToggle()\n              }\n            }}\n          />\n          <Label htmlFor={column.id} className='sr-only'>\n            {column.name}\n          </Label>\n        </div>\n        <span>{column.name}</span>\n      </div>\n      <div {...attributes} {...listeners} className='cursor-grab active:cursor-grabbing'>\n        <GripVerticalIcon />\n      </div>\n    </DropdownMenuCheckboxItem>\n  )\n}\n\nexport default DragDropdown\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/dashboard-dropdown-22/drag-dropdown.tsx"
+    }
+  ]
+}

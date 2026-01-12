@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "two-factor-authentication-04",
+  "type": "registry:block",
+  "description": "Two-column layout with branded left panel featuring security messaging, dashboard preview, technology badges, and simple OTP verification form for tech-focused platforms",
+  "registryDependencies": [
+    "button",
+    "input-otp",
+    "label"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/two-factor-authentication/two-factor-authentication-04/page.tsx",
+      "content": "import TwoFactorAuthentication from '@/components/shadcn-studio/blocks/two-factor-authentication-04/two-factor-authentication-04'\n\nconst TwoFactorAuthenticationPage = () => {\n  return <TwoFactorAuthentication />\n}\n\nexport default TwoFactorAuthenticationPage\n",
+      "type": "registry:page",
+      "target": "app/two-factor-authentication-04/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/two-factor-authentication-04/two-factor-authentication-04.tsx",
+      "content": "import TwoFactorAuthenticationForm from '@/components/shadcn-studio/blocks/two-factor-authentication-04/two-factor-authentication-form'\n\nconst TwoFactorAuthentication = () => {\n  return (\n    <div className='h-dvh lg:grid lg:grid-cols-2'>\n      {/* Dashboard Preview */}\n      <div className='bg-primary flex flex-col items-center justify-between gap-12 p-10 max-lg:hidden xl:p-16'>\n        <div className='text-primary-foreground'>\n          <h1 className='mb-6 text-3xl font-bold'>Enable Two-Factor Authentication (2FA)</h1>\n          <p className='text-xl'>\n            Enhance the security of your account by enabling Two-Factor Authentication (2FA). With 2FA, you&apos;ll add\n            an extra layer of protection.\n          </p>\n        </div>\n\n        <div className='border-card bg-card flex max-h-118 items-center justify-center rounded-xl border-12'>\n          <img\n            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/auth/image-1.png'\n            alt='dashboard'\n            className='size-full rounded-xl object-contain dark:hidden'\n          />\n          <img\n            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/auth/image-1-dark.png'\n            alt='dashboard'\n            className='hidden size-full rounded-xl object-contain dark:inline-block'\n          />\n        </div>\n\n        <div className='flex gap-2 rounded-full bg-white/20 px-3 py-2'>\n          <a href='#' className='flex size-9 items-center justify-center rounded-full bg-white'>\n            <img\n              src='https://cdn.shadcnstudio.com/ss-assets/brand-logo/tailwind-logo.png'\n              alt='TailwindCSS Logo'\n              className='w-7'\n            />\n          </a>\n          <a href='#' className='flex size-9 items-center justify-center rounded-full bg-white'>\n            <img\n              src='https://cdn.shadcnstudio.com/ss-assets/brand-logo/nextjs-logo.png'\n              alt='Next.js Logo'\n              className='w-5.5'\n            />\n          </a>\n          <a href='#' className='flex size-9 items-center justify-center rounded-full bg-white'>\n            <img\n              src='https://cdn.shadcnstudio.com/ss-assets/brand-logo/shadcn-logo.png'\n              alt='Shadcn Logo'\n              className='w-5.5'\n            />\n          </a>\n        </div>\n      </div>\n\n      {/* TwoFactorAuthentication Form */}\n      <div className='flex h-full flex-col items-center justify-center py-10 sm:px-5'>\n        <div className='flex w-full max-w-lg flex-col gap-6 p-6'>\n          <div className='space-y-3 text-center'>\n            <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Password Reset 🔐</h2>\n            <p className='text-muted-foreground'>\n              We sent a code to your mobile number <span className='font-semibold'>*******1234</span>\n            </p>\n          </div>\n\n          <div className='space-y-4'>\n            {/* Form */}\n            <TwoFactorAuthenticationForm />\n\n            <p className='text-muted-foreground text-center'>\n              Didn&apos;t get the code?{' '}\n              <a href='#' className='text-foreground hover:underline'>\n                Resend\n              </a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default TwoFactorAuthentication\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/two-factor-authentication-04/two-factor-authentication-04.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/two-factor-authentication-04/two-factor-authentication-form.tsx",
+      "content": "'use client'\n\nimport { Button } from '@/components/ui/button'\nimport { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'\nimport { Label } from '@/components/ui/label'\n\nconst TwoFactorAuthenticationForm = () => {\n  return (\n    <form className='space-y-4' onSubmit={e => e.preventDefault()}>\n      <div className='flex items-center justify-between gap-1'>\n        <Label htmlFor='recoveryCode' className='text-base'>\n          Code*\n        </Label>\n        <span className='text-base font-medium'>Use a recovery code</span>\n      </div>\n\n      <InputOTP id='recoveryCode' maxLength={6}>\n        <InputOTPGroup className='w-full justify-center gap-4 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border'>\n          <InputOTPSlot index={0} />\n          <InputOTPSlot index={1} />\n          <InputOTPSlot index={2} />\n          <InputOTPSlot index={3} />\n          <InputOTPSlot index={4} />\n          <InputOTPSlot index={5} />\n        </InputOTPGroup>\n      </InputOTP>\n\n      <Button className='w-full' type='submit'>\n        Reset Password\n      </Button>\n    </form>\n  )\n}\n\nexport default TwoFactorAuthenticationForm\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/two-factor-authentication-04/two-factor-authentication-form.tsx"
+    }
+  ]
+}

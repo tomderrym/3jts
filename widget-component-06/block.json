@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-component-06",
+  "type": "registry:block",
+  "description": "Sales by countries widget with geographic analytics, interactive controls, and comprehensive international sales tracking",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "dropdown-menu"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/widgets-component/widget-component-06/page.tsx",
+      "content": "import SalesByCountryCard from '@/components/shadcn-studio/blocks/widget-sales-by-countries'\n\n// Sales data\nconst Sales = [\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/flags/austria.png',\n    sales: '$867k',\n    country: 'Austria',\n    changePercentage: '20.3%',\n    trend: 'up'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/flags/china.png',\n    sales: '$1.2M',\n    country: 'China',\n    changePercentage: '15.7%',\n    trend: 'up'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/flags/switzerland.png',\n    sales: '$750k',\n    country: 'Switzerland',\n    changePercentage: '18.2%',\n    trend: 'down'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/flags/india.png',\n    sales: '$1.5M',\n    country: 'India',\n    changePercentage: '22.1%',\n    trend: 'up'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/flags/brazil.png',\n    sales: '$980k',\n    country: 'Brazil',\n    changePercentage: '19.6%',\n    trend: 'down'\n  }\n]\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-16'>\n      <div className='flex justify-center'>\n        <SalesByCountryCard\n          title='Sales by countries'\n          subTitle='Monthly sales overview'\n          salesData={Sales}\n          className='w-full max-w-100'\n        />\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/widget-component-06/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/widget-sales-by-countries.tsx",
+      "content": "import { ChevronDownIcon, ChevronUpIcon, EllipsisVerticalIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\nconst listItems = ['Share', 'Update', 'Refresh']\n\ntype Props = {\n  title: string\n  subTitle: string\n  salesData: {\n    img: string\n    sales: string\n    country: string\n    changePercentage: string\n    trend: string\n  }[]\n  className?: string\n}\n\nconst SalesByCountryCard = ({ title, subTitle, salesData, className }: Props) => {\n  return (\n    <Card className={className}>\n      <CardHeader className='flex justify-between gap-2'>\n        <div className='flex flex-col gap-1'>\n          <span className='text-lg font-semibold'>{title}</span>\n          <span className='text-muted-foreground text-sm'>{subTitle}</span>\n        </div>\n        <DropdownMenu>\n          <DropdownMenuTrigger asChild>\n            <Button variant='ghost' size='icon' className='text-muted-foreground size-6 rounded-full'>\n              <EllipsisVerticalIcon />\n              <span className='sr-only'>Menu</span>\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align='end'>\n            <DropdownMenuGroup>\n              {listItems.map((item, index) => (\n                <DropdownMenuItem key={index}>{item}</DropdownMenuItem>\n              ))}\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </CardHeader>\n      <CardContent className='flex flex-1 flex-col justify-between gap-4'>\n        {salesData.map((sale, index) => (\n          <div key={index} className='flex items-center justify-between gap-4'>\n            <div className='flex items-center justify-between gap-4'>\n              <div className='overflow-hidden rounded-full'>\n                <img src={sale.img} alt={sale.country} className='size-10 object-cover' />\n              </div>\n              <div className='flex flex-col gap-0.5'>\n                <span className='font-medium'>{sale.sales}</span>\n                <span className='text-muted-foreground text-sm'>{sale.country}</span>\n              </div>\n            </div>\n            <span className='flex items-center gap-1'>\n              {sale.trend === 'up' ? <ChevronUpIcon className='size-4' /> : <ChevronDownIcon className='size-4' />}\n              <span className='text-sm'>{sale.changePercentage}</span>\n            </span>\n          </div>\n        ))}\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default SalesByCountryCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/widget-sales-by-countries.tsx"
+    }
+  ]
+}

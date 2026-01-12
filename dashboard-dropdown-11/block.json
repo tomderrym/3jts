@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-dropdown-11",
+  "type": "registry:block",
+  "description": "A status selection dropdown with avatar display, status indicators, and availability options for user presence and activity management.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "dropdown-menu",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/dashboard-dropdown/dashboard-dropdown-11/page.tsx",
+      "content": "import StatusDropdown from '@/components/shadcn-studio/blocks/dashboard-dropdown-11/status-dropdown'\n\nconst DropdownPage = () => {\n  return (\n    <div className='flex h-132 items-start justify-center p-8'>\n      <StatusDropdown defaultOpen align='center' userStatus='in-meeting' />\n    </div>\n  )\n}\n\nexport default DropdownPage\n",
+      "type": "registry:page",
+      "target": "app/dashboard-dropdown-11/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/dashboard-dropdown-11/status-dropdown.tsx",
+      "content": "import { CircleIcon } from 'lucide-react'\n\nimport { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\nimport { cn } from '@/lib/utils'\n\ntype Props = {\n  defaultOpen?: boolean\n  align?: 'start' | 'center' | 'end'\n  userStatus: 'offline' | 'busy' | 'available' | 'on-break' | 'in-meeting'\n}\n\nconst statusOptions = [\n  {\n    value: 'offline',\n    statusClasses:\n      'fill-[color-mix(in_oklab,var(--primary)50%,var(--card))] stroke-[color-mix(in_oklab,var(--primary)50%,var(--card))]',\n    label: 'Offline'\n  },\n  {\n    value: 'busy',\n    statusClasses: 'fill-destructive stroke-destructive',\n    label: 'Busy'\n  },\n  {\n    value: 'available',\n    statusClasses: 'fill-green-600 stroke-green-600 dark:fill-green-400 dark:stroke-green-400',\n    label: 'Available'\n  },\n  {\n    value: 'on-break',\n    statusClasses: 'fill-amber-600 stroke-amber-600 dark:fill-amber-400 dark:stroke-amber-400',\n    label: 'On Break'\n  },\n  {\n    value: 'in-meeting',\n    statusClasses: 'fill-sky-600 stroke-sky-600 dark:fill-sky-400 dark:stroke-sky-400',\n    label: 'In Meeting'\n  }\n]\n\nconst StatusDropdown = ({ defaultOpen, align, userStatus }: Props) => {\n  const getStatusIndicatorClasses = (currentStatus: Props['userStatus']) => {\n    const statusOption = statusOptions.find(option => option.value === currentStatus)\n\n    return statusOption?.statusClasses || statusOptions[0].statusClasses\n  }\n\n  return (\n    <DropdownMenu defaultOpen={defaultOpen}>\n      <DropdownMenuTrigger asChild>\n        <div className='relative'>\n          <Avatar className='size-10 cursor-pointer rounded-lg'>\n            <AvatarImage\n              src='https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png'\n              alt='John Doe'\n              className='rounded-lg'\n            />\n            <AvatarFallback>JD</AvatarFallback>\n          </Avatar>\n          <CircleIcon\n            className={cn(\n              'ring-card absolute -top-1 right-0 size-2 rounded-full ring-2',\n              getStatusIndicatorClasses(userStatus)\n            )}\n          />\n        </div>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className='w-74.5' align={align || 'end'}>\n        <DropdownMenuRadioGroup value={userStatus} className='space-y-0.5'>\n          {statusOptions.map(option => (\n            <DropdownMenuRadioItem\n              key={option.value}\n              value={option.value}\n              className='data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground px-4 py-2.5 text-base [&>span]:hidden'\n            >\n              <CircleIcon className={cn('size-2.5', option.statusClasses)} />\n              {option.label}\n            </DropdownMenuRadioItem>\n          ))}\n        </DropdownMenuRadioGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport default StatusDropdown\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/dashboard-dropdown-11/status-dropdown.tsx"
+    }
+  ]
+}

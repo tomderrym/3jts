@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pricing-component-17",
+  "type": "registry:block",
+  "description": "Professional pricing table with testimonials integration and social proof elements for credibility.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/pricing-component/pricing-component-17/page.tsx",
+      "content": "import Pricing from '@/components/shadcn-studio/blocks/pricing-component-17/pricing-component-17'\n\nconst pricingData = [\n  {\n    title: 'Starter Plan',\n    price: '$99',\n    features: [\n      '1x Business Account & Cards',\n      '1x Account',\n      '30 Transfers or Direct Debits',\n      '24/7 Customer Support',\n      'Monthly Financial Reports',\n      'Integration with Popular'\n    ]\n  },\n  {\n    title: 'Professional Plan',\n    price: '$199',\n    features: [\n      '2x Business Accounts & Cards',\n      '2x Accounts',\n      '60 Transfers or Direct Debits',\n      'Priority Customer Support',\n      'Analytics Dashboard',\n      'Team Collaboration Tools'\n    ],\n    isHighlighted: true\n  },\n  {\n    title: 'Enterprise Plan',\n    price: '$299',\n    features: [\n      '5x Business Account & Cards',\n      '5x Accounts',\n      '90 Transfer or Direct Debits',\n      'Dedicated Account Manager',\n      'Advanced Security Features',\n      'Customizable Reporting Tools'\n    ]\n  }\n]\n\nconst PricingPage = () => {\n  return <Pricing pricingData={pricingData} />\n}\n\nexport default PricingPage\n",
+      "type": "registry:page",
+      "target": "app/pricing-component-17/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/pricing-component-17/pricing-component-17.tsx",
+      "content": "import { CheckCircle2Icon, RocketIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent } from '@/components/ui/card'\n\nimport { cn } from '@/lib/utils'\n\ntype PricingData = {\n  title: string\n  price: string\n  features: string[]\n  isHighlighted?: boolean\n}[]\n\nconst Pricing = ({ pricingData }: { pricingData: PricingData }) => {\n  return (\n    <div className='bg-muted py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl space-y-12 px-4 sm:space-y-16 sm:px-6 lg:space-y-24 lg:px-8'>\n        <div className='flex flex-col gap-4'>\n          <p className='text-primary text-sm font-medium tracking-wide uppercase'>Pricing Details</p>\n          <h2 className='text-2xl font-semibold sm:text-3xl lg:text-4xl'>Choose your right plan!</h2>\n          <p className='text-muted-foreground text-xl'>\n            Select from best plans, ensuring a perfect match. Need more or less?\n            <br />\n            Customize your subscription for a seamless fit!\n          </p>\n        </div>\n\n        <div className='flex flex-col gap-6'>\n          {pricingData.map((plan, idx) => (\n            <Card\n              key={idx}\n              className={cn('sm:max-md:mx-auto sm:max-md:w-sm', {\n                'shadow-primary border-primary': plan.isHighlighted\n              })}\n            >\n              <CardContent className='flex flex-row items-baseline gap-6 max-md:flex-col'>\n                <div className='flex w-54 flex-col items-start justify-center gap-3'>\n                  <h3 className='text-muted-foreground text-2xl font-semibold'>{plan.title}</h3>\n                  <div className='flex items-end gap-0.5'>\n                    <span className='text-card-foreground text-4xl font-bold'>{plan.price}</span>\n                    <span className='text-muted-foreground text-lg'>/month</span>\n                  </div>\n                </div>\n\n                <div className='flex flex-1 flex-row gap-6 max-lg:flex-col max-lg:gap-2'>\n                  <div className='flex flex-1 flex-col gap-2'>\n                    {plan.features.slice(0, 3).map((feature, i) => (\n                      <div key={i} className='flex items-center gap-3 py-1'>\n                        <CheckCircle2Icon className='text-card-foreground size-4.5 shrink-0' />\n                        <span className='text-card-foreground text-base font-medium'>{feature}</span>\n                      </div>\n                    ))}\n                  </div>\n\n                  <div className='flex flex-1 flex-col gap-2'>\n                    {plan.features.slice(3).map((feature, i) => (\n                      <div key={i} className='flex items-center gap-3 py-1'>\n                        <CheckCircle2Icon className='text-card-foreground size-4.5 shrink-0' />\n                        <span className='text-card-foreground text-base font-medium'>{feature}</span>\n                      </div>\n                    ))}\n                  </div>\n                </div>\n                <Button variant={plan.isHighlighted ? 'default' : 'secondary'} size='lg'>\n                  Get started\n                  <RocketIcon />\n                </Button>\n              </CardContent>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default Pricing\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/pricing-component-17/pricing-component-17.tsx"
+    }
+  ]
+}

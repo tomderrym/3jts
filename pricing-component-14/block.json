@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pricing-component-14",
+  "type": "registry:block",
+  "description": "Comparison-focused pricing with detailed feature matrices and plan benefits for informed decision making.",
+  "dependencies": [
+    "lucide-react",
+    "motion"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/pricing-component/pricing-component-14/page.tsx",
+      "content": "import Pricing from '@/components/shadcn-studio/blocks/pricing-component-14/pricing-component-14'\n\nconst plans = [\n  {\n    name: 'Free Plan',\n    price: 0,\n    suffix: '',\n    description: 'Recommended for people with at least 1 year experience in crypto markets.',\n    features: [\n      'Access to basic trading tools',\n      'Weekly market trend reports',\n      'Exclusive customer feedback sessions',\n      'Limited access to educational resources'\n    ],\n    buttonText: 'Get started for free'\n  },\n  {\n    name: 'Enterprise',\n    price: 99,\n    suffix: '/month',\n    description: 'Recommended for people with at least 1 year experience in crypto markets.',\n    features: [\n      'Dedicated account manager',\n      '24/7 real-time market analysis',\n      'Personalized portfolio reviews',\n      'Invitations to premium webinars',\n      'Access to exclusive industry reports'\n    ],\n    isPro: true,\n    buttonText: 'Get started'\n  }\n]\n\nconst PricingPage = () => {\n  return <Pricing plans={plans} />\n}\n\nexport default PricingPage\n",
+      "type": "registry:page",
+      "target": "app/pricing-component-14/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/pricing-component-14/pricing-component-14.tsx",
+      "content": "import { CheckIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent } from '@/components/ui/card'\n\nimport { cn } from '@/lib/utils'\nimport { NumberTicker } from '@/components/ui/number-ticker'\n\ntype Plan = {\n  name: string\n  price: number\n  suffix: string\n  description: string\n  features: string[]\n  buttonText: string\n  isPro?: boolean\n}[]\n\nconst Pricing = ({ plans }: { plans: Plan }) => {\n  return (\n    <section className='bg-muted px-4 py-12 sm:px-6 lg:px-8 lg:py-24'>\n      <header className='mx-auto mb-12 text-center lg:mb-24'>\n        <p className='text-primary text-sm font-medium tracking-wide uppercase'>PRICING</p>\n        <h2 className='text-foreground mt-4 text-4xl font-semibold'>Choose the right plan for you</h2>\n        <p className='text-muted-foreground mt-4 text-xl'>\n          Find the ideal plan that fits your budget and goals. Make informed choices with ease.\n        </p>\n      </header>\n\n      <div className='flex flex-col items-center justify-center gap-6 md:flex-row md:gap-0'>\n        {plans.map((plan, index) => (\n          <Card\n            key={index}\n            className={cn('py-8', {\n              'shadow-none': !plan.isPro,\n              'bg-primary border-none shadow-xl md:-ml-4': plan.isPro\n            })}\n          >\n            <CardContent className='flex max-w-lg flex-col gap-6 px-8'>\n              <div className='gap-4'>\n                <h3 className={cn('mb-2 text-3xl font-semibold', { 'text-primary-foreground': plan.isPro })}>\n                  {plan.name}\n                </h3>\n                <div className='flex gap-1'>\n                  <span className={cn('text-lg font-medium', { 'text-primary-foreground': plan.isPro })}>$</span>\n                  <span className={cn('text-5xl font-bold', { 'text-primary-foreground': plan.isPro })}>\n                    <NumberTicker startValue={0} value={plan.price} />\n                  </span>\n                  {plan.suffix && (\n                    <span className={cn('self-end text-lg', { 'text-primary-foreground': plan.isPro })}>\n                      {plan.suffix}\n                    </span>\n                  )}\n                </div>\n                <p className={cn('text-muted-foreground mt-4', { 'text-primary-foreground': plan.isPro })}>\n                  {plan.description}\n                </p>\n              </div>\n\n              <ul className='flex flex-col gap-4.5'>\n                {plan.features.map((feature, i) => (\n                  <li key={i} className='flex items-center gap-2'>\n                    <CheckIcon className={cn('size-3.5', { 'text-primary-foreground': plan.isPro })} />\n                    <span className={cn({ 'text-primary-foreground': plan.isPro })}>{feature}</span>\n                  </li>\n                ))}\n              </ul>\n\n              <Button variant={plan.isPro ? 'secondary' : 'outline'} size='lg' className='w-full'>\n                {plan.buttonText}\n              </Button>\n            </CardContent>\n          </Card>\n        ))}\n      </div>\n    </section>\n  )\n}\n\nexport default Pricing\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/pricing-component-14/pricing-component-14.tsx"
+    },
+    {
+      "path": "src/registry/new-york/ui/number-ticker.tsx",
+      "content": "'use client'\n\nimport * as React from 'react'\n\nimport { useInView, useMotionValue, useSpring } from 'motion/react'\n\nimport { cn } from '@/lib/utils'\n\ninterface NumberTickerProps extends React.ComponentPropsWithoutRef<'span'> {\n  value: number\n  startValue?: number\n  direction?: 'up' | 'down'\n  delay?: number\n  decimalPlaces?: number\n  damping?: number\n  stiffness?: number\n}\n\nfunction NumberTicker({\n  value,\n  startValue = 0,\n  direction = 'up',\n  delay = 0,\n  className,\n  decimalPlaces = 0,\n  damping = 30,\n  stiffness = 200,\n  ...props\n}: NumberTickerProps) {\n  const ref = React.useRef<HTMLSpanElement>(null)\n  const motionValue = useMotionValue(direction === 'down' ? value : startValue)\n\n  const springValue = useSpring(motionValue, {\n    damping,\n    stiffness\n  })\n\n  const isInView = useInView(ref, { once: true, margin: '0px' })\n\n  React.useEffect(() => {\n    if (isInView) {\n      const timer = setTimeout(() => {\n        motionValue.set(direction === 'down' ? startValue : value)\n      }, delay * 1000)\n\n      return () => clearTimeout(timer)\n    }\n  }, [motionValue, isInView, delay, value, direction, startValue])\n\n  React.useEffect(\n    () =>\n      springValue.on('change', latest => {\n        if (ref.current) {\n          ref.current.textContent = Intl.NumberFormat('en-US', {\n            minimumFractionDigits: decimalPlaces,\n            maximumFractionDigits: decimalPlaces\n          }).format(Number(latest.toFixed(decimalPlaces)))\n        }\n      }),\n    [springValue, decimalPlaces]\n  )\n\n  return (\n    <span ref={ref} className={cn('inline-block tabular-nums', className)} {...props}>\n      {startValue}\n    </span>\n  )\n}\n\nexport { NumberTicker, type NumberTickerProps }\n",
+      "type": "registry:ui",
+      "target": "components/ui/number-ticker.tsx"
+    }
+  ]
+}

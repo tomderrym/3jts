@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "contact-us-page-08",
+  "type": "registry:block",
+  "description": "Two-column layout with office background image featuring logo overlay, contact form section with top navigation links, and footer with social media avatar icons",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "button",
+    "input",
+    "label",
+    "textarea",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/contact-us-page/contact-us-page-08/page.tsx",
+      "content": "import { GithubIcon, InstagramIcon, TwitterIcon, YoutubeIcon } from 'lucide-react'\n\nimport ContactUs from '@/components/shadcn-studio/blocks/contact-us-page-08/contact-us-page-08'\n\n// Navigation links data\nconst topNavLinks = [\n  { label: 'Products', href: '#' },\n  { label: 'About', href: '#' },\n  { label: 'Contact', href: '#' },\n  { label: 'Login', href: '#' }\n]\n\n// Footer navigation data\nconst footerNavigation = [\n  { label: 'Home', href: '#' },\n  { label: 'Products', href: '#' },\n  { label: 'Pricing', href: '#' },\n  { label: 'About us', href: '#' },\n  { label: 'Contact Us', href: '#' },\n  { label: 'Blog', href: '#' },\n  { label: 'Privacy Policy', href: '#' },\n  { label: 'Careers', href: '#' },\n  { label: 'Press', href: '#' }\n]\n\n// Social media data\nconst socialMedia = [\n  {\n    icon: GithubIcon,\n    href: '#',\n    avatarClasses: 'bg-primary text-primary-foreground'\n  },\n  {\n    icon: InstagramIcon,\n    href: '#',\n    avatarClasses: 'bg-sky-600 text-white dark:bg-sky-400'\n  },\n  {\n    icon: TwitterIcon,\n    href: '#',\n    avatarClasses: 'bg-amber-600 text-white dark:bg-amber-400'\n  },\n  {\n    icon: YoutubeIcon,\n    href: '#',\n    avatarClasses: 'bg-destructive text-white'\n  }\n]\n\nconst ContactUsPage = () => {\n  return <ContactUs topNavLinks={topNavLinks} footerNavigation={footerNavigation} socialMedia={socialMedia} />\n}\n\nexport default ContactUsPage\n",
+      "type": "registry:page",
+      "target": "app/contact-us-page-08/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/contact-us-page-08/contact-form.tsx",
+      "content": "'use client'\n\nimport { Button } from '@/components/ui/button'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\nimport { Textarea } from '@/components/ui/textarea'\n\nconst ContactForm = () => {\n  return (\n    <form className='space-y-6' onSubmit={e => e.preventDefault()}>\n      <div className='w-full space-y-2'>\n        <Label htmlFor='username'>Full Name</Label>\n        <Input type='text' id='username' className='h-10' placeholder='Enter your name here...' />\n      </div>\n\n      <div className='w-full space-y-2'>\n        <Label htmlFor='useremail'>Your Email</Label>\n        <Input type='email' id='useremail' className='h-10' placeholder='Enter your email here...' />\n      </div>\n\n      <div className='space-y-2'>\n        <Label htmlFor='usermessage'>Message</Label>\n        <Textarea id='usermessage' className='h-20 resize-none' placeholder='Enter your message' />\n      </div>\n\n      <Button type='submit' size='lg'>\n        Send Your Message\n      </Button>\n    </form>\n  )\n}\n\nexport default ContactForm\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/contact-us-page-08/contact-form.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/contact-us-page-08/contact-us-page-08.tsx",
+      "content": "import type { ComponentType } from 'react'\n\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\n\nimport { cn } from '@/lib/utils'\n\nimport ContactForm from '@/components/shadcn-studio/blocks/contact-us-page-08/contact-form'\n\ntype TopNavLink = {\n  label: string\n  href: string\n}[]\n\ntype FooterNavigation = {\n  label: string\n  href: string\n}[]\n\ntype SocialMedia = {\n  icon: ComponentType\n  href: string\n  avatarClasses: string\n}[]\n\nconst ContactUs = ({\n  topNavLinks,\n  footerNavigation,\n  socialMedia\n}: {\n  topNavLinks: TopNavLink\n  footerNavigation: FooterNavigation\n  socialMedia: SocialMedia\n}) => {\n  return (\n    <div className='bg-background'>\n      <div className='grid lg:grid-cols-2'>\n        {/* Image Section with Logo */}\n        <div className='relative h-180 max-lg:h-96'>\n          <img\n            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/contact-us/image-9.png'\n            alt='Modern office interior'\n            className='size-full object-cover'\n          />\n          <div className='absolute top-6 left-6'>\n            <a href='#' className='flex items-center gap-3 text-xl font-bold text-white'>\n              <img\n                src='https://cdn.shadcnstudio.com/ss-assets/logo/logo-square.png'\n                className='size-8 rounded-full'\n                alt='shadcnstudio'\n              />\n              <span>shadcn/studio</span>\n            </a>\n          </div>\n        </div>\n\n        {/* Form Section */}\n        <div className='my-auto p-6'>\n          <div className='mb-16 flex items-center gap-6'>\n            {topNavLinks.map((link, index) => (\n              <a key={index} href={link.href} className='font-medium underline-offset-4 hover:underline'>\n                {link.label}\n              </a>\n            ))}\n          </div>\n\n          <div className='mb-6 space-y-4'>\n            <h2 className='mb-4 text-3xl font-semibold'>Contact Us for More Insights!</h2>\n            <p className='text-muted-foreground text-lg font-medium'>\n              Want to dive deeper? Reach out for personalized assistance and expert guidance.\n            </p>\n          </div>\n\n          <ContactForm />\n        </div>\n      </div>\n\n      {/* Footer */}\n      <footer className='bg-muted mx-auto px-4 py-12 md:px-6 lg:px-8'>\n        <div className='flex gap-9 max-md:flex-col md:items-center'>\n          <div className='grid w-full flex-1 grid-cols-3 grid-rows-3 gap-x-3 gap-y-3 text-start sm:gap-x-10'>\n            {footerNavigation.map((link, index) => (\n              <a\n                key={index}\n                href={link.href}\n                className='text-foreground font-medium underline-offset-4 hover:underline'\n              >\n                {link.label}\n              </a>\n            ))}\n          </div>\n\n          <div className='flex flex-col gap-3 md:items-end lg:flex-1'>\n            <p>Follow us on</p>\n            <div className='flex items-center gap-2'>\n              {socialMedia.map((social, index) => {\n                const IconComponent = social.icon\n\n                return (\n                  <a key={index} href={social.href}>\n                    <Avatar className='size-10'>\n                      <AvatarFallback className={cn('[&>svg]:size-6', social.avatarClasses)}>\n                        <IconComponent />\n                      </AvatarFallback>\n                    </Avatar>\n                  </a>\n                )\n              })}\n            </div>\n          </div>\n        </div>\n      </footer>\n    </div>\n  )\n}\n\nexport default ContactUs\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/contact-us-page-08/contact-us-page-08.tsx"
+    }
+  ]
+}

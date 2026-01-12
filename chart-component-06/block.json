@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-component-06",
+  "type": "registry:block",
+  "description": "Top services by sales performance dashboard featuring horizontal bar chart with service names labeled inside bars and accompanying grid layout showing percentage breakdown.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "chart",
+    "dropdown-menu",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/charts-component/chart-component-06/page.tsx",
+      "content": "import ServicesBySalesCard from '@/components/shadcn-studio/blocks/chart-services-by-sales'\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='flex justify-center'>\n          <ServicesBySalesCard className='w-full max-w-208' />\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/chart-component-06/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/chart-services-by-sales.tsx",
+      "content": "'use client'\n\nimport { CircleIcon, EllipsisVerticalIcon } from 'lucide-react'\n\nimport { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\nimport { cn } from '@/lib/utils'\n\nconst listItems = ['Share', 'Update', 'Refresh']\n\n// Sales chart data\nconst salesChartData = [\n  { sr: 1, service: 'UI design', sales: 99, fill: 'var(--chart-1)' },\n  { sr: 2, service: 'UX design', sales: 94, fill: 'var(--chart-2)' },\n  { sr: 3, service: 'Music', sales: 80, fill: 'var(--chart-3)' },\n  { sr: 4, service: 'Animation', sales: 68, fill: 'var(--chart-4)' },\n  { sr: 5, service: 'React', sales: 52, fill: 'var(--chart-5)' },\n  { sr: 6, service: 'SEO', sales: 45, fill: 'var(--primary)' }\n]\n\nconst salesChartConfig = {\n  sales: {\n    label: 'Sales'\n  }\n} satisfies ChartConfig\n\nconst ServicesBySalesCard = ({ className }: { className?: string }) => {\n  return (\n    <Card className={cn('gap-4', className)}>\n      <CardHeader className='flex justify-between gap-2'>\n        <span className='text-lg font-semibold'>Top Services by Sales</span>\n        <DropdownMenu>\n          <DropdownMenuTrigger asChild>\n            <Button variant='ghost' size='icon' className='text-muted-foreground size-6 rounded-full'>\n              <EllipsisVerticalIcon />\n              <span className='sr-only'>Menu</span>\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align='end'>\n            <DropdownMenuGroup>\n              {listItems.map((item, index) => (\n                <DropdownMenuItem key={index}>{item}</DropdownMenuItem>\n              ))}\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </CardHeader>\n      <CardContent className='grid grid-cols-1 gap-4 px-0 lg:grid-cols-2'>\n        <div className='p-6'>\n          <ChartContainer config={salesChartConfig} className='h-full min-h-60 w-full max-lg:max-h-70 lg:max-w-95'>\n            <BarChart\n              accessibilityLayer\n              data={salesChartData}\n              layout='vertical'\n              barSize={24}\n              margin={{\n                left: -35,\n                right: 12\n              }}\n            >\n              <CartesianGrid horizontal={false} strokeDasharray='4' stroke='var(--border)' />\n              <XAxis\n                type='number'\n                dataKey='sales'\n                domain={[0, 100]}\n                tickFormatter={value => `${value}%`}\n                axisLine={false}\n                tickLine={false}\n                tickMargin={8}\n                tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}\n              />\n              <YAxis dataKey='sr' type='category' tickLine={false} tickMargin={10} axisLine={false} />\n              <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />\n              <Bar dataKey='sales' radius={[0, 10, 10, 0]}>\n                <LabelList dataKey='service' position='middle' fill='var(--primary-foreground)' className='text-sm' />\n              </Bar>\n            </BarChart>\n          </ChartContainer>\n        </div>\n        <div className='grid grid-cols-2 gap-x-23 gap-y-12 px-8 max-lg:gap-x-8 lg:py-10'>\n          {salesChartData.map((service, index) => (\n            <div key={index} className='flex gap-3 px-2'>\n              <div className='flex size-4.5 items-center justify-center'>\n                <CircleIcon fill={service.fill} stroke={service.fill} className='size-2.5' />\n              </div>\n              <div className='flex flex-col gap-2'>\n                <span className='text-muted-foreground text-sm'>{service.service}</span>\n                <span className='text-lg font-medium'>{service.sales}%</span>\n              </div>\n            </div>\n          ))}\n        </div>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default ServicesBySalesCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/chart-services-by-sales.tsx"
+    }
+  ]
+}
