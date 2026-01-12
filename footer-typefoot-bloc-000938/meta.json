@@ -1,0 +1,10 @@
+{
+  "block": "footer",
+  "pattern": {
+    "type": "footer",
+    "links": 0,
+    "layout": "simple",
+    "social": true,
+    "newsletter": true
+  }
+}
