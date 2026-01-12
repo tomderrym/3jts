@@ -1,0 +1,10 @@
+{
+  "block": "card",
+  "pattern": {
+    "type": "card",
+    "media": "none",
+    "actions": 0,
+    "elevation": "flat"
+  },
+  "content": {}
+}

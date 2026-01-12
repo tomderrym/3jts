@@ -1,0 +1,10 @@
+{
+  "block": "modal",
+  "pattern": {
+    "type": "modal",
+    "size": "sm",
+    "closable": true,
+    "backdrop": true
+  },
+  "content": {}
+}

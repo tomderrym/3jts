@@ -1,0 +1,10 @@
+{
+  "block": "feature-grid",
+  "pattern": {
+    "columns": 3,
+    "alignment": "center",
+    "density": "comfortable",
+    "icon": "filled"
+  },
+  "content": {}
+}
