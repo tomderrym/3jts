@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-dropdown-15",
+  "type": "registry:block",
+  "description": "A more options dropdown with additional actions, extended functionality, and secondary menu items for comprehensive feature access.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "dropdown-menu"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/dashboard-dropdown/dashboard-dropdown-15/page.tsx",
+      "content": "import { MoreVerticalIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport MoreOptionsDropdown from '@/components/shadcn-studio/blocks/dashboard-dropdown-15/dropdown-more-options'\n\nconst DropdownPage = () => {\n  return (\n    <div className='flex h-150 items-start justify-center p-8'>\n      <MoreOptionsDropdown\n        defaultOpen\n        align='center'\n        trigger={\n          <Button variant='outline' size='icon'>\n            <MoreVerticalIcon />\n          </Button>\n        }\n      />\n    </div>\n  )\n}\n\nexport default DropdownPage\n",
+      "type": "registry:page",
+      "target": "app/dashboard-dropdown-15/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/dashboard-dropdown-15/dropdown-more-options.tsx",
+      "content": "import type { ReactNode } from 'react'\n\nimport {\n  ChartNoAxesColumnIcon,\n  CopyIcon,\n  FoldersIcon,\n  GalleryHorizontalEndIcon,\n  InfoIcon,\n  SettingsIcon,\n  Trash2Icon,\n  Undo2Icon,\n  UnlinkIcon,\n  UploadIcon\n} from 'lucide-react'\n\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\ntype Props = {\n  trigger: ReactNode\n  defaultOpen?: boolean\n  align?: 'start' | 'center' | 'end'\n}\n\nconst MoreOptionsDropdown = ({ defaultOpen, align, trigger }: Props) => {\n  return (\n    <DropdownMenu defaultOpen={defaultOpen}>\n      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>\n      <DropdownMenuContent className='w-60 p-2' align={align || 'end'}>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <SettingsIcon className='text-foreground size-5' />\n          Settings\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <UnlinkIcon className='text-foreground size-5' />\n          Copy Link\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <FoldersIcon className='text-foreground size-5' />\n          Move to a Folder\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <CopyIcon className='text-foreground size-5' />\n          Duplicate\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <Trash2Icon className='text-foreground size-5' />\n          Move to Trash\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <Undo2Icon className='text-foreground size-5' />\n          Undo\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <UploadIcon className='text-foreground size-5' />\n          Export\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <ChartNoAxesColumnIcon className='text-foreground size-5' />\n          Updates & Analytics\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <GalleryHorizontalEndIcon className='text-foreground size-5' />\n          Version History\n        </DropdownMenuItem>\n        <DropdownMenuItem className='px-3 py-2.5 text-base'>\n          <InfoIcon className='text-foreground size-5' />\n          Report\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport default MoreOptionsDropdown\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/dashboard-dropdown-15/dropdown-more-options.tsx"
+    }
+  ]
+}

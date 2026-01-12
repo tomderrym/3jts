@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-component-10",
+  "type": "registry:block",
+  "description": "Country sales performance dashboard with horizontal bar chart displaying sales data by country, featuring labeled bars and geographic sales comparison.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "chart",
+    "dropdown-menu"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/charts-component/chart-component-10/page.tsx",
+      "content": "import CountrySalesCard from '@/components/shadcn-studio/blocks/chart-country-sales'\n\n// Chart data\nconst countrySalesChartData = [\n  { country: 'IN', sales: 20000 },\n  { country: 'US', sales: 18988 },\n  { country: 'CA', sales: 15473 },\n  { country: 'JA', sales: 13042 },\n  { country: 'AU', sales: 9933 },\n  { country: 'NZ', sales: 7297 }\n]\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='flex justify-center'>\n          <CountrySalesCard\n            title='Sale Country'\n            subTitle='until your daily purchase target'\n            chartData={countrySalesChartData}\n            className='w-full max-w-100'\n          />\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/chart-component-10/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/chart-country-sales.tsx",
+      "content": "'use client'\n\nimport { EllipsisVerticalIcon } from 'lucide-react'\n\nimport { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\nconst listItems = ['Share', 'Update', 'Refresh']\n\ntype Props = {\n  title: string\n  subTitle: string\n  chartData: {\n    country: string\n    sales: number\n  }[]\n  className?: string\n}\n\nconst countrySalesChartConfig = {\n  sales: {\n    label: 'Sales',\n    color: 'var(--primary)'\n  }\n} satisfies ChartConfig\n\nconst CountrySalesCard = ({ title, subTitle, chartData, className }: Props) => {\n  return (\n    <Card className={className}>\n      <CardHeader className='flex justify-between gap-2 border-b'>\n        <div className='flex flex-col gap-1'>\n          <span className='text-lg font-semibold'>{title}</span>\n          <span className='text-muted-foreground text-sm'>{subTitle}</span>\n        </div>\n        <DropdownMenu>\n          <DropdownMenuTrigger asChild>\n            <Button variant='ghost' size='icon' className='text-muted-foreground size-6 rounded-full'>\n              <EllipsisVerticalIcon />\n              <span className='sr-only'>Menu</span>\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align='end'>\n            <DropdownMenuGroup>\n              {listItems.map((item, index) => (\n                <DropdownMenuItem key={index}>{item}</DropdownMenuItem>\n              ))}\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </CardHeader>\n      <CardContent className='flex flex-1'>\n        <ChartContainer config={countrySalesChartConfig} className='min-h-80 max-w-89 max-[400px]:max-w-76'>\n          <BarChart\n            accessibilityLayer\n            data={chartData}\n            layout='vertical'\n            barSize={24}\n            margin={{\n              left: -26,\n              right: 25\n            }}\n          >\n            <CartesianGrid horizontal={false} strokeDasharray='4' stroke='var(--border)' />\n            <XAxis\n              type='number'\n              dataKey='sales'\n              domain={[0, 20000]}\n              ticks={[0, 4000, 8000, 12000, 16000, 20000]}\n              tickFormatter={value => (value === 0 ? '0K' : `${value / 1000}K`)}\n              axisLine={false}\n              tickLine={false}\n              tickMargin={8}\n              tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}\n            />\n            <YAxis dataKey='country' type='category' tickLine={false} tickMargin={8} axisLine={false} fontSize={14} />\n            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />\n            <Bar dataKey='sales' fill='var(--color-sales)' radius={6}>\n              <LabelList\n                dataKey='sales'\n                offset={24}\n                position='insideLeft'\n                fill='var(--primary-foreground)'\n                className='text-sm'\n              />\n            </Bar>\n          </BarChart>\n        </ChartContainer>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default CountrySalesCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/chart-country-sales.tsx"
+    }
+  ]
+}

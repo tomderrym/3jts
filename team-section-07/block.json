@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "team-section-07",
+  "type": "registry:block",
+  "description": "Split-screen team carousel with dedicated navigation controls and content area. Features a clean layout with carousel on one side and descriptive content with custom navigation buttons.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "carousel"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/team-section/team-section-07/page.tsx",
+      "content": "import Team from '@/components/shadcn-studio/blocks/team-section-07/team-section-07'\n\nconst teamMembers = [\n  {\n    name: 'Gustavo Dokidis',\n    role: 'Sales Lead',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-21.png',\n    socialLinks: {\n      facebook: '#',\n      twitter: '#',\n      github: '#'\n    }\n  },\n  {\n    name: 'Alena Lubin',\n    role: 'Product manager',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-22.png',\n    socialLinks: {\n      facebook: '#',\n      twitter: '#',\n      github: '#'\n    }\n  },\n  {\n    name: 'Sarah Johnson',\n    role: 'Lead Designer',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-41.png',\n    socialLinks: {\n      facebook: '#',\n      twitter: '#',\n      github: '#'\n    }\n  },\n  {\n    name: 'Alex Chen',\n    role: 'Frontend Developer',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-40.png',\n    socialLinks: {\n      facebook: '#',\n      twitter: '#',\n      github: '#'\n    }\n  }\n]\n\nconst TeamPage = () => {\n  return <Team teamMembers={teamMembers} />\n}\n\nexport default TeamPage\n",
+      "type": "registry:page",
+      "target": "app/team-section-07/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/team-section-07/team-section-07.tsx",
+      "content": "import { FacebookIcon, GithubIcon, TwitterIcon } from 'lucide-react'\n\nimport {\n  Carousel,\n  CarouselContent,\n  CarouselItem,\n  CarouselNext,\n  CarouselPrevious\n} from '@/components/ui/carousel'\n\ntype TeamMember = {\n  name: string\n  role: string\n  image: string\n  socialLinks: {\n    facebook: string\n    twitter: string\n    github: string\n  }\n}[]\n\nconst Team = ({ teamMembers }: { teamMembers: TeamMember }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <Carousel\n        className='mx-auto flex max-w-7xl gap-12 px-4 max-sm:flex-col sm:items-center sm:gap-16 sm:px-6 lg:gap-24 lg:px-8'\n        opts={{\n          align: 'start',\n          slidesToScroll: 1\n        }}\n      >\n        <div className='sm:w-1/2'>\n          <h2 className='mb-4 text-2xl font-semibold sm:text-3xl lg:text-4xl'>Brains behind our success team</h2>\n          <p className='text-muted-foreground mb-10 text-xl'>\n            We have a diverse group of talented individuals who bring unique skills and perspectives to our projects.\n          </p>\n\n          <div className='flex items-center gap-4'>\n            <CarouselPrevious\n              variant='default'\n              className='disabled:text-primary static size-9 translate-y-0 rounded-lg disabled:border disabled:bg-transparent disabled:opacity-100'\n            />\n            <CarouselNext\n              variant='default'\n              className='disabled:text-primary static size-9 translate-y-0 rounded-lg disabled:border disabled:bg-transparent disabled:opacity-100'\n            />\n          </div>\n        </div>\n\n        <div className='relative sm:w-1/2'>\n          <CarouselContent className='sm:-ml-6'>\n            {teamMembers.map((member, index) => (\n              <CarouselItem key={index} className='sm:pl-6 lg:basis-1/2'>\n                <div className='flex flex-col gap-3'>\n                  <img src={member.image} alt={member.name} className='max-h-110 rounded-md object-cover sm:max-h-80' />\n                  <div className='flex items-center justify-between gap-1 px-2'>\n                    <div>\n                      <h4 className='text-card-foreground mb-1 text-lg font-semibold'>{member.name}</h4>\n                      <p className='text-muted-foreground'>{member.role}</p>\n                    </div>\n                    <div className='text-card-foreground flex items-center gap-3'>\n                      <a href={member.socialLinks.facebook}>\n                        <FacebookIcon className='size-5' />\n                      </a>\n                      <a href={member.socialLinks.twitter}>\n                        <TwitterIcon className='size-5' />\n                      </a>\n                      <a href={member.socialLinks.github}>\n                        <GithubIcon className='size-5' />\n                      </a>\n                    </div>\n                  </div>\n                </div>\n              </CarouselItem>\n            ))}\n          </CarouselContent>\n        </div>\n      </Carousel>\n    </section>\n  )\n}\n\nexport default Team\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/team-section-07/team-section-07.tsx"
+    }
+  ]
+}

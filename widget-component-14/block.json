@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-component-14",
+  "type": "registry:block",
+  "description": "Payment history widget with table displays, comprehensive transaction tracking, and detailed payment management features",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "card",
+    "dropdown-menu",
+    "button",
+    "table",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/widgets-component/widget-component-14/page.tsx",
+      "content": "import PaymentHistoryCard from '@/components/shadcn-studio/blocks/widget-payment-history'\n\n// Payment data\nconst paymentData = [\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/master-card.png',\n    imgWidth: 8,\n    cardNumber: '5688',\n    cardType: 'Credit Card',\n    date: '05/Jan',\n    spend: '2,820',\n    remaining: '10,020'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/visa.png',\n    imgWidth: 8,\n    cardNumber: '8562',\n    cardType: 'Debit Card',\n    date: '15/Feb',\n    spend: '1,450',\n    remaining: '8,570'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/american-express.png',\n    imgWidth: 10.5,\n    cardNumber: '5238',\n    cardType: 'ATM card',\n    date: '20/Mar',\n    spend: '500',\n    remaining: '7,070'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/visa.png',\n    imgWidth: 8,\n    cardNumber: '8562',\n    cardType: 'Debit card',\n    date: '10/Mar',\n    spend: '750',\n    remaining: '5,120'\n  },\n  {\n    img: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/master-card.png',\n    imgWidth: 8,\n    cardNumber: '*5688',\n    cardType: 'Credit Card',\n    date: '25/May',\n    spend: '1,200',\n    remaining: '5,870'\n  }\n]\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-16'>\n      <div className='flex justify-center'>\n        <PaymentHistoryCard title='Payment History' paymentData={paymentData} className='w-full max-w-100' />\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/widget-component-14/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/widget-payment-history.tsx",
+      "content": "import { EllipsisVerticalIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\nimport { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'\n\nimport { cn } from '@/lib/utils'\n\nconst listItems = ['Share', 'Update', 'Refresh']\n\ntype Props = {\n  title: string\n  paymentData: {\n    img: string\n    imgWidth: number\n    cardNumber: string\n    cardType: string\n    date: string\n    spend: string\n    remaining: string\n  }[]\n  className?: string\n}\n\nconst PaymentHistoryCard = ({ title, paymentData, className }: Props) => {\n  return (\n    <Card className={cn('justify-between gap-2.5', className)}>\n      <CardHeader className='flex items-center justify-between gap-2'>\n        <span className='text-lg font-semibold'>{title}</span>\n        <DropdownMenu>\n          <DropdownMenuTrigger asChild>\n            <Button variant='ghost' size='icon' className='text-muted-foreground size-6 rounded-full'>\n              <EllipsisVerticalIcon />\n              <span className='sr-only'>Menu</span>\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align='end'>\n            <DropdownMenuGroup>\n              {listItems.map((item, index) => (\n                <DropdownMenuItem key={index}>{item}</DropdownMenuItem>\n              ))}\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </CardHeader>\n      <CardContent className='px-0'>\n        <Table>\n          <TableHeader>\n            <TableRow>\n              <TableHead className='pl-6'>Card</TableHead>\n              <TableHead>Date</TableHead>\n              <TableHead className='pr-6 text-end'>Spend</TableHead>\n            </TableRow>\n          </TableHeader>\n          <TableBody>\n            {paymentData.map((payment, index) => (\n              <TableRow key={index} className='border-none'>\n                <TableCell className='pl-6 first:pt-4'>\n                  <div className='flex items-center gap-2'>\n                    <div className='bg-muted flex size-10.5 items-center justify-center rounded-sm'>\n                      <img src={payment.img} alt={payment.cardType} className={`w-${payment.imgWidth}`} />\n                    </div>\n                    <div className='flex flex-col gap-0.5'>\n                      <span className='text-base font-medium'>*{payment.cardNumber}</span>\n                      <span className='text-muted-foreground text-sm'>{payment.cardType}</span>\n                    </div>\n                  </div>\n                </TableCell>\n                <TableCell className='text-muted-foreground text-xs'>{payment.date}</TableCell>\n                <TableCell className='pr-6'>\n                  <div className='flex flex-col items-end'>\n                    <span className='text-sm'>-${payment.spend}</span>\n                    <span className='text-muted-foreground text-xs'>${payment.remaining}</span>\n                  </div>\n                </TableCell>\n              </TableRow>\n            ))}\n          </TableBody>\n        </Table>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default PaymentHistoryCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/widget-payment-history.tsx"
+    }
+  ]
+}

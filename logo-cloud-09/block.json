@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "logo-cloud-09",
+  "type": "registry:block",
+  "description": "A neatly arranged logo cloud showcasing prominent global brands, reflecting the diversity and reach of the company's collaborations with leading enterprises. The logos are presented in a grid layout, highlighting the companies the organization partners with to drive growth and innovation.",
+  "registryDependencies": [
+    "button",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/logo-cloud/logo-cloud-09/page.tsx",
+      "content": "import LogoCloud from '@/components/shadcn-studio/blocks/logo-cloud-09/logo-cloud-09'\n\nconst brandLogos = [\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/microsoft-icon.png',\n    name: 'Microsoft'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/google-logo-bw.png',\n    name: 'Google'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/amazon-logo-bw.png',\n    name: 'Amazon'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/meta-icon.png',\n    name: 'Ola'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/evernote-icon-bw.png',\n    name: 'Evernote'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/hubspot-logo-bw.png',\n    name: 'HubSpot'\n  }\n]\n\nconst LogoCloudPage = () => {\n  return <LogoCloud brandLogos={brandLogos} />\n}\n\nexport default LogoCloudPage\n",
+      "type": "registry:page",
+      "target": "app/logo-cloud-09/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/logo-cloud-09/logo-cloud-09.tsx",
+      "content": "import { Button } from '@/components/ui/button'\n\nimport { cn } from '@/lib/utils'\n\ntype brandLogos = {\n  image: string\n  name: string\n}\n\nconst LogoCloud = ({ brandLogos }: { brandLogos: brandLogos[] }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='grid gap-8 md:grid-cols-3'>\n          {/* Header */}\n          <div className='space-y-4 md:col-span-2'>\n            <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>\n              Join 50,000+ diverse companies making a difference in business today.\n            </h2>\n            <p className='text-muted-foreground text-xl'>\n              Fueling progress by working with global leaders who are redefining innovation, success, and customer\n              experiences worldwide.\n            </p>\n            <Button className='rounded-lg text-base shadow-sm' size='lg'>\n              Explore more\n            </Button>\n          </div>\n\n          <div className='grid grid-cols-3 gap-4'>\n            {brandLogos.map((logo, index) => (\n              <div\n                key={index}\n                className={cn('bg-muted flex items-center justify-center rounded-md px-2 py-7', {\n                  'col-span-2': index === 1 || index === 2 || index == 5\n                })}\n              >\n                <img src={logo.image} alt={logo.name} className='h-7.5 shrink-0 grayscale' />\n              </div>\n            ))}\n          </div>\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default LogoCloud\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/logo-cloud-09/logo-cloud-09.tsx"
+    }
+  ]
+}

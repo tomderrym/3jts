@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "statistics-component-03",
+  "type": "registry:block",
+  "description": "E-commerce statistics cards featuring Total Sales, Total Orders, Total Profit, Bookmarks, and Total Impressions with trend badges (positive/negative/neutral) and \"from last month\" comparisons",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "badge",
+    "card",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/statistics-component/statistics-component-03/page.tsx",
+      "content": "import { BookMarkedIcon, DollarSignIcon, GlobeIcon, ShoppingCartIcon, TicketCheckIcon } from 'lucide-react'\n\nimport StatisticsCard, { type StatisticsCardProps } from '@/components/shadcn-studio/blocks/statistics-card-03'\n\n// Statistics card data\nconst StatisticsCardData: StatisticsCardProps[] = [\n  {\n    icon: <TicketCheckIcon />,\n    title: 'Total Sales',\n    value: '$13.4k',\n    trend: 'up',\n    changePercentage: '+38%',\n    badgeContent: 'Last 6 months'\n  },\n  {\n    icon: <ShoppingCartIcon />,\n    title: 'Total Orders',\n    value: '155K',\n    trend: 'up',\n    changePercentage: '+22%',\n    badgeContent: 'Last 4 months'\n  },\n  {\n    icon: <DollarSignIcon />,\n    title: 'Total Profit',\n    value: '$89.34k',\n    trend: 'down',\n    changePercentage: '-16%',\n    badgeContent: 'Last One year'\n  },\n  {\n    icon: <BookMarkedIcon />,\n    title: 'Bookmarks',\n    value: '$1,200',\n    trend: 'up',\n    changePercentage: '+38%',\n    badgeContent: 'Last 6 months'\n  },\n  {\n    icon: <GlobeIcon />,\n    title: 'Total Impressions',\n    value: '142.8k',\n    trend: 'down',\n    changePercentage: '-20%',\n    badgeContent: 'Last 6 months'\n  }\n]\n\nconst StatisticsCardPreview = () => {\n  return (\n    <div className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:px-8'>\n        {StatisticsCardData.map((card, index) => (\n          <StatisticsCard\n            key={index}\n            icon={card.icon}\n            title={card.title}\n            value={card.value}\n            trend={card.trend}\n            changePercentage={card.changePercentage}\n            badgeContent={card.badgeContent}\n          />\n        ))}\n      </div>\n    </div>\n  )\n}\n\nexport default StatisticsCardPreview\n",
+      "type": "registry:page",
+      "target": "app/statistics-component-03/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/statistics-card-03.tsx",
+      "content": "import type { ReactNode } from 'react'\n\nimport { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'\n\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Badge } from '@/components/ui/badge'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\n\nimport { cn } from '@/lib/utils'\n\n// Statistics card data type\nexport type StatisticsCardProps = {\n  icon: ReactNode\n  trend: 'up' | 'down'\n  changePercentage: string\n  value: string\n  title: string\n  badgeContent: string\n  className?: string\n  iconClassName?: string\n}\n\nconst StatisticsCard = ({\n  icon,\n  value,\n  title,\n  trend,\n  changePercentage,\n  badgeContent,\n  className,\n  iconClassName\n}: StatisticsCardProps) => {\n  return (\n    <Card className={cn('gap-4', className)}>\n      <CardHeader className='flex items-center justify-between gap-2'>\n        <Avatar className='size-9.5 rounded-md'>\n          <AvatarFallback\n            className={cn('bg-primary/10 text-primary size-9.5 shrink-0 rounded-md [&>svg]:size-4.75', iconClassName)}\n          >\n            {icon}\n          </AvatarFallback>\n        </Avatar>\n        <p className='flex items-center gap-1'>\n          {changePercentage}{' '}\n          {trend === 'up' ? <ChevronUpIcon className='size-4' /> : <ChevronDownIcon className='size-4' />}\n        </p>\n      </CardHeader>\n      <CardContent className='flex flex-1 flex-col justify-between gap-4'>\n        <p className='flex flex-col gap-1'>\n          <span className='text-lg font-semibold'>{value}</span>\n          <span className='text-muted-foreground text-sm'>{title}</span>\n        </p>\n        <Badge className='bg-primary/10 text-primary rounded-full'>{badgeContent}</Badge>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default StatisticsCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/statistics-card-03.tsx"
+    }
+  ]
+}

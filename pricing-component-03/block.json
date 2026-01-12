@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pricing-component-03",
+  "type": "registry:block",
+  "description": "Badge-enhanced pricing cards with highlighted features and separator elements for plan distinction",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "badge",
+    "button",
+    "card",
+    "separator"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/pricing-component/pricing-component-03/page.tsx",
+      "content": "import { StarIcon, UsersIcon, PieChartIcon } from 'lucide-react'\n\nimport Pricing from '@/components/shadcn-studio/blocks/pricing-component-03/pricing-component-03'\n\nconst features = [\n  {\n    icon: StarIcon,\n    title: 'Unlimited Templates:',\n    description: 'Insight gives you the tools & resources you need to design a website.'\n  },\n  {\n    icon: UsersIcon,\n    title: 'Collaborative Workspace:',\n    description: 'Insight provides you with the tools & resources you need to work as a team.'\n  },\n  {\n    icon: PieChartIcon,\n    title: 'Performance Analytics:',\n    description: \"Insight gives you the tools & resources you need to track your website's success.\"\n  }\n]\n\nconst planFeatures = [\n  ['5 Website Templates', 'Mobile Responsive Design', 'Customisation Options', 'Access to Template Updates'],\n  ['Free Demo Previews', 'Priority Email Support', '1 Year Access to New Templates', 'Template Setup Guide']\n]\n\nconst PricingPage = () => {\n  return <Pricing features={features} planFeatures={planFeatures} />\n}\n\nexport default PricingPage\n",
+      "type": "registry:page",
+      "target": "app/pricing-component-03/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/pricing-component-03/pricing-component-03.tsx",
+      "content": "import type { ComponentType } from 'react'\n\nimport { CircleCheckIcon } from 'lucide-react'\n\nimport { Separator } from '@/components/ui/separator'\nimport { Badge } from '@/components/ui/badge'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent } from '@/components/ui/card'\n\ntype Features = {\n  icon: ComponentType\n  title: string\n  description: string\n}[]\n\ntype PlanFeature = string[][]\n\nconst Pricing = ({ features, planFeatures }: { features: Features; planFeatures: PlanFeature }) => {\n  return (\n    <div className='bg-muted py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='flex gap-16 max-md:flex-col md:gap-20 lg:gap-28'>\n          <div className='max-w-121.5 flex-1 space-y-12'>\n            <div className='flex flex-col gap-4'>\n              <Badge variant='outline' className='rounded-full text-sm font-normal'>\n                Pricing detail\n              </Badge>\n              <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Access All Features</h2>\n              <p className='text-muted-foreground text-xl'>\n                Insight provides you with the tools & resources you need to build a stunning e-commerce site, portfolio,\n                or dashboard for your business.\n              </p>\n            </div>\n\n            <div className='space-y-8'>\n              {features.map((feature, index) => (\n                <div key={index} className='flex items-start gap-4 [&>svg]:size-6.5 [&>svg]:shrink-0'>\n                  <feature.icon />\n                  <p>\n                    <span className='font-semibold'>{feature.title}</span> {feature.description}\n                  </p>\n                </div>\n              ))}\n            </div>\n          </div>\n\n          <Card className='h-fit border-none shadow-lg'>\n            <CardContent>\n              <div className='flex flex-wrap items-center gap-4 pb-1'>\n                <div className='flex-1 space-y-2'>\n                  <h3 className='text-3xl font-bold text-nowrap'>Pro Plan</h3>\n                  <p className='text-muted-foreground'>per user, billed annually</p>\n                </div>\n                <div className='flex items-baseline gap-1'>\n                  <span className='text-muted-foreground mb-auto text-lg font-medium'>$</span>\n                  <span className='text-6xl font-bold'>49</span>\n                  <span className='text-muted-foreground text-lg font-medium'>/month</span>\n                </div>\n              </div>\n\n              <Separator className='-mx-6 mb-6 w-auto' />\n\n              <div className='space-y-4'>\n                <h6 className='text-muted-foreground text-xs font-medium'>EVERYTHING IN FREE, PLUS</h6>\n                <div className='flex gap-x-6 gap-y-2 max-lg:flex-col'>\n                  {planFeatures.map((column, columnIndex) => (\n                    <ul key={columnIndex} className='space-y-2'>\n                      {column.map((feature, index) => (\n                        <li key={index} className='flex items-start gap-3 py-1'>\n                          <CircleCheckIcon className='text-primary mt-0.5 size-5 shrink-0' />\n                          <span>{feature}</span>\n                        </li>\n                      ))}\n                    </ul>\n                  ))}\n                </div>\n              </div>\n              <Button className='mt-6 w-full' size='lg'>\n                Start 14 days free trial\n              </Button>\n            </CardContent>\n          </Card>\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default Pricing\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/pricing-component-03/pricing-component-03.tsx"
+    }
+  ]
+}

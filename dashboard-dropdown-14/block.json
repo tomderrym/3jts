@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-dropdown-14",
+  "type": "registry:block",
+  "description": "A search dropdown with avatar display, checkboxes, labels, and advanced filtering options for enhanced search functionality.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "button",
+    "checkbox",
+    "dropdown-menu",
+    "label"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/dashboard-dropdown/dashboard-dropdown-14/page.tsx",
+      "content": "import { Button } from '@/components/ui/button'\n\nimport SearchDropdown from '@/components/shadcn-studio/blocks/dashboard-dropdown-14/search-dropdown'\n\nconst users = [\n  {\n    id: 'john-doe',\n    name: 'John Doe',\n    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png',\n    initials: 'JD'\n  },\n  {\n    id: 'arthur-gauthier',\n    name: 'Arthur Gauthier',\n    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png',\n    initials: 'AG'\n  },\n  {\n    id: 'james-brown',\n    name: 'James Brown',\n    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png',\n    initials: 'JB'\n  },\n  {\n    id: 'emma-wright',\n    name: 'Emma Wright',\n    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png',\n    initials: 'EW'\n  },\n  {\n    id: 'laura-perez',\n    name: 'Laura Perez',\n    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-4.png',\n    initials: 'LP'\n  }\n]\n\nconst DropdownPage = () => {\n  return (\n    <div className='flex h-132 items-start justify-center p-8'>\n      <SearchDropdown\n        defaultOpen\n        align='center'\n        trigger={<Button variant='outline'>Select User</Button>}\n        usersData={users}\n      />\n    </div>\n  )\n}\n\nexport default DropdownPage\n",
+      "type": "registry:page",
+      "target": "app/dashboard-dropdown-14/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/dashboard-dropdown-14/search-dropdown.tsx",
+      "content": "'use client'\n\nimport { useState } from 'react'\nimport type { ReactNode } from 'react'\n\nimport { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'\nimport { Checkbox } from '@/components/ui/checkbox'\nimport {\n  DropdownMenu,\n  DropdownMenuCheckboxItem,\n  DropdownMenuContent,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\nimport { Label } from '@/components/ui/label'\n\ntype Props = {\n  trigger: ReactNode\n  defaultOpen?: boolean\n  align?: 'start' | 'center' | 'end'\n  usersData: {\n    id: string\n    name: string\n    avatar: string\n    initials: string\n  }[]\n}\n\nconst SearchDropdown = ({ defaultOpen, align, trigger, usersData }: Props) => {\n  const [selected, setSelected] = useState<string[]>(['james-brown'])\n\n  return (\n    <DropdownMenu defaultOpen={defaultOpen}>\n      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>\n      <DropdownMenuContent className='w-72.5 space-y-0.5' align={align || 'end'}>\n        {usersData.map(user => (\n          <DropdownMenuCheckboxItem\n            key={user.id}\n            className='gap-3 px-3 py-2.5 text-base [&>span]:hidden'\n            onClick={e => {\n              e.preventDefault()\n              const isChecked = selected.includes(user.id)\n\n              if (!isChecked) {\n                setSelected([...selected, user.id])\n              } else {\n                setSelected(selected.filter(id => id !== user.id))\n              }\n            }}\n          >\n            <div>\n              <Checkbox\n                id={user.id}\n                checked={selected.includes(user.id)}\n                onCheckedChange={checked => {\n                  if (checked) {\n                    setSelected([...selected, user.id])\n                  } else {\n                    setSelected(selected.filter(id => id !== user.id))\n                  }\n                }}\n              />\n              <Label htmlFor={user.id} className='sr-only'>\n                {user.name}\n              </Label>\n            </div>\n            <div className='flex items-center gap-3'>\n              <Avatar>\n                <AvatarImage src={user.avatar} alt={user.name} />\n                <AvatarFallback>{user.initials}</AvatarFallback>\n              </Avatar>\n              {user.name}\n            </div>\n          </DropdownMenuCheckboxItem>\n        ))}\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport default SearchDropdown\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/dashboard-dropdown-14/search-dropdown.tsx"
+    }
+  ]
+}

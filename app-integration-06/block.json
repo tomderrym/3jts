@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-integration-06",
+  "type": "registry:block",
+  "description": "Partner app showcase with four-column grid featuring branded avatars, descriptions, and connect buttons for app partnerships",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "button",
+    "card",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/app-integration/app-integration-06/page.tsx",
+      "content": "import AppIntegration from '@/components/shadcn-studio/blocks/app-integration-06/app-integration-06'\n\nconst partnerApps = [\n  {\n    name: 'Zapier',\n    description: 'Automate workflows across apps seamlessly',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/zapier-icon.png',\n    bgColor: 'bg-destructive/10',\n    link: '#'\n  },\n  {\n    name: 'Notion',\n    description: 'Organize your work and ideas efficiently',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/notion-white.png',\n    bgColor: 'bg-primary/10',\n    link: '#'\n  },\n  {\n    name: 'Slack',\n    description: 'Collaborate and communicate in real time',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/slack-icon.png',\n    bgColor: 'bg-green-600/10 dark:bg-green-400/10',\n    link: '#'\n  },\n  {\n    name: 'Figma',\n    description: 'Design and prototype together, remotely',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/figma-icon.png',\n    bgColor: 'bg-destructive/10',\n    link: '#'\n  },\n  {\n    name: 'Discord',\n    description: 'Connect and chat with teams instantly',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/discord-icon.png',\n    bgColor: 'bg-sky-600/10 dark:bg-sky-400/10',\n    link: '#'\n  },\n  {\n    name: 'Google Meet',\n    description: 'Host video calls with ease',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/meet-icon.png',\n    bgColor: 'bg-amber-600/10 dark:bg-amber-400/10',\n    link: '#'\n  },\n  {\n    name: 'Zoom',\n    description: 'Connect with others through video meetings',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/camera-icon.png',\n    bgColor: 'bg-sky-600/10 dark:bg-sky-400/10',\n    link: '#'\n  },\n  {\n    name: 'Gmail',\n    description: 'Manage your emails securely and easily',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/gmail-icon.png',\n    bgColor: 'bg-amber-600/10 dark:bg-amber-400/10',\n    link: '#'\n  }\n]\n\nconst AppIntegrationPage = () => {\n  return <AppIntegration partnerApps={partnerApps} />\n}\n\nexport default AppIntegrationPage\n",
+      "type": "registry:page",
+      "target": "app/app-integration-06/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/app-integration-06/app-integration-06.tsx",
+      "content": "import { ChevronRightIcon } from 'lucide-react'\n\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card'\n\nimport { cn } from '@/lib/utils'\n\ntype PartnerApp = {\n  name: string\n  description: string\n  image: string\n  bgColor: string\n  link: string\n}[]\n\nconst AppIntegration = ({ partnerApps }: { partnerApps: PartnerApp }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        {/* Header */}\n        <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>\n          <p className='text-primary text-sm font-medium uppercase'>App Integration</p>\n          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Browse our partner apps</h2>\n          <p className='text-muted-foreground text-xl'>\n            Explore integrated apps that enhance productivity, streamline workflows, and simplify collaboration\n            effortlessly.\n          </p>\n          <Button size='lg' className='rounded-lg text-base shadow-sm'>\n            Browse All Apps\n          </Button>\n        </div>\n\n        {/* Apps */}\n        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>\n          {partnerApps.map((app, index) => (\n            <Card key={index} className='hover:bg-muted group border-none shadow-none transition-colors'>\n              <CardContent className='flex flex-col gap-6'>\n                <Avatar className='size-12 rounded-lg'>\n                  <AvatarFallback className={cn('rounded-lg', app.bgColor)}>\n                    <img src={app.image} alt={app.name} className='size-7 object-contain' />\n                  </AvatarFallback>\n                </Avatar>\n                <div>\n                  <CardTitle className='mb-3.5 text-2xl font-medium'>{app.name}</CardTitle>\n                  <CardDescription className='text-xl'>{app.description}</CardDescription>\n                </div>\n                <Button variant='outline' asChild className='h-7 w-fit gap-1.5 px-2 py-1 text-xs'>\n                  <a href={app.link}>\n                    Connect\n                    <ChevronRightIcon className='transition-transform group-hover:translate-x-1' />\n                  </a>\n                </Button>\n              </CardContent>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default AppIntegration\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/app-integration-06/app-integration-06.tsx"
+    }
+  ]
+}

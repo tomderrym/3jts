@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "offer-modal-03",
+  "type": "registry:block",
+  "description": "Background image overlay modal with 40% off signup offer, white text overlay, email input with mail icon, checkbox preference, and promotional messaging",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "checkbox",
+    "dialog",
+    "input",
+    "label"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/ecommerce/offer-modal/offer-modal-03/page.tsx",
+      "content": "import OfferModal from '@/components/shadcn-studio/blocks/offer-modal-03/offer-modal-03'\nimport { Button } from '@/components/ui/button'\n\nconst OfferModalPage = () => {\n  return (\n    <div className='flex h-dvh items-start justify-center p-8'>\n      <OfferModal defaultOpen trigger={<Button variant='outline'>Offer Modal</Button>} />\n    </div>\n  )\n}\n\nexport default OfferModalPage\n",
+      "type": "registry:page",
+      "target": "app/offer-modal-03/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/offer-modal-03/offer-modal-03.tsx",
+      "content": "'use client'\n\nimport { useState, type ReactNode } from 'react'\n\nimport { MailIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Checkbox } from '@/components/ui/checkbox'\nimport { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from '@/components/ui/dialog'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\n\ntype OfferModalProps = {\n  trigger?: ReactNode\n  defaultOpen?: boolean\n}\n\nconst OfferModal = ({ defaultOpen = false, trigger }: OfferModalProps) => {\n  const [open, setOpen] = useState(defaultOpen)\n\n  return (\n    <Dialog open={open} onOpenChange={setOpen}>\n      <DialogTrigger asChild onClick={() => setOpen(true)}>\n        {trigger}\n      </DialogTrigger>\n      <DialogContent className='[&_[data-slot=\"dialog-close\"]]:bg-card flex h-120 flex-col items-center justify-center gap-6 border-0 bg-[url(https://cdn.shadcnstudio.com/ss-assets/blocks/ecommerce/offer-modal/image-3.png)] bg-cover py-16 text-center lg:max-w-3xl [&_[data-slot=\"dialog-close\"]]:flex [&_[data-slot=\"dialog-close\"]]:size-7 [&_[data-slot=\"dialog-close\"]]:items-center [&_[data-slot=\"dialog-close\"]]:justify-center [&_[data-slot=\"dialog-close\"]]:rounded-full'>\n        <DialogTitle className='text-3xl font-semibold text-white'>SIGN UP & GET 40% OFF</DialogTitle>\n\n        <DialogDescription className='max-w-xl text-base text-white'>\n          Sign up today for free and be the first to hear of special promotions, new arrivals, designer and offer news.\n        </DialogDescription>\n\n        <form onSubmit={e => e.preventDefault()} className='flex w-full max-w-md justify-center gap-1.5'>\n          <div className='relative flex-1'>\n            <Input type='email' placeholder='Your email address' className='peer h-10 !bg-white pr-9' />\n            <div className='text-muted-foreground pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center pr-3 peer-disabled:opacity-50'>\n              <MailIcon className='h-5 w-5' />\n            </div>\n          </div>\n          <Button size='lg' className='uppercase'>\n            Sign Up\n          </Button>\n        </form>\n\n        <div className='flex items-center space-x-2'>\n          <Checkbox id='signup-checkbox' className='border-white bg-white' />\n          <Label htmlFor='signup-checkbox' className='cursor-pointer font-normal text-white'>\n            Don&apos;t show this popup again\n          </Label>\n        </div>\n      </DialogContent>\n    </Dialog>\n  )\n}\n\nexport default OfferModal\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/offer-modal-03/offer-modal-03.tsx"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-dropdown-13",
+  "type": "registry:block",
+  "description": "A workspace application dropdown with app selection, workspace switching, and environment management for multi-workspace applications.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "dropdown-menu"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/dashboard-dropdown/dashboard-dropdown-13/page.tsx",
+      "content": "import AppWorkspaceDropdown from '@/components/shadcn-studio/blocks/dashboard-dropdown-13/app-workspace'\n\nconst apps = [\n  {\n    id: 1,\n    name: 'shadcn/studio',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-16.png',\n    workspace: 'Workspace'\n  },\n  {\n    id: 2,\n    name: 'FlyonUI',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-15.png',\n    workspace: 'Workspace'\n  },\n  {\n    id: 3,\n    name: 'ThemeSelection',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-17.png',\n    workspace: 'Workspace'\n  },\n  {\n    id: 4,\n    name: 'Pixinvent',\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/dropdown/icon-18.png',\n    workspace: 'Workspace'\n  }\n]\n\nconst DropdownPage = () => {\n  return (\n    <div className='flex h-110 items-start justify-center p-8'>\n      <AppWorkspaceDropdown defaultOpen align='center' data={apps} />\n    </div>\n  )\n}\n\nexport default DropdownPage\n",
+      "type": "registry:page",
+      "target": "app/dashboard-dropdown-13/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/dashboard-dropdown-13/app-workspace.tsx",
+      "content": "'use client'\n\nimport { useState } from 'react'\n\nimport { ChevronDownIcon, PlusIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport {\n  DropdownMenu,\n  DropdownMenuCheckboxItem,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\n\ntype Props = {\n  defaultOpen?: boolean\n  align?: 'start' | 'center' | 'end'\n  data: {\n    id: number\n    name: string\n    image: string\n    workspace: string\n  }[]\n}\n\nconst AppWorkspaceDropdown = ({ defaultOpen, align = 'end', data }: Props) => {\n  const [activeApp, setActiveApp] = useState(data[0].id)\n\n  return (\n    <DropdownMenu defaultOpen={defaultOpen}>\n      <DropdownMenuTrigger asChild>\n        <Button variant='secondary' className='h-fit px-4 py-2.5 font-normal'>\n          <img src={data.find(app => app.id === activeApp)?.image || ''} alt='App' className='size-9.5' />\n          <div className='flex w-37 flex-col items-start'>\n            <span className='text-base font-medium'>{data.find(app => app.id === activeApp)?.name || ''}</span>\n            <span className='text-muted-foreground text-sm'>\n              {data.find(app => app.id === activeApp)?.workspace || ''}\n            </span>\n          </div>\n          <ChevronDownIcon className='size-6' />\n        </Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className='w-75 space-y-1' align={align || 'end'}>\n        {data.map(app => (\n          <DropdownMenuCheckboxItem\n            key={app.id}\n            className='data-[state=checked]:bg-muted gap-4 px-4 py-2.5 [&>span]:hidden'\n            checked={activeApp === app.id}\n            onCheckedChange={() => setActiveApp(app.id)}\n          >\n            <img src={app.image} alt={app.name} className='size-9.5' />\n            <div className='flex flex-col items-start'>\n              <span className='text-base font-medium'>{app.name}</span>\n              <span className='text-muted-foreground text-sm'>{app.workspace}</span>\n            </div>\n          </DropdownMenuCheckboxItem>\n        ))}\n        <DropdownMenuItem className='bg-primary/10 focus:bg-primary/15 text-primary justify-center'>\n          <span>Add New Workspace</span>\n          <PlusIcon className='text-primary' />\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport default AppWorkspaceDropdown\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/dashboard-dropdown-13/app-workspace.tsx"
+    }
+  ]
+}

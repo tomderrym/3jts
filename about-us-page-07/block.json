@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "about-us-page-07",
+  "type": "registry:block",
+  "description": "Timeline layout with milestone cards, year markers, descriptions and company achievement progression",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/about-us-page/about-us-page-07/page.tsx",
+      "content": "import AboutUs from '@/components/shadcn-studio/blocks/about-us-page-07/about-us-page-07'\n\nconst statCards = [\n  {\n    title: '50+ years',\n    description: 'Bringing architectural visions to life for 50 years.'\n  },\n  {\n    title: '100+ Projects',\n    description: 'Delivered precisely with quality commitment.'\n  },\n  {\n    title: '20+ Awards',\n    description: 'Recognizing our innovation and dedication.'\n  },\n  {\n    title: '99% Success',\n    description: 'Showing our commitment to client satisfaction.'\n  }\n]\n\nconst featureCards = [\n  {\n    title: 'Why Choose Us?',\n    description: 'Our project management tools boost collaboration and streamline processes.'\n  },\n  {\n    title: 'Our Vision',\n    description: 'Our project management tools boost collaboration and streamline processes.'\n  },\n  {\n    title: 'Our Team',\n    description: 'Our professionals are dedicated to exceptional results and service.'\n  }\n]\n\nconst AboutUsPage = () => {\n  return <AboutUs statCards={statCards} featureCards={featureCards} />\n}\n\nexport default AboutUsPage\n",
+      "type": "registry:page",
+      "target": "app/about-us-page-07/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/about-us-page-07/about-us-page-07.tsx",
+      "content": "import { ArrowRightIcon, CheckCircleIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'\n\ntype StatCard = {\n  title: string\n  description: string\n}[]\n\ntype FeatureCard = {\n  title: string\n  description: string\n}[]\n\nconst AboutUs = ({ statCards, featureCards }: { statCards: StatCard; featureCards: FeatureCard }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='mb-10 grid gap-16 lg:grid-cols-2'>\n          <div className='space-y-10'>\n            <div className='space-y-4'>\n              <p className='text-primary text-sm font-medium uppercase'>About Us</p>\n              <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Building a Legacy of Excellence</h2>\n              <p className='text-muted-foreground text-xl'>\n                Our story is a testament to the power of collaboration and resilience. Together, we have navigated\n                challenges, celebrated milestones, and crafted a narrative of growth and achievement in the construction\n                industry.\n              </p>\n            </div>\n\n            {/* Stats grid with 4 cards */}\n            <div className='grid gap-6 md:grid-cols-2'>\n              {statCards.map((stat, index) => (\n                <Card\n                  key={index}\n                  className='border-primary/30 hover:border-primary rounded-lg shadow-none transition-colors duration-300'\n                >\n                  <CardHeader className='gap-2'>\n                    <CardTitle className='text-xl'>{stat.title}</CardTitle>\n                    <CardDescription className='text-base'>{stat.description}</CardDescription>\n                  </CardHeader>\n                </Card>\n              ))}\n            </div>\n\n            <Button asChild size='lg' className='group rounded-lg text-base shadow-sm has-[>svg]:px-6'>\n              <a href='#'>\n                Read more\n                <ArrowRightIcon className='transition-transform duration-200 group-hover:translate-x-0.5' />\n              </a>\n            </Button>\n          </div>\n\n          <img\n            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/about-us/image-8.png'\n            alt='About Us'\n            className='h-full max-h-175 w-full rounded-md object-cover'\n          />\n        </div>\n\n        {/* Feature cards */}\n        <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>\n          {featureCards.map((feature, index) => (\n            <Card key={index} className='rounded-lg shadow-none max-lg:last:col-span-full'>\n              <CardHeader className='gap-3'>\n                <CardTitle className='flex items-center gap-3 text-xl'>\n                  <CheckCircleIcon />\n                  {feature.title}\n                </CardTitle>\n                <CardDescription className='text-base'>{feature.description}</CardDescription>\n              </CardHeader>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default AboutUs\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/about-us-page-07/about-us-page-07.tsx"
+    }
+  ]
+}

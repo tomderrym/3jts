@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-dialog-08",
+  "type": "registry:block",
+  "description": "An authenticator setup dialog for two-factor authentication with QR code display, input fields, and security configuration options.",
+  "registryDependencies": [
+    "button",
+    "dialog",
+    "input",
+    "label",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/dashboard-dialog/dashboard-dialog-08/page.tsx",
+      "content": "import { Button } from '@/components/ui/button'\nimport AuthenticatorDialog from '@/components/shadcn-studio/blocks/dashboard-dialog-08/dialog-authenticator'\n\nconst DialogPage = () => {\n  return (\n    <div className='flex h-dvh items-start justify-center p-8'>\n      <AuthenticatorDialog\n        defaultOpen\n        trigger={\n          <Button variant='outline'>\n            <span>Verify</span>\n          </Button>\n        }\n      />\n    </div>\n  )\n}\n\nexport default DialogPage\n",
+      "type": "registry:page",
+      "target": "app/dashboard-dialog-08/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/dashboard-dialog-08/dialog-authenticator.tsx",
+      "content": "'use client'\n\nimport { useState, type ReactNode } from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport {\n  Dialog,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger\n} from '@/components/ui/dialog'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\n\nimport { cn } from '@/lib/utils'\n\ntype Props = {\n  trigger: ReactNode\n  defaultOpen?: boolean\n  className?: string\n}\n\nconst AuthenticatorDialog = ({ defaultOpen = false, trigger, className }: Props) => {\n  const [open, setOpen] = useState(defaultOpen)\n\n  return (\n    <Dialog open={open} onOpenChange={setOpen}>\n      <DialogTrigger asChild onClick={() => setOpen(true)}>\n        {trigger}\n      </DialogTrigger>\n      <DialogContent className={cn('sm:max-w-145 [&>[data-slot=dialog-close]>svg]:size-5', className)}>\n        <DialogHeader>\n          <DialogTitle className='leading-7'>Add Authenticator App</DialogTitle>\n          <DialogDescription className='max-w-sm'>\n            Enter your mobile phone number with country code, and we will send you a verification code.\n          </DialogDescription>\n        </DialogHeader>\n\n        <div className='space-y-1'>\n          <Label htmlFor='number'>Phone Number</Label>\n          <Input id='number' type='tel' maxLength={10} placeholder='Phone number' />\n        </div>\n\n        <DialogFooter className='flex-row gap-4'>\n          <Button size='lg'>Submit</Button>\n          <DialogClose asChild>\n            <Button variant='outline' size='lg'>\n              Cancel\n            </Button>\n          </DialogClose>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  )\n}\n\nexport default AuthenticatorDialog\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/dashboard-dialog-08/dialog-authenticator.tsx"
+    }
+  ]
+}

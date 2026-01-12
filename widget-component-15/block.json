@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-component-15",
+  "type": "registry:block",
+  "description": "User order widget with avatars, progress tracking, tabs, separators, and comprehensive order management features",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "button",
+    "card",
+    "dropdown-menu",
+    "progress",
+    "separator",
+    "tabs",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/widgets-component/widget-component-15/page.tsx",
+      "content": "import UserOrderCard from '@/components/shadcn-studio/blocks/widget-user-order'\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-16'>\n      <div className='flex justify-center'>\n        <UserOrderCard className='w-full max-w-100' />\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/widget-component-15/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/widget-user-order.tsx",
+      "content": "import { EllipsisIcon, PackageIcon, PackageOpenIcon, TruckIcon } from 'lucide-react'\n\nimport { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardHeader } from '@/components/ui/card'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\nimport { Progress } from '@/components/ui/progress'\nimport { Separator } from '@/components/ui/separator'\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'\n\nimport { cn } from '@/lib/utils'\n\nconst listItems = ['Share', 'Update', 'Refresh']\n\nconst tabs = [\n  {\n    name: 'Packed',\n    value: 'packed',\n    icon: PackageIcon,\n    contentData: [\n      {\n        label: 'Packing Pending',\n        value: 4250,\n        progress: 80\n      },\n      {\n        label: 'Packing in Progress',\n        value: 2150,\n        progress: 60\n      },\n      {\n        label: 'Packing Complete',\n        value: 1750,\n        progress: 40\n      }\n    ]\n  },\n  {\n    name: 'Shipped',\n    value: 'shipped',\n    icon: TruckIcon,\n    contentData: [\n      {\n        label: 'Shipping Pending',\n        value: 3250,\n        progress: 70\n      },\n      {\n        label: 'Shipping in Progress',\n        value: 1150,\n        progress: 50\n      },\n      {\n        label: 'Shipping Complete',\n        value: 950,\n        progress: 30\n      }\n    ]\n  },\n  {\n    name: 'Received',\n    value: 'received',\n    icon: PackageOpenIcon,\n    contentData: [\n      {\n        label: 'Receiving Pending',\n        value: 2250,\n        progress: 80\n      },\n      {\n        label: 'Receiving in Progress',\n        value: 1150,\n        progress: 50\n      },\n      {\n        label: 'Receiving Complete',\n        value: 950,\n        progress: 30\n      }\n    ]\n  }\n]\n\nconst UserOrderCard = ({ className }: { className?: string }) => {\n  return (\n    <Card className={cn('gap-4', className)}>\n      <CardHeader className='flex justify-between gap-2'>\n        <div className='flex items-center gap-2'>\n          <Avatar className='size-9.5 rounded-lg'>\n            <AvatarImage\n              src='https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png'\n              alt='Hallie Richards'\n              className='rounded-lg'\n            />\n            <AvatarFallback className='text-xs'>JW</AvatarFallback>\n          </Avatar>\n          <div className='flex flex-col gap-1'>\n            <span className='text-xl font-medium'>@jackwilliams</span>\n            <span className='text-muted-foreground text-sm'>Business</span>\n          </div>\n        </div>\n        <DropdownMenu>\n          <DropdownMenuTrigger asChild>\n            <Button variant='ghost' size='icon' className='text-muted-foreground size-6 rounded-full'>\n              <EllipsisIcon />\n              <span className='sr-only'>Menu</span>\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align='end'>\n            <DropdownMenuGroup>\n              {listItems.map((item, index) => (\n                <DropdownMenuItem key={index}>{item}</DropdownMenuItem>\n              ))}\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </CardHeader>\n      <CardContent className='flex flex-1 flex-col gap-6'>\n        <Separator />\n        <div className='flex flex-1 flex-col gap-2'>\n          <div className='flex items-baseline gap-2'>\n            <span className='text-2xl font-medium'>4,689</span>\n            <span className='text-muted-foreground text-sm'>Orders</span>\n          </div>\n          <Tabs defaultValue='packed' className='flex-1 justify-between gap-6'>\n            <TabsList className='w-full'>\n              {tabs.map(({ icon: Icon, name, value }) => (\n                <TabsTrigger key={value} value={value} className='flex items-center gap-1 px-1.5'>\n                  <Icon />\n                  <span className='max-sm:hidden'>{name}</span>\n                </TabsTrigger>\n              ))}\n            </TabsList>\n\n            {tabs.map(tab => (\n              <TabsContent key={tab.value} value={tab.value} className='flex flex-col justify-evenly gap-6'>\n                {tab.contentData?.map((item, index) => (\n                  <div key={index} className='space-y-2'>\n                    <div className='flex items-center justify-between'>\n                      <span>{item.label}</span>\n                      <span className='text-muted-foreground text-sm'>{item.value}</span>\n                    </div>\n                    <Progress value={item.progress} />\n                  </div>\n                ))}\n              </TabsContent>\n            ))}\n          </Tabs>\n        </div>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default UserOrderCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/widget-user-order.tsx"
+    }
+  ]
+}

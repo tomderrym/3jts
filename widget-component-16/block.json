@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "widget-component-16",
+  "type": "registry:block",
+  "description": "Advertisement widget with avatars, badges, tooltips, interactive controls, and comprehensive advertisement management features",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "avatar",
+    "badge",
+    "button",
+    "card",
+    "dropdown-menu",
+    "tooltip",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/dashboard-and-application/widgets-component/widget-component-16/page.tsx",
+      "content": "import AdvertisementCard from '@/components/shadcn-studio/blocks/widget-advertisement'\n\nconst WidgetCardPreview = () => {\n  return (\n    <div className='mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-16'>\n      <div className='flex justify-center'>\n        <AdvertisementCard className='w-full max-w-100' />\n      </div>\n    </div>\n  )\n}\n\nexport default WidgetCardPreview\n",
+      "type": "registry:page",
+      "target": "app/widget-component-16/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/widget-advertisement.tsx",
+      "content": "import { EllipsisVerticalIcon, MessageSquareIcon, ThumbsUpIcon } from 'lucide-react'\n\nimport { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'\nimport { Badge } from '@/components/ui/badge'\nimport { Button } from '@/components/ui/button'\nimport { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuTrigger\n} from '@/components/ui/dropdown-menu'\nimport { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'\n\nimport { cn } from '@/lib/utils'\n\nconst listItems = ['Share', 'Update', 'Refresh']\n\nconst avatars = [\n  {\n    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png',\n    fallback: 'OS',\n    name: 'Olivia Sparks'\n  },\n  {\n    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-6.png',\n    fallback: 'HL',\n    name: 'Howard Lloyd'\n  },\n  {\n    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png',\n    fallback: 'HR',\n    name: 'Hallie Richards'\n  },\n  {\n    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-16.png',\n    fallback: 'JW',\n    name: 'Jenny Wilson'\n  }\n]\n\nconst AdvertisementCard = ({ className }: { className?: string }) => {\n  return (\n    <Card className={cn('justify-between', className)}>\n      <CardHeader className='flex justify-between gap-2'>\n        <div className='flex items-center gap-4'>\n          <Avatar className='size-10.5 rounded-full'>\n            <AvatarImage\n              src='https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png'\n              alt='Hallie Richards'\n              className='rounded-full'\n            />\n            <AvatarFallback className='text-xs'>JW</AvatarFallback>\n          </Avatar>\n          <div className='flex flex-col gap-1'>\n            <span className='text-lg font-medium'>Design strategy master class</span>\n            <span className='text-muted-foreground text-sm'>07 Jun 2025 at 10:00 PM</span>\n          </div>\n        </div>\n        <DropdownMenu>\n          <DropdownMenuTrigger asChild>\n            <Button variant='ghost' size='icon' className='text-muted-foreground size-6 rounded-full'>\n              <EllipsisVerticalIcon />\n              <span className='sr-only'>Menu</span>\n            </Button>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent align='end'>\n            <DropdownMenuGroup>\n              {listItems.map((item, index) => (\n                <DropdownMenuItem key={index}>{item}</DropdownMenuItem>\n              ))}\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </CardHeader>\n      <div className='flex flex-col gap-9'>\n        <div className='relative'>\n          <img\n            src='https://cdn.shadcnstudio.com/ss-assets/blocks/dashboard-application/widgets/image-6.png'\n            alt='background image'\n          />\n          <div className='bg-card absolute -bottom-7 left-5.5 flex flex-col items-center rounded-md px-4 py-2 shadow-xl'>\n            <span className='text-lg font-medium'>12</span>\n            <span className='text-muted-foreground'>Dec</span>\n          </div>\n        </div>\n        <CardContent className='space-y-2'>\n          <p>How to improve you next design&apos;s strategy that works for user and business</p>\n          <div className='flex items-center gap-2'>\n            <Badge className='bg-primary/10 text-primary'>Technical</Badge>\n            <Badge className='bg-primary/10 text-primary'>User research</Badge>\n            <Badge className='bg-primary/10 text-primary'>Analytics</Badge>\n          </div>\n        </CardContent>\n      </div>\n      <CardFooter className='flex-col items-stretch gap-6'>\n        <div className='flex items-center justify-between gap-2'>\n          <div className='flex -space-x-5 hover:space-x-1'>\n            {avatars.map((avatar, index) => (\n              <Tooltip key={index}>\n                <TooltipTrigger asChild>\n                  <Avatar className='ring-background size-12 ring-2 transition-all duration-300 ease-in-out'>\n                    <AvatarImage src={avatar.src} alt={avatar.name} />\n                    <AvatarFallback className='text-xs'>{avatar.fallback}</AvatarFallback>\n                  </Avatar>\n                </TooltipTrigger>\n                <TooltipContent>{avatar.name}</TooltipContent>\n              </Tooltip>\n            ))}\n          </div>\n          <Button size='sm'>Join now</Button>\n        </div>\n        <div className='flex items-center gap-4'>\n          <div className='flex items-center gap-1'>\n            <ThumbsUpIcon className='size-4' />\n            <span className='text-sm'>56k</span>\n          </div>\n          <div className='flex items-center gap-1'>\n            <MessageSquareIcon className='size-4' />\n            <span className='text-sm'>2k</span>\n          </div>\n        </div>\n      </CardFooter>\n    </Card>\n  )\n}\n\nexport default AdvertisementCard\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/widget-advertisement.tsx"
+    }
+  ]
+}

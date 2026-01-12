@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blog-component-08",
+  "type": "registry:block",
+  "description": "Five-card grid layout featuring educational blog posts with images, titles, descriptions, and \"See all blogs\" button",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/blocks/marketing-ui/blog-component/blog-component-08/page.tsx",
+      "content": "import Blog from '@/components/shadcn-studio/blocks/blog-component-08/blog-component-08'\n\nconst blogCards = [\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-29.png',\n    alt: 'EduInsights',\n    title: 'EduInsights',\n    description: 'Sharing expert advice and insights for educational success.',\n    blogLink: '#'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-28.png',\n    alt: 'StudySphere',\n    title: 'StudySphere',\n    description: 'Exploring innovative study techniques and tools for academic success.',\n    classNames: 'md:max-lg:col-span-2',\n    blogLink: '#'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-32.png',\n    alt: 'LearnWise',\n    title: 'LearnWise',\n    description: 'Empowering students and educators with innovative learning solutions.',\n    blogLink: '#'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-31.png',\n    alt: 'Knowledge Hub',\n    title: 'The Knowledge Hub',\n    description: 'A comprehensive resource for educational resources and tools.',\n    blogLink: '#'\n  },\n  {\n    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-30.png',\n    alt: 'Scholarly',\n    title: 'Scholarly Steps',\n    description: 'Guiding your journey through educational research and resources.',\n    classNames: 'md:max-lg:col-span-2',\n    blogLink: '#'\n  }\n]\n\nconst BlogPage = () => {\n  return <Blog blogCards={blogCards} />\n}\n\nexport default BlogPage\n",
+      "type": "registry:page",
+      "target": "app/blog-component-08/page.tsx"
+    },
+    {
+      "path": "src/registry/new-york/components/blocks/blog-component-08/blog-component-08.tsx",
+      "content": "import { ArrowRightIcon, ExternalLinkIcon } from 'lucide-react'\n\nimport { Button } from '@/components/ui/button'\nimport { Card, CardDescription, CardTitle } from '@/components/ui/card'\n\nimport { cn } from '@/lib/utils'\n\ntype BlogCard = {\n  image: string\n  alt: string\n  title: string\n  description: string\n  blogLink: string\n  classNames?: string\n}[]\n\nconst Blog = ({ blogCards }: { blogCards: BlogCard }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        {/* Blog Grid */}\n        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>\n          <div className='space-y-4 self-center'>\n            <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>The Blog Corner</h2>\n            <p className='text-muted-foreground text-xl'>\n              A dedicated space for innovation, learning, and sharing knowledge that makes a difference.\n            </p>\n            <Button className='group rounded-lg text-base shadow-sm has-[>svg]:px-6' size='lg' asChild>\n              <a href='#'>\n                See All Blogs\n                <ArrowRightIcon className='transition-transform duration-200 group-hover:translate-x-0.5' />\n              </a>\n            </Button>\n          </div>\n\n          {/* Blog Cards */}\n          {blogCards.map((card, index) => (\n            <Card key={index} className={cn('group relative overflow-hidden p-0 shadow-none', card.classNames)}>\n              <img src={card.image} alt={card.alt} className='h-70 w-full object-cover' />\n              {/* Overlay gradients for hover effect */}\n              <div className='absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-black/0 to-black/85 transition-opacity duration-500 group-hover:opacity-0' />\n              <div className='absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />\n              <div className='absolute right-6 bottom-6 left-6 flex items-end justify-between gap-3'>\n                <div className='overflow-hidden'>\n                  <CardTitle className='mb-1 text-lg font-semibold text-white'>{card.title}</CardTitle>\n                  <CardDescription className='truncate text-base text-white'>{card.description}</CardDescription>\n                </div>\n                <Button size='icon' className='bg-muted text-primary hover:bg-muted/90 rounded-full' asChild>\n                  <a href={card.blogLink}>\n                    <ExternalLinkIcon className='size-5' />\n                  </a>\n                </Button>\n              </div>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default Blog\n",
+      "type": "registry:component",
+      "target": "components/shadcn-studio/blocks/blog-component-08/blog-component-08.tsx"
+    }
+  ]
+}
