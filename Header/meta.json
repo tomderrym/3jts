@@ -1,0 +1,13 @@
+{
+  "block": "header",
+  "pattern": {
+    "type": "header",
+    "logoPosition": "left",
+    "navPosition": "right",
+    "ctaCount": 2,
+    "ctaEmphasis": "mixed",
+    "background": "solid",
+    "sticky": false
+  },
+  "content": {}
+}
