@@ -1,0 +1,11 @@
+{
+  "block": "testimonials",
+  "pattern": {
+    "layout": "grid",
+    "avatar": true,
+    "quoteStyle": "short"
+  },
+  "content": {},
+  "name": "Component414",
+  "originalName": "Testimonials"
+}

@@ -1,0 +1,576 @@
+{
+  "id": "component-1768289674583-lugzxd20r",
+  "name": "Navigation467",
+  "description": "Site header with logo, title, and navigation items",
+  "category": "Navigation",
+  "tags": [
+    "navigation",
+    "horizontal-nav"
+  ],
+  "useCases": [
+    "Site header",
+    "App navigation",
+    "Dashboard header"
+  ],
+  "props": {
+    "title": {
+      "type": "string",
+      "required": false,
+      "description": "Site or app name"
+    },
+    "logo": {
+      "type": "string",
+      "required": false,
+      "description": "Logo image URL"
+    },
+    "items": {
+      "type": "array",
+      "required": false,
+      "description": "Navigation items array"
+    }
+  },
+  "metadata": {
+    "source": "landingfolio",
+    "scrapedAt": "2026-01-13T07:34:53.082Z",
+    "url": "http://localhost:3000/library/all",
+    "referenceId": "component-1768289674583-lugzxd20r",
+    "note": "Props are hard-defined per component type. No inference from scraped code.",
+    "images": [
+      {
+        "name": "about.png",
+        "path": "img/about.e74e785.png",
+        "url": "http://localhost:3000/img/about.e74e785.png",
+        "moduleId": "550"
+      },
+      {
+        "name": "alert copy.png",
+        "path": "img/alert copy.95b2c13.png",
+        "url": "http://localhost:3000/img/alert copy.95b2c13.png",
+        "moduleId": "551"
+      },
+      {
+        "name": "alert.png",
+        "path": "img/alert.95b2c13.png",
+        "url": "http://localhost:3000/img/alert.95b2c13.png",
+        "moduleId": "552"
+      },
+      {
+        "name": "approve-transaction.png",
+        "path": "img/approve-transaction.a2411df.png",
+        "url": "http://localhost:3000/img/approve-transaction.a2411df.png",
+        "moduleId": "553"
+      },
+      {
+        "name": "article.png",
+        "path": "img/article.33e43d4.png",
+        "url": "http://localhost:3000/img/article.33e43d4.png",
+        "moduleId": "554"
+      },
+      {
+        "name": "authors.png",
+        "path": "img/authors.9e84ba3.png",
+        "url": "http://localhost:3000/img/authors.9e84ba3.png",
+        "moduleId": "555"
+      },
+      {
+        "name": "badges.png",
+        "path": "img/badges.94f9746.png",
+        "url": "http://localhost:3000/img/badges.94f9746.png",
+        "moduleId": "556"
+      },
+      {
+        "name": "blog-author.png",
+        "path": "img/blog-author.6fffe58.png",
+        "url": "http://localhost:3000/img/blog-author.6fffe58.png",
+        "moduleId": "557"
+      },
+      {
+        "name": "blog-content.png",
+        "path": "img/blog-content.33e43d4.png",
+        "url": "http://localhost:3000/img/blog-content.33e43d4.png",
+        "moduleId": "558"
+      },
+      {
+        "name": "blog-featured.png",
+        "path": "img/blog-featured.12cf1c4.png",
+        "url": "http://localhost:3000/img/blog-featured.12cf1c4.png",
+        "moduleId": "559"
+      },
+      {
+        "name": "blog-grid.png",
+        "path": "img/blog-grid.162d4f7.png",
+        "url": "http://localhost:3000/img/blog-grid.162d4f7.png",
+        "moduleId": "560"
+      },
+      {
+        "name": "blog-items.png",
+        "path": "img/blog-items.176d35c.png",
+        "url": "http://localhost:3000/img/blog-items.176d35c.png",
+        "moduleId": "561"
+      },
+      {
+        "name": "blog-list.png",
+        "path": "img/blog-list.d168ff4.png",
+        "url": "http://localhost:3000/img/blog-list.d168ff4.png",
+        "moduleId": "562"
+      },
+      {
+        "name": "blog-newsletter.png",
+        "path": "img/blog-newsletter.450ca4d.png",
+        "url": "http://localhost:3000/img/blog-newsletter.450ca4d.png",
+        "moduleId": "563"
+      },
+      {
+        "name": "blog-pagination.png",
+        "path": "img/blog-pagination.6723374.png",
+        "url": "http://localhost:3000/img/blog-pagination.6723374.png",
+        "moduleId": "564"
+      },
+      {
+        "name": "blog-sidebar.png",
+        "path": "img/blog-sidebar.9a9a47e.png",
+        "url": "http://localhost:3000/img/blog-sidebar.9a9a47e.png",
+        "moduleId": "565"
+      },
+      {
+        "name": "blog.png",
+        "path": "img/blog.176d35c.png",
+        "url": "http://localhost:3000/img/blog.176d35c.png",
+        "moduleId": "566"
+      },
+      {
+        "name": "breadcrumbs.png",
+        "path": "img/breadcrumbs.4fda021.png",
+        "url": "http://localhost:3000/img/breadcrumbs.4fda021.png",
+        "moduleId": "567"
+      },
+      {
+        "name": "buttons.png",
+        "path": "img/buttons.f04184d.png",
+        "url": "http://localhost:3000/img/buttons.f04184d.png",
+        "moduleId": "568"
+      },
+      {
+        "name": "call-to-action.png",
+        "path": "img/call-to-action.450ca4d.png",
+        "url": "http://localhost:3000/img/call-to-action.450ca4d.png",
+        "moduleId": "569"
+      },
+      {
+        "name": "cards.png",
+        "path": "img/cards.d21e14c.png",
+        "url": "http://localhost:3000/img/cards.d21e14c.png",
+        "moduleId": "570"
+      },
+      {
+        "name": "cart.png",
+        "path": "img/cart.88256a8.png",
+        "url": "http://localhost:3000/img/cart.88256a8.png",
+        "moduleId": "571"
+      },
+      {
+        "name": "categories.png",
+        "path": "img/categories.b888b2d.png",
+        "url": "http://localhost:3000/img/categories.b888b2d.png",
+        "moduleId": "572"
+      },
+      {
+        "name": "charts.png",
+        "path": "img/charts.6deab7d.png",
+        "url": "http://localhost:3000/img/charts.6deab7d.png",
+        "moduleId": "573"
+      },
+      {
+        "name": "checkout.png",
+        "path": "img/checkout.46cbe74.png",
+        "url": "http://localhost:3000/img/checkout.46cbe74.png",
+        "moduleId": "574"
+      },
+      {
+        "name": "connect-wallet.png",
+        "path": "img/connect-wallet.ed89828.png",
+        "url": "http://localhost:3000/img/connect-wallet.ed89828.png",
+        "moduleId": "575"
+      },
+      {
+        "name": "contact.png",
+        "path": "img/contact.d21e14c.png",
+        "url": "http://localhost:3000/img/contact.d21e14c.png",
+        "moduleId": "576"
+      },
+      {
+        "name": "content.png",
+        "path": "img/content.d21e14c.png",
+        "url": "http://localhost:3000/img/content.d21e14c.png",
+        "moduleId": "577"
+      },
+      {
+        "name": "dashboard-page.png",
+        "path": "img/dashboard-page.2349cda.png",
+        "url": "http://localhost:3000/img/dashboard-page.2349cda.png",
+        "moduleId": "578"
+      },
+      {
+        "name": "dashboard-steps.png",
+        "path": "img/dashboard-steps.d479eb0.png",
+        "url": "http://localhost:3000/img/dashboard-steps.d479eb0.png",
+        "moduleId": "579"
+      },
+      {
+        "name": "data-stats.png",
+        "path": "img/data-stats.13a44c8.png",
+        "url": "http://localhost:3000/img/data-stats.13a44c8.png",
+        "moduleId": "580"
+      },
+      {
+        "name": "dropdown.png",
+        "path": "img/dropdown.97349b5.png",
+        "url": "http://localhost:3000/img/dropdown.97349b5.png",
+        "moduleId": "581"
+      },
+      {
+        "name": "faq.png",
+        "path": "img/faq.ca06770.png",
+        "url": "http://localhost:3000/img/faq.ca06770.png",
+        "moduleId": "582"
+      },
+      {
+        "name": "feature.png",
+        "path": "img/feature.e05fde9.png",
+        "url": "http://localhost:3000/img/feature.e05fde9.png",
+        "moduleId": "583"
+      },
+      {
+        "name": "featured-drops.png",
+        "path": "img/featured-drops.946ec68.png",
+        "url": "http://localhost:3000/img/featured-drops.946ec68.png",
+        "moduleId": "584"
+      },
+      {
+        "name": "filters.png",
+        "path": "img/filters.ce886d0.png",
+        "url": "http://localhost:3000/img/filters.ce886d0.png",
+        "moduleId": "585"
+      },
+      {
+        "name": "footer.png",
+        "path": "img/footer.309488e.png",
+        "url": "http://localhost:3000/img/footer.309488e.png",
+        "moduleId": "586"
+      },
+      {
+        "name": "gallery.png",
+        "path": "img/gallery.c3e3f66.png",
+        "url": "http://localhost:3000/img/gallery.c3e3f66.png",
+        "moduleId": "587"
+      },
+      {
+        "name": "header.png",
+        "path": "img/header.303f091.png",
+        "url": "http://localhost:3000/img/header.303f091.png",
+        "moduleId": "588"
+      },
+      {
+        "name": "hero copy.png",
+        "path": "img/hero copy.0f24ee4.png",
+        "url": "http://localhost:3000/img/hero copy.0f24ee4.png",
+        "moduleId": "589"
+      },
+      {
+        "name": "hero.png",
+        "path": "img/hero.0f24ee4.png",
+        "url": "http://localhost:3000/img/hero.0f24ee4.png",
+        "moduleId": "590"
+      },
+      {
+        "name": "home-sidebar.png",
+        "path": "img/home-sidebar.aaf3539.png",
+        "url": "http://localhost:3000/img/home-sidebar.aaf3539.png",
+        "moduleId": "591"
+      },
+      {
+        "name": "horizontal-menu.png",
+        "path": "img/horizontal-menu.303f091.png",
+        "url": "http://localhost:3000/img/horizontal-menu.303f091.png",
+        "moduleId": "592"
+      },
+      {
+        "name": "images.png",
+        "path": "img/images.25dda41.png",
+        "url": "http://localhost:3000/img/images.25dda41.png",
+        "moduleId": "593"
+      },
+      {
+        "name": "incentives.png",
+        "path": "img/incentives.0f90478.png",
+        "url": "http://localhost:3000/img/incentives.0f90478.png",
+        "moduleId": "594"
+      },
+      {
+        "name": "integration.png",
+        "path": "img/integration.08d4099.png",
+        "url": "http://localhost:3000/img/integration.08d4099.png",
+        "moduleId": "595"
+      },
+      {
+        "name": "is-it-for-me.png",
+        "path": "img/is-it-for-me.52211cb.png",
+        "url": "http://localhost:3000/img/is-it-for-me.52211cb.png",
+        "moduleId": "596"
+      },
+      {
+        "name": "landing-page.png",
+        "path": "img/landing-page.0f24ee4.png",
+        "url": "http://localhost:3000/img/landing-page.0f24ee4.png",
+        "moduleId": "597"
+      },
+      {
+        "name": "login.png",
+        "path": "img/login.d21e14c.png",
+        "url": "http://localhost:3000/img/login.d21e14c.png",
+        "moduleId": "598"
+      },
+      {
+        "name": "logo-cloud.png",
+        "path": "img/logo-cloud.092c568.png",
+        "url": "http://localhost:3000/img/logo-cloud.092c568.png",
+        "moduleId": "599"
+      },
+      {
+        "name": "mint-success.png",
+        "path": "img/mint-success.639ea2a.png",
+        "url": "http://localhost:3000/img/mint-success.639ea2a.png",
+        "moduleId": "600"
+      },
+      {
+        "name": "mint.png",
+        "path": "img/mint.26da342.png",
+        "url": "http://localhost:3000/img/mint.26da342.png",
+        "moduleId": "601"
+      },
+      {
+        "name": "modal.png",
+        "path": "img/modal.f2c0551.png",
+        "url": "http://localhost:3000/img/modal.f2c0551.png",
+        "moduleId": "602"
+      },
+      {
+        "name": "navigation.png",
+        "path": "img/navigation.303f091.png",
+        "url": "http://localhost:3000/img/navigation.303f091.png",
+        "moduleId": "603"
+      },
+      {
+        "name": "newsletter.png",
+        "path": "img/newsletter.31f319d.png",
+        "url": "http://localhost:3000/img/newsletter.31f319d.png",
+        "moduleId": "604"
+      },
+      {
+        "name": "nft-hero.png",
+        "path": "img/nft-hero.0f24ee4.png",
+        "url": "http://localhost:3000/img/nft-hero.0f24ee4.png",
+        "moduleId": "605"
+      },
+      {
+        "name": "nft-team.png",
+        "path": "img/nft-team.e74e785.png",
+        "url": "http://localhost:3000/img/nft-team.e74e785.png",
+        "moduleId": "606"
+      },
+      {
+        "name": "notfound.png",
+        "path": "img/notfound.ce886d0.png",
+        "url": "http://localhost:3000/img/notfound.ce886d0.png",
+        "moduleId": "607"
+      },
+      {
+        "name": "notification.png",
+        "path": "img/notification.41a7a62.png",
+        "url": "http://localhost:3000/img/notification.41a7a62.png",
+        "moduleId": "608"
+      },
+      {
+        "name": "order-confirmed.png",
+        "path": "img/order-confirmed.ffafaf4.png",
+        "url": "http://localhost:3000/img/order-confirmed.ffafaf4.png",
+        "moduleId": "609"
+      },
+      {
+        "name": "order-details.png",
+        "path": "img/order-details.029ff23.png",
+        "url": "http://localhost:3000/img/order-details.029ff23.png",
+        "moduleId": "610"
+      },
+      {
+        "name": "page-header.png",
+        "path": "img/page-header.f57814a.png",
+        "url": "http://localhost:3000/img/page-header.f57814a.png",
+        "moduleId": "611"
+      },
+      {
+        "name": "page-titles.png",
+        "path": "img/page-titles.f57814a.png",
+        "url": "http://localhost:3000/img/page-titles.f57814a.png",
+        "moduleId": "612"
+      },
+      {
+        "name": "pagination.png",
+        "path": "img/pagination.6723374.png",
+        "url": "http://localhost:3000/img/pagination.6723374.png",
+        "moduleId": "613"
+      },
+      {
+        "name": "pricing.png",
+        "path": "img/pricing.119758a.png",
+        "url": "http://localhost:3000/img/pricing.119758a.png",
+        "moduleId": "614"
+      },
+      {
+        "name": "product-details.png",
+        "path": "img/product-details.d54e893.png",
+        "url": "http://localhost:3000/img/product-details.d54e893.png",
+        "moduleId": "615"
+      },
+      {
+        "name": "product-overview.png",
+        "path": "img/product-overview.2b0c272.png",
+        "url": "http://localhost:3000/img/product-overview.2b0c272.png",
+        "moduleId": "616"
+      },
+      {
+        "name": "products.png",
+        "path": "img/products.086332c.png",
+        "url": "http://localhost:3000/img/products.086332c.png",
+        "moduleId": "617"
+      },
+      {
+        "name": "program.png",
+        "path": "img/program.5afba22.png",
+        "url": "http://localhost:3000/img/program.5afba22.png",
+        "moduleId": "618"
+      },
+      {
+        "name": "radio-switcher.png",
+        "path": "img/radio-switcher.eaea08b.png",
+        "url": "http://localhost:3000/img/radio-switcher.eaea08b.png",
+        "moduleId": "619"
+      },
+      {
+        "name": "rarity.png",
+        "path": "img/rarity.3637c6d.png",
+        "url": "http://localhost:3000/img/rarity.3637c6d.png",
+        "moduleId": "620"
+      },
+      {
+        "name": "reviews.png",
+        "path": "img/reviews.cb2a34b.png",
+        "url": "http://localhost:3000/img/reviews.cb2a34b.png",
+        "moduleId": "621"
+      },
+      {
+        "name": "roadmap.png",
+        "path": "img/roadmap.a5352bb.png",
+        "url": "http://localhost:3000/img/roadmap.a5352bb.png",
+        "moduleId": "622"
+      },
+      {
+        "name": "select-box.png",
+        "path": "img/select-box.17158f6.png",
+        "url": "http://localhost:3000/img/select-box.17158f6.png",
+        "moduleId": "623"
+      },
+      {
+        "name": "settings-page.png",
+        "path": "img/settings-page.e392c02.png",
+        "url": "http://localhost:3000/img/settings-page.e392c02.png",
+        "moduleId": "624"
+      },
+      {
+        "name": "signin.png",
+        "path": "img/signin.d21e14c.png",
+        "url": "http://localhost:3000/img/signin.d21e14c.png",
+        "moduleId": "625"
+      },
+      {
+        "name": "signup.png",
+        "path": "img/signup.af8a3b8.png",
+        "url": "http://localhost:3000/img/signup.af8a3b8.png",
+        "moduleId": "626"
+      },
+      {
+        "name": "stats.png",
+        "path": "img/stats.925ac1c.png",
+        "url": "http://localhost:3000/img/stats.925ac1c.png",
+        "moduleId": "627"
+      },
+      {
+        "name": "steps.png",
+        "path": "img/steps.86dfb1e.png",
+        "url": "http://localhost:3000/img/steps.86dfb1e.png",
+        "moduleId": "628"
+      },
+      {
+        "name": "table-grid.png",
+        "path": "img/table-grid.636cbc8.png",
+        "url": "http://localhost:3000/img/table-grid.636cbc8.png",
+        "moduleId": "629"
+      },
+      {
+        "name": "table-list.png",
+        "path": "img/table-list.67f0e2d.png",
+        "url": "http://localhost:3000/img/table-list.67f0e2d.png",
+        "moduleId": "630"
+      },
+      {
+        "name": "table-stacks.png",
+        "path": "img/table-stacks.b05877d.png",
+        "url": "http://localhost:3000/img/table-stacks.b05877d.png",
+        "moduleId": "631"
+      },
+      {
+        "name": "tabs.png",
+        "path": "img/tabs.8636621.png",
+        "url": "http://localhost:3000/img/tabs.8636621.png",
+        "moduleId": "632"
+      },
+      {
+        "name": "team.png",
+        "path": "img/team.e74e785.png",
+        "url": "http://localhost:3000/img/team.e74e785.png",
+        "moduleId": "633"
+      },
+      {
+        "name": "testimonial.png",
+        "path": "img/testimonial.31f319d.png",
+        "url": "http://localhost:3000/img/testimonial.31f319d.png",
+        "moduleId": "634"
+      },
+      {
+        "name": "text-input.png",
+        "path": "img/text-input.811cc33.png",
+        "url": "http://localhost:3000/img/text-input.811cc33.png",
+        "moduleId": "635"
+      },
+      {
+        "name": "top-banner.png",
+        "path": "img/top-banner.caa2e47.png",
+        "url": "http://localhost:3000/img/top-banner.caa2e47.png",
+        "moduleId": "636"
+      },
+      {
+        "name": "transaction-progress.png",
+        "path": "img/transaction-progress.1aa34aa.png",
+        "url": "http://localhost:3000/img/transaction-progress.1aa34aa.png",
+        "moduleId": "637"
+      },
+      {
+        "name": "vertical-menu.png",
+        "path": "img/vertical-menu.40ae9ed.png",
+        "url": "http://localhost:3000/img/vertical-menu.40ae9ed.png",
+        "moduleId": "638"
+      }
+    ]
+  },
+  "originalName": "1768289674583lugzxd20r"
+}

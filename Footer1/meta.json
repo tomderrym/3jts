@@ -1,0 +1,12 @@
+{
+  "block": "footer",
+  "pattern": {
+    "type": "footer",
+    "links": 0,
+    "layout": "simple",
+    "social": true,
+    "newsletter": true
+  },
+  "name": "Footer1",
+  "originalName": "footer-typefoot-bloc-000938"
+}

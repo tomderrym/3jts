@@ -1,0 +1,11 @@
+{
+  "block": "section",
+  "pattern": {
+    "type": "section",
+    "layout": "single",
+    "padding": "none",
+    "background": "transparent"
+  },
+  "name": "Section2",
+  "originalName": "section-typesect-bloc-000937"
+}
