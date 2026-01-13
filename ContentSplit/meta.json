@@ -1,0 +1,10 @@
+{
+  "block": "content-split",
+  "pattern": {
+    "type": "content-split",
+    "mediaPosition": "left",
+    "mediaSize": "sm",
+    "verticalAlign": "top"
+  },
+  "content": {}
+}
