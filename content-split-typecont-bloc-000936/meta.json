@@ -1,9 +1,0 @@
-{
-  "block": "content-split",
-  "pattern": {
-    "type": "content-split",
-    "mediaSize": "sm",
-    "mediaPosition": "left",
-    "verticalAlign": "top"
-  }
-}

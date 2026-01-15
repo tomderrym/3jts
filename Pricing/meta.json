@@ -1,9 +1,0 @@
-{
-  "block": "pricing",
-  "pattern": {
-    "plans": 3,
-    "highlight": "middle",
-    "billing": "monthly"
-  },
-  "content": {}
-}
