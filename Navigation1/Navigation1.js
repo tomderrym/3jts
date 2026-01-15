@@ -1,35 +1,53 @@
-// Standalone Navigation1 Block
-// Pure React runtime - generated from blueprint
-// NO metadata - see meta.json for purpose, tags, category
+// Standalone Hero Block - Works with dynamic import()
+// This version imports React from a CDN so it works without bundling
 
-import React, { createElement } from 'https://esm.sh/react@18';
+import React from 'https://esm.sh/react@18';
+import { createElement } from 'https://esm.sh/react@18';
 
-export default function Navigation1({ title = 'Navigation1', logo = 'http://localhost:3000/img/logo-cloud.092c568.png', items = [] }) {
-  return createElement('header', {
-    className: 'flex items-center justify-between p-4 bg-white border-b'
+/**
+ * Hero Section Block
+ * Props: { title?: string, subtitle?: string, ctaText?: string }
+ */
+export default function Hero01({ 
+  title = 'Welcome to Our Platform',
+  subtitle = 'Build amazing applications with AI-powered blocks',
+  ctaText = 'Get Started'
+}) {
+  return createElement('div', {
+    style: {
+      padding: '4rem 2rem',
+      textAlign: 'center',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      color: 'white',
+      borderRadius: '8px',
+      fontFamily: 'system-ui, sans-serif'
+    }
   }, [
-    createElement('div', {
-      key: 'brand',
-      className: 'flex items-center gap-2'
-    }, [
-      logo && createElement('img', {
-        key: 'logo',
-        src: logo,
-        alt: title || 'Logo',
-        className: 'h-8'
-      }),
-      createElement('span', {
-        key: 'title',
-        className: 'text-xl font-bold'
-      }, title)
-    ].filter(Boolean)),
-    items && Array.isArray(items) && items.length > 0 && createElement('nav', {
-      key: 'nav',
-      className: 'flex gap-4'
-    }, items.map((item, i) => createElement('a', {
-      key: i,
-      href: typeof item === 'string' ? item : (item.href || '#'),
-      className: 'text-gray-700 hover:text-blue-600'
-    }, typeof item === 'string' ? item : (item.title || item.name || item))))
-  ].filter(Boolean));
+    createElement('h1', {
+      key: 'title',
+      style: { fontSize: '3rem', marginBottom: '1rem', fontWeight: 'bold', margin: '0 0 1rem 0' }
+    }, title),
+    createElement('p', {
+      key: 'subtitle',
+      style: { fontSize: '1.25rem', marginBottom: '2rem', opacity: 0.9, margin: '0 0 2rem 0' }
+    }, subtitle),
+    createElement('button', {
+      key: 'cta',
+      onClick: () => alert('CTA clicked!'),
+      style: {
+        padding: '0.75rem 2rem',
+        fontSize: '1rem',
+        fontWeight: '600',
+        background: 'white',
+        color: '#667eea',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        transition: 'transform 0.2s'
+      },
+      onMouseOver: (e) => e.currentTarget.style.transform = 'scale(1.05)',
+      onMouseOut: (e) => e.currentTarget.style.transform = 'scale(1)'
+    }, ctaText)
+  ]);
 }
+
