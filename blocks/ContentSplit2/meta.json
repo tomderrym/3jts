@@ -1,0 +1,11 @@
+{
+  "block": "content-split",
+  "pattern": {
+    "type": "content-split",
+    "mediaSize": "sm",
+    "mediaPosition": "left",
+    "verticalAlign": "top"
+  },
+  "name": "ContentSplit2",
+  "originalName": "content-split-typecont-bloc-000936"
+}

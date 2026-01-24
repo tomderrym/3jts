@@ -1,0 +1,12 @@
+{
+  "block": "list",
+  "pattern": {
+    "type": "list",
+    "layout": "vertical",
+    "density": "compact",
+    "dividers": true
+  },
+  "content": {},
+  "name": "List1",
+  "originalName": "List"
+}

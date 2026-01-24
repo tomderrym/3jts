@@ -1,0 +1,10 @@
+{
+  "block": "table",
+  "pattern": {
+    "type": "table",
+    "columns": 2,
+    "sortable": true,
+    "selectable": true
+  },
+  "content": {}
+}
