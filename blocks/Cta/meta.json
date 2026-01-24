@@ -1,0 +1,9 @@
+{
+  "block": "cta",
+  "pattern": {
+    "layout": "centered",
+    "ctaCount": 1,
+    "background": "solid"
+  },
+  "content": {}
+}

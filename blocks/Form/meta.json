@@ -1,0 +1,10 @@
+{
+  "block": "form",
+  "pattern": {
+    "type": "form",
+    "layout": "inline",
+    "fields": 6,
+    "submitStyle": "primary"
+  },
+  "content": {}
+}

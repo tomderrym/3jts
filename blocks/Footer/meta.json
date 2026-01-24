@@ -1,0 +1,10 @@
+{
+  "block": "footer",
+  "pattern": {
+    "layout": "columns",
+    "links": 4,
+    "social": true,
+    "newsletter": false
+  },
+  "content": {}
+}
