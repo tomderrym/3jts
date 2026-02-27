@@ -6,209 +6,268 @@
 // Note: This component uses Tailwind CSS utility classes only.
 // No custom component library dependencies.
 // Ensure responsive (sm:, md:, lg:) and dark mode (dark:) classes are included.
-import React from 'https://esm.sh/react@18';
-import { useNavigate } from 'react-router-dom';
+import React, {  useState  } from 'https://esm.sh/react@18';
 import { 
-  User,
-  Car,
-  CreditCard,
-  MapPin,
-  Bell,
+  Search, 
+  Filter,
+  Wrench,
+  Droplet,
+  Zap,
+  Wind,
   Shield,
-  HelpCircle,
-  LogOut,
-  ChevronRight,
-  Award,
+  Gauge,
+  Calendar,
+  MapPin,
   Star,
-  Settings,
-  Moon,
-  Globe,
-  Lock
+  Clock,
+  ChevronRight,
+  Settings
 } from 'lucide-react';
 
-export function ProfileScreen() {
-  const navigate = useNavigate();
-  const { user, userProfile, userType, signOut } = useAuth();
+export function ServicesScreen() {
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleLogout = async () => {
-    await signOut();
-    navigate('/login');
-  };
+  const serviceCategories = [
+    { id: 'maintenance', name: 'Maintenance', icon: Wrench, color: 'text-blue-500 bg-blue-500/10' },
+    { id: 'oil', name: 'Oil Change', icon: Droplet, color: 'text-orange-500 bg-orange-500/10' },
+    { id: 'battery', name: 'Battery', icon: Zap, color: 'text-yellow-500 bg-yellow-500/10' },
+    { id: 'ac', name: 'AC Service', icon: Wind, color: 'text-cyan-500 bg-cyan-500/10' },
+    { id: 'brake', name: 'Brakes', icon: Shield, color: 'text-red-500 bg-red-500/10' },
+    { id: 'diagnostic', name: 'Diagnostic', icon: Gauge, color: 'text-purple-500 bg-purple-500/10' },
+  ];
 
-  const getUserTypeLabel = () => {
-    switch (userType) {
-      case 'mechanic':
-        return 'Mechanic';
-      case 'dealer':
-        return 'Dealer';
-      case 'electrician':
-        return 'Auto Electrician';
-      default:
-        return 'Customer';
-    }
-  };
-
-  const getInitials = (name?: string) => {
-    if (!name) return 'U';
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase();
-  };
-  const menuSections = [
+  const upcomingBookings = [
     {
-      title: 'Account',
-      items: [
-        { icon: User, label: 'Personal Information', badge: null },
-        { icon: Car, label: 'My Vehicles', badge: '2 cars' },
-        { icon: MapPin, label: 'Saved Addresses', badge: null },
-        { icon: CreditCard, label: 'Payment Methods', badge: null },
-      ],
+      id: 1,
+      service: 'Oil Change & Inspection',
+      mechanic: 'AutoCare Pro',
+      date: 'Tomorrow, Nov 3',
+      time: '10:00 AM',
+      location: '123 Main St',
+      status: 'scheduled',
+      price: '$89.99'
     },
     {
-      title: 'Preferences',
-      items: [
-        { icon: Bell, label: 'Notifications', badge: null, toggle: true },
-        { icon: Moon, label: 'Dark Mode', badge: null, toggle: true },
-        { icon: Globe, label: 'Language', badge: 'English' },
-      ],
+      id: 2,
+      service: 'Brake Pad Replacement',
+      mechanic: 'Elite Motors',
+      date: 'Nov 10, 2025',
+      time: '2:00 PM',
+      location: '456 Oak Ave',
+      status: 'confirmed',
+      price: '$249.99'
+    },
+  ];
+
+  const pastBookings = [
+    {
+      id: 3,
+      service: 'Battery Replacement',
+      mechanic: 'QuickFix Garage',
+      date: 'Oct 25, 2025',
+      time: '11:00 AM',
+      location: '789 Pine Rd',
+      status: 'completed',
+      price: '$159.99',
+      rating: 5
     },
     {
-      title: 'Support',
-      items: [
-        { icon: HelpCircle, label: 'Help Center', badge: null },
-        { icon: Shield, label: 'Privacy Policy', badge: null },
-        { icon: Lock, label: 'Terms of Service', badge: null },
-      ],
+      id: 4,
+      service: 'AC Service & Recharge',
+      mechanic: 'AutoCare Pro',
+      date: 'Oct 15, 2025',
+      time: '3:00 PM',
+      location: '123 Main St',
+      status: 'completed',
+      price: '$199.99',
+      rating: 4
     },
   ];
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-gradient-to-b from-primary to-primary/90 text-primary-foreground px-4 pt-8 pb-12">
+      <header className="bg-card border-b px-4 py-4 sticky top-0 z-10">
         <div className="max-w-screen-xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl">Profile</h1>
-            <Button variant="ghost" size="icon" className="text-primary-foreground">
-              <Settings className="h-5 w-5" />
+          <h1 className="text-2xl mb-4">Services & Bookings</h1>
+          
+          {/* Search Bar */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search services or mechanics..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-10"
+            />
+            <Button
+              size="sm"
+              variant="ghost"
+              className="absolute right-1 top-1/2 -translate-y-1/2"
+            >
+              <Filter className="h-4 w-4" />
             </Button>
           </div>
-
-          {/* Profile Card */}
-          <Card className="bg-card/95 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4 mb-4">
-                <Avatar className="h-20 w-20 border-4 border-primary/20">
-                  <AvatarImage src={userProfile?.profile_photo} />
-                  <AvatarFallback>{getInitials(userProfile?.full_name || user?.email)}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <h2 className="text-xl font-bold mb-1">{userProfile?.full_name || 'User'}</h2>
-                  <p className="text-sm text-muted-foreground mb-2">{user?.email}</p>
-                  <Badge variant="secondary" className="gap-1">
-                    <Award className="h-3 w-3" />
-                    {getUserTypeLabel()}
-                  </Badge>
-                </div>
-              </div>
-
-              <Separator className="my-4" />
-
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <p className="text-2xl font-bold text-primary">12</p>
-                  <p className="text-xs text-muted-foreground">Services</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-primary">4.8</p>
-                  <div className="flex items-center justify-center gap-1">
-                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                    <p className="text-xs text-muted-foreground">Rating</p>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-primary">850</p>
-                  <p className="text-xs text-muted-foreground">Points</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </header>
 
-      <div className="max-w-screen-xl mx-auto px-4 -mt-2">
-        {/* Menu Sections */}
-        {menuSections.map((section, sectionIndex) => (
-          <section key={sectionIndex} className="mb-6">
-            <h3 className="text-sm font-semibold text-muted-foreground mb-3 px-1">
-              {section.title}
-            </h3>
-            <Card>
-              <CardContent className="p-0">
-                {section.items.map((item, itemIndex) => {
-                  export default function Icon = item.icon;
-                  return (
-                    <React.Fragment key={itemIndex}>
-                      {item.toggle ? (
-                        // Use div instead of button for toggle items to avoid nested buttons
-                        <div className="w-full flex items-center gap-4 px-4 py-4">
-                          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <Icon className="h-5 w-5 text-primary" />
-                          </div>
-                          <div className="flex-1 text-left">
-                            <p className="font-medium">{item.label}</p>
-                          </div>
-                          <Switch />
-                        </div>
-                      ) : (
-                        // Regular button for non-toggle items
-                        <button className="w-full flex items-center gap-4 px-4 py-4 hover:bg-accent transition-colors">
-                          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <Icon className="h-5 w-5 text-primary" />
-                          </div>
-                          <div className="flex-1 text-left">
-                            <p className="font-medium">{item.label}</p>
-                          </div>
-                          {item.badge ? (
-                            <Badge variant="secondary" className="text-xs">
-                              {item.badge}
-                            </Badge>
-                          ) : (
-                            <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                          )}
-                        </button>
-                      )}
-                      {itemIndex < section.items.length - 1 && (
-                        <Separator className="mx-4" />
-                      )}
-                    </React.Fragment>
-                  );
-                })}
-              </CardContent>
-            </Card>
-          </section>
-        ))}
+      <div className="max-w-screen-xl mx-auto px-4 py-6">
+        {/* Service Categories */}
+        <section className="mb-6">
+          <h2 className="font-semibold mb-3">Browse Services</h2>
+          <div className="grid grid-cols-3 gap-3">
+            {serviceCategories.map((category) => {
+              export default function Icon = category.icon;
+              return (
+                <Card key={category.id} className="cursor-pointer hover:shadow-md transition-shadow">
+                  <CardContent className="p-4">
+                    <div className="flex flex-col items-center text-center gap-2">
+                      <div className={`h-12 w-12 rounded-full ${category.color} flex items-center justify-center`}>
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <p className="text-xs font-medium leading-tight">{category.name}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </section>
 
-        {/* Logout Button */}
-        <Card className="mb-20">
-          <CardContent className="p-0">
-            <button onClick={handleLogout} className="w-full flex items-center gap-4 px-4 py-4 text-destructive hover:bg-destructive/10 transition-colors">
-              <div className="h-10 w-10 rounded-lg bg-destructive/10 flex items-center justify-center">
-                <LogOut className="h-5 w-5" />
-              </div>
-              <p className="font-medium">Log Out</p>
-            </button>
+        {/* Bookings Tabs */}
+        <Tabs defaultValue="upcoming" className="mb-6">
+          <TabsList className="grid w-full grid-cols-2 mb-4">
+            <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+            <TabsTrigger value="past">Past Bookings</TabsTrigger>
+          </TabsList>
+
+          {/* Upcoming Bookings */}
+          <TabsContent value="upcoming" className="space-y-4">
+            {upcomingBookings.length > 0 ? (
+              upcomingBookings.map((booking) => (
+                <Card key={booking.id} className="border-2 border-primary/20">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-semibold mb-1">{booking.service}</h3>
+                        <Badge variant={booking.status === 'scheduled' ? 'default' : 'secondary'}>
+                          {booking.status}
+                        </Badge>
+                      </div>
+                      <p className="font-bold text-lg text-primary">{booking.price}</p>
+                    </div>
+
+                    <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-2">
+                        <Wrench className="h-4 w-4" />
+                        <span className="font-medium text-foreground">{booking.mechanic}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4" />
+                        <span>{booking.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        <span>{booking.time}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4" />
+                        <span>{booking.location}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button variant="outline" className="flex-1">
+                        Reschedule
+                      </Button>
+                      <Button variant="destructive" className="flex-1">
+                        Cancel
+                      </Button>
+                      <Button size="icon" variant="ghost">
+                        <ChevronRight className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <Card>
+                <CardContent className="p-12 text-center">
+                  <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
+                    <Calendar className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                  <h3 className="font-semibold mb-2">No upcoming bookings</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Book a service to get started
+                  </p>
+                  <Button>Browse Services</Button>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
+
+          {/* Past Bookings */}
+          <TabsContent value="past" className="space-y-4">
+            {pastBookings.map((booking) => (
+              <Card key={booking.id}>
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="font-semibold mb-1">{booking.service}</h3>
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-3.5 w-3.5 ${
+                              i < (booking.rating || 0)
+                                ? 'fill-yellow-400 text-yellow-400'
+                                : 'text-muted-foreground'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="font-bold text-muted-foreground">{booking.price}</p>
+                  </div>
+
+                  <div className="space-y-1.5 text-sm text-muted-foreground mb-4">
+                    <div className="flex items-center gap-2">
+                      <Wrench className="h-4 w-4" />
+                      <span className="font-medium text-foreground">{booking.mechanic}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      <span>{booking.date}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button variant="outline" className="flex-1">
+                      Book Again
+                    </Button>
+                    <Button variant="outline" className="flex-1">
+                      View Receipt
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </TabsContent>
+        </Tabs>
+
+        {/* Book New Service CTA */}
+        <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground border-0 mb-20">
+          <CardContent className="p-6 text-center">
+            <Settings className="h-12 w-12 mx-auto mb-3 opacity-90" />
+            <h3 className="font-bold mb-2">Need a service?</h3>
+            <p className="text-sm text-primary-foreground/80 mb-4">
+              Book with top-rated mechanics near you
+            </p>
+            <Button variant="secondary" size="lg" className="w-full max-w-xs">
+              Book New Service
+            </Button>
           </CardContent>
         </Card>
-
-        {/* App Version */}
-        <div className="text-center text-sm text-muted-foreground pb-6">
-          <p>FiloZof AutoCare v1.0.0</p>
-          <p className="text-xs mt-1">© 2025 All rights reserved</p>
-        </div>
       </div>
     </div>
   );
