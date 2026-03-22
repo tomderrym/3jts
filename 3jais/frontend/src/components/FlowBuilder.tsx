@@ -43,8 +43,8 @@ function toRFEdges(raw: { id: string; source: string; target: string }[]): Edge[
 }
 
 export default function FlowBuilder() {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [name, setName] = useState("Default pipeline");
   const [status, setStatus] = useState("");
 
@@ -59,7 +59,8 @@ export default function FlowBuilder() {
   }, [setEdges, setNodes]);
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge({ ...params, style: { stroke: "#94a3b8" } }, eds)),
+    (params: Connection) =>
+      setEdges((eds) => addEdge({ ...params, style: { stroke: "#94a3b8" } } as Edge, eds)),
     [setEdges]
   );
 
@@ -120,7 +121,7 @@ export default function FlowBuilder() {
       </div>
       <p className="text-xs text-slate-500">
         Drag nodes, connect handles, add edges. This is your Flow Builder canvas (React Flow). Save persists to the
-        API (in-memory on server restart).
+        API (<code className="text-slate-400">backend/data/state.json</code>).
       </p>
     </div>
   );

@@ -18,6 +18,7 @@ export type Suggestion = {
   created_at: string;
   priorityScore?: number;
   applied_commit?: string;
+  git_branch?: string;
 };
 
 export type Goal = {

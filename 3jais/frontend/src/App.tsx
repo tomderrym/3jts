@@ -3,6 +3,8 @@ import {
   type Goal,
   type Suggestion,
   approve,
+  deploySuggestion,
+  fetchDeployPreview,
   fetchIntelligence,
   fetchSuggestions,
   reject,
@@ -24,6 +26,10 @@ export default function App() {
   } | null>(null);
   const [err, setErr] = useState("");
   const [scanning, setScanning] = useState(false);
+  /** suggestion id → deploy preview markdown (loaded on demand) */
+  const [deployPreviewById, setDeployPreviewById] = useState<Record<string, string>>({});
+  const [deployPreviewPathById, setDeployPreviewPathById] = useState<Record<string, string>>({});
+  const [deployLoadingId, setDeployLoadingId] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     setErr("");
@@ -110,6 +116,7 @@ export default function App() {
             </button>
           </div>
           <div className="space-y-4">
+            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Pending</h3>
             {suggestions
               .filter((s) => s.status === "pending")
               .map((s) => {
@@ -173,6 +180,117 @@ export default function App() {
                   </article>
                 );
               })}
+            <h3 className="text-sm font-bold text-amber-400/90 uppercase tracking-wider pt-6">
+              Approved — preview & deploy to Git
+            </h3>
+            <p className="text-xs text-slate-500">
+              Writes <code className="text-slate-400">.3jais-applied/&lt;id&gt;.md</code> on a new branch, commits, then
+              restores your previous branch.
+            </p>
+            {suggestions.filter((s) => s.status === "approved").length === 0 && (
+              <p className="text-sm text-slate-500">No approved items yet.</p>
+            )}
+            {suggestions
+              .filter((s) => s.status === "approved")
+              .map((s) => (
+                <article
+                  key={s.id}
+                  className="rounded-xl border border-amber-900/40 bg-amber-950/10 p-5 space-y-3"
+                >
+                  <div className="flex flex-wrap justify-between gap-2">
+                    <h2 className="text-lg font-semibold text-white">{s.title}</h2>
+                    <span className="text-xs text-amber-200/80">
+                      Priority: <strong>{s.priorityScore ?? "—"}</strong>
+                    </span>
+                  </div>
+                  <p className="text-sm text-slate-400">{s.short}</p>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700"
+                      onClick={async () => {
+                        setErr("");
+                        try {
+                          const prev = await fetchDeployPreview(s.id);
+                          setDeployPreviewById((m) => ({ ...m, [s.id]: prev.body }));
+                          setDeployPreviewPathById((m) => ({ ...m, [s.id]: prev.relativePath }));
+                        } catch (e) {
+                          setErr(String(e));
+                        }
+                      }}
+                    >
+                      Load deploy preview
+                    </button>
+                    <button
+                      type="button"
+                      disabled={deployLoadingId === s.id}
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-700 text-white hover:bg-emerald-600 disabled:opacity-50"
+                      onClick={async () => {
+                        setDeployLoadingId(s.id);
+                        setErr("");
+                        try {
+                          await deploySuggestion(s.id);
+                          setDeployPreviewById((m) => {
+                            const next = { ...m };
+                            delete next[s.id];
+                            return next;
+                          });
+                          setDeployPreviewPathById((m) => {
+                            const next = { ...m };
+                            delete next[s.id];
+                            return next;
+                          });
+                          await refresh();
+                        } catch (e) {
+                          setErr(String(e));
+                        } finally {
+                          setDeployLoadingId(null);
+                        }
+                      }}
+                    >
+                      {deployLoadingId === s.id ? "Deploying…" : "Deploy to Git"}
+                    </button>
+                  </div>
+                  {deployPreviewPathById[s.id] && (
+                    <div className="text-[11px] text-slate-500">
+                      Path: <code className="text-slate-400">{deployPreviewPathById[s.id]}</code>
+                    </div>
+                  )}
+                  {deployPreviewById[s.id] != null && (
+                    <textarea
+                      readOnly
+                      className="w-full min-h-[200px] rounded-lg border border-slate-700 bg-slate-950/80 p-3 text-xs font-mono text-slate-300"
+                      value={deployPreviewById[s.id]}
+                    />
+                  )}
+                </article>
+              ))}
+            <h3 className="text-sm font-bold text-emerald-400/90 uppercase tracking-wider pt-6">Applied</h3>
+            {suggestions.filter((s) => s.status === "applied").length === 0 && (
+              <p className="text-sm text-slate-500">Nothing deployed yet.</p>
+            )}
+            {suggestions
+              .filter((s) => s.status === "applied")
+              .map((s) => (
+                <article
+                  key={s.id}
+                  className="rounded-xl border border-emerald-900/40 bg-emerald-950/10 p-5 space-y-2"
+                >
+                  <h2 className="text-lg font-semibold text-white">{s.title}</h2>
+                  <div className="text-xs text-slate-400 space-y-1">
+                    {s.git_branch && (
+                      <div>
+                        Branch: <code className="text-emerald-200/90">{s.git_branch}</code>
+                      </div>
+                    )}
+                    {s.applied_commit && (
+                      <div>
+                        Commit: <code className="text-slate-300">{s.applied_commit}</code>
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
           </div>
         </section>
       )}

@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { runAppScannerAgent } from "./agents/appScannerAgent.js";
+import { deploySuggestionToGit, getDeployPreview } from "./gitDeploy.js";
 import { canApprove } from "./services/policy.js";
 import { MCP_STYLE_TOOLS, invokeTool } from "./tools/toolRegistry.js";
 import {
@@ -9,6 +10,8 @@ import {
   getFlow,
   getGoals,
   getRankedVault,
+  getSuggestionById,
+  markSuggestionApplied,
   saveFlow,
   setSuggestionStatus,
   upsertSuggestions,
@@ -84,6 +87,37 @@ app.post("/api/suggestions/:id/approve", (req, res) => {
   if (!gate.ok) return res.status(403).json({ error: "policy blocked", reasons: gate.reasons });
   const updated = setSuggestionStatus(req.params.id, "approved");
   res.json(updated);
+});
+
+/** Approve → diff: markdown that would be written on deploy */
+app.get("/api/suggestions/:id/deploy-preview", (req, res) => {
+  const s = getSuggestionById(req.params.id);
+  if (!s) return res.status(404).json({ error: "not found" });
+  if (s.status !== "approved") {
+    return res.status(400).json({ error: "suggestion must be approved before deploy preview" });
+  }
+  const ranked = getRankedVault().find((x) => x.id === s.id) ?? s;
+  const prev = getDeployPreview(ranked, WORKSPACE_ROOT);
+  res.json({ relativePath: prev.relativePath, body: prev.body });
+});
+
+/** Apply: Git branch + .3jais-applied/<id>.md + commit, then mark applied */
+app.post("/api/suggestions/:id/deploy", (req, res) => {
+  const s = getSuggestionById(req.params.id);
+  if (!s) return res.status(404).json({ error: "not found" });
+  if (s.status !== "approved") {
+    return res.status(400).json({ error: "suggestion must be approved before deploy" });
+  }
+  const ranked = getRankedVault().find((x) => x.id === s.id) ?? s;
+  const result = deploySuggestionToGit(ranked, WORKSPACE_ROOT);
+  if (!result.ok) {
+    return res.status(400).json({ error: result.message });
+  }
+  const updated = markSuggestionApplied(req.params.id, {
+    applied_commit: result.commitSha ?? "",
+    git_branch: result.branch ?? "",
+  });
+  res.json({ result, suggestion: updated });
 });
 
 app.post("/api/suggestions/:id/reject", (req, res) => {

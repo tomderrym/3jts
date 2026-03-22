@@ -19,6 +19,8 @@ export type Suggestion = {
   tags: string[];
   created_at: string;
   priorityScore?: number;
+  applied_commit?: string;
+  git_branch?: string;
   _canApprove?: { ok: boolean; reasons: string[] };
 };
 
@@ -65,6 +67,29 @@ export async function approve(id: string): Promise<void> {
 export async function reject(id: string): Promise<void> {
   const r = await fetch(`${base}/api/suggestions/${id}/reject`, { method: "POST" });
   if (!r.ok) throw new Error(await r.text());
+}
+
+export async function fetchDeployPreview(
+  id: string
+): Promise<{ relativePath: string; body: string }> {
+  const r = await fetch(`${base}/api/suggestions/${id}/deploy-preview`);
+  if (!r.ok) {
+    const j = await r.json().catch(() => ({}));
+    throw new Error((j as { error?: string }).error || (await r.text()));
+  }
+  return r.json();
+}
+
+export async function deploySuggestion(id: string): Promise<{
+  result: { ok: boolean; message: string; commitSha?: string; branch?: string; relativePath?: string };
+  suggestion: Suggestion;
+}> {
+  const r = await fetch(`${base}/api/suggestions/${id}/deploy`, { method: "POST" });
+  if (!r.ok) {
+    const j = await r.json().catch(() => ({}));
+    throw new Error((j as { error?: string }).error || (await r.text()));
+  }
+  return r.json();
 }
 
 export async function fetchFlow(): Promise<{

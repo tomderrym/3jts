@@ -1,2 +1,5 @@
 node_modules
 node_modules
+
+# 3jAIS local persisted state (vault, flow, goals)
+3jais/backend/data/
