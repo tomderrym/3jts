@@ -1,0 +1,42 @@
+---
+description: When user pastes AI-agent content, summarize vs current architecture and propose stability-first patch enhancements only.
+alwaysApply: true
+---
+
+# AI agent pastes — planning, comparison, stability-first
+
+## When this applies
+
+If the user pastes **discussion, blog-style text, prompts, or specs** about any of:
+
+- Autonomous / “world-class” AI agents, agency products, agent frameworks  
+- Self-improvement, evolution, optimization of agent behavior  
+- Skills, tools, MCP, workflows, orchestration, memory, RAG, routing  
+
+→ Treat it as **input for planning**, not as a mandate to rewrite the codebase or chase “faster intelligence.”
+
+## North star (non-negotiable)
+
+- **Stability and reliability** over **rapid evolution** of agent “intelligence.”  
+- Prefer **deterministic, bounded, auditable** behavior over open-ended self-modification.  
+- Reject patterns that increase **nondeterminism** or **loss of control** (silent prompt drift, ungated tool use, auto-merge without vault/approval, unconstrained self-edit loops).
+
+Canonical in-repo philosophy: **`AI-AGENCY-ARCHITECTURE.md`** (CSIL, vault, governed autonomy). Align comparisons to it and to **`suggestions-vault-gui/`** where implementation exists.
+
+## Required response shape
+
+1. **Short summary** of what the pasted material claims or recommends.  
+2. **Comparison to current approach**: what we already have vs what is new (vault, CSIL, Git record, scanner heuristics, export bundle, skills/tools/MCP/flows **if/when** present in code).  
+3. **What is genuinely new or missing** — call out gaps: e.g. tool registry, MCP server, policy engine, evaluator metrics store, skill composition, workflow DSL, memory/RAG with approval gates.  
+4. **Patch-scale enhancements only** — concrete, **small** improvements that fit stability (e.g. “add `tools.json` stub + read-only listing in UI”) not “rebuild entire agent OS.”  
+5. **Risk note** for any idea that trades control for speed (auto-apply, always-on learning without measurement, etc.).
+
+## What not to do
+
+- Do not treat pasted hype as a spec to implement wholesale.  
+- Do not “evolve” prompts or agent logic **across the project** without tying to vault / suggestions / explicit user approval.  
+- Do not bundle or recommend shipping **secrets** or **ungoverned** automation.
+
+## If unclear
+
+Ask one focused question (e.g. vertical: support vs leads vs devops) only when blocking; otherwise default to the comparison + patch list above.

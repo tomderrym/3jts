@@ -1,0 +1,11 @@
+{
+  "name": "appmonster-ai-workspace",
+  "private": true,
+  "description": "Root tooling for AppMonster-style AI bundle export",
+  "scripts": {
+    "export:ai": "node scripts/export-ai-bundle.js"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1"
+  }
+}

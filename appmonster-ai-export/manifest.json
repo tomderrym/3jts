@@ -1,0 +1,176 @@
+[
+  {
+    "relativePath": "ai-agent-plan-1-prompt.md",
+    "category": "prompts",
+    "exportPath": "originals/prompts/ai-agent-plan-1-prompt.md",
+    "bytes": 32468
+  },
+  {
+    "relativePath": "ai-agent-plan-2-prompt.md",
+    "category": "prompts",
+    "exportPath": "originals/prompts/ai-agent-plan-2-prompt.md",
+    "bytes": 21026
+  },
+  {
+    "relativePath": "blocks/appcontext-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/appcontext-standalone.js",
+    "bytes": 10947
+  },
+  {
+    "relativePath": "blocks/authcontext-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/authcontext-standalone.js",
+    "bytes": 6162
+  },
+  {
+    "relativePath": "blocks/Component1/meta.json",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/Component1/meta.json",
+    "bytes": 18227
+  },
+  {
+    "relativePath": "blocks/Component2/meta.json",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/Component2/meta.json",
+    "bytes": 18228
+  },
+  {
+    "relativePath": "blocks/custombreathing-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/custombreathing-standalone.js",
+    "bytes": 12636
+  },
+  {
+    "relativePath": "blocks/exercises-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/exercises-standalone.js",
+    "bytes": 8805
+  },
+  {
+    "relativePath": "blocks/habittracker-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/habittracker-standalone.js",
+    "bytes": 7424
+  },
+  {
+    "relativePath": "blocks/icon-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/icon-standalone.js",
+    "bytes": 10539
+  },
+  {
+    "relativePath": "blocks/journalcomponent-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/journalcomponent-standalone.js",
+    "bytes": 9053
+  },
+  {
+    "relativePath": "blocks/loginscreen-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/loginscreen-standalone.js",
+    "bytes": 7796
+  },
+  {
+    "relativePath": "blocks/mantras-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/mantras-standalone.js",
+    "bytes": 12202
+  },
+  {
+    "relativePath": "blocks/mettacoach-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/mettacoach-standalone.js",
+    "bytes": 8283
+  },
+  {
+    "relativePath": "blocks/mixed/Component1/meta.json",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/mixed/Component1/meta.json",
+    "bytes": 18227
+  },
+  {
+    "relativePath": "blocks/mixed/Component2/meta.json",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/mixed/Component2/meta.json",
+    "bytes": 18228
+  },
+  {
+    "relativePath": "blocks/mixed/Navigation1/meta.json",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/mixed/Navigation1/meta.json",
+    "bytes": 18348
+  },
+  {
+    "relativePath": "blocks/mixed/page-sample-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/mixed/page-sample-standalone.js",
+    "bytes": 976
+  },
+  {
+    "relativePath": "blocks/Navigation1/meta.json",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/Navigation1/meta.json",
+    "bytes": 18348
+  },
+  {
+    "relativePath": "blocks/page-sample-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/page-sample-standalone.js",
+    "bytes": 976
+  },
+  {
+    "relativePath": "blocks/plibhujourney-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/plibhujourney-standalone.js",
+    "bytes": 6889
+  },
+  {
+    "relativePath": "blocks/routines-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/routines-standalone.js",
+    "bytes": 23337
+  },
+  {
+    "relativePath": "blocks/servicebookingscreen-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/servicebookingscreen-standalone.js",
+    "bytes": 18439
+  },
+  {
+    "relativePath": "blocks/signupscreen-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/signupscreen-standalone.js",
+    "bytes": 11914
+  },
+  {
+    "relativePath": "blocks/statusicon-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/statusicon-standalone.js",
+    "bytes": 9945
+  },
+  {
+    "relativePath": "blocks/xpdisplay-standalone.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/blocks/xpdisplay-standalone.js",
+    "bytes": 5706
+  },
+  {
+    "relativePath": "package-lock.json",
+    "category": "unknown",
+    "exportPath": "originals/unknown/package-lock.json",
+    "bytes": 40329
+  },
+  {
+    "relativePath": "REFERENCES.md",
+    "category": "unknown",
+    "exportPath": "originals/unknown/REFERENCES.md",
+    "bytes": 1290
+  },
+  {
+    "relativePath": "scripts/export-ai-bundle.js",
+    "category": "unknown",
+    "exportPath": "originals/unknown/scripts/export-ai-bundle.js",
+    "bytes": 11543
+  }
+]

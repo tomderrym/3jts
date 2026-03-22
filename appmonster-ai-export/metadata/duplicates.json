@@ -1,0 +1,60 @@
+[
+  {
+    "basename": "meta.json",
+    "files": [
+      {
+        "path": "blocks/Component1/meta.json",
+        "category": "unknown",
+        "confidence": 0.95,
+        "status": "primary_candidate"
+      },
+      {
+        "path": "blocks/Component2/meta.json",
+        "category": "unknown",
+        "confidence": 0.8999999999999999,
+        "status": "secondary_candidate"
+      },
+      {
+        "path": "blocks/mixed/Component1/meta.json",
+        "category": "unknown",
+        "confidence": 0.85,
+        "status": "secondary_candidate"
+      },
+      {
+        "path": "blocks/mixed/Component2/meta.json",
+        "category": "unknown",
+        "confidence": 0.7999999999999999,
+        "status": "secondary_candidate"
+      },
+      {
+        "path": "blocks/mixed/Navigation1/meta.json",
+        "category": "unknown",
+        "confidence": 0.75,
+        "status": "secondary_candidate"
+      },
+      {
+        "path": "blocks/Navigation1/meta.json",
+        "category": "unknown",
+        "confidence": 0.7,
+        "status": "secondary_candidate"
+      }
+    ]
+  },
+  {
+    "basename": "page-sample-standalone.js",
+    "files": [
+      {
+        "path": "blocks/mixed/page-sample-standalone.js",
+        "category": "unknown",
+        "confidence": 0.95,
+        "status": "primary_candidate"
+      },
+      {
+        "path": "blocks/page-sample-standalone.js",
+        "category": "unknown",
+        "confidence": 0.8999999999999999,
+        "status": "secondary_candidate"
+      }
+    ]
+  }
+]
