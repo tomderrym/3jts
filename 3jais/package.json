@@ -1,0 +1,17 @@
+{
+  "name": "3jais",
+  "private": true,
+  "description": "Control panel: vault + priority engine + goals/constraints + flow builder + MCP-style tools",
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,green \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w backend && npm run build -w frontend",
+    "install:all": "npm install"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@feature-os/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.3.0"
+  }
+}

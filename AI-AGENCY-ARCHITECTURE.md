@@ -134,6 +134,8 @@ This architecture supports those products **without** conflating “marketable�
 |-------|------------------|
 | Vault UI + scan + Git record | `suggestions-vault-gui/` — implements vault workflow, folder/React heuristics, Git branch + `.csil-suggestions/` commits, rollback via branch delete. |
 | AI bundle export | `scripts/export-ai-bundle.js` — discovers AI-related files, redacts env, manifest + zip. |
+| Feature vault + blueprint DB | `feature-os/` — Postgres schema (`schema/001_init.sql`), Prisma mirror, TS types, diff/learning tables; stability-first CRUD before AI automation. |
+| Control panel (vault + priority + goals + flow + tools) | `3jais/` — React + Express starter: priority engine, policy-gated approve, React Flow builder, `AppScannerAgent` + MCP-style tool registry. |
 | Legacy narrative & examples | `ai-agent-plan-1-prompt.md`, `ai-agent-plan-2-prompt.md`, `ai-agenrt-plan-3-prompt.md` — historical; **canonical spec is this file**. |
 | External pointers | `REFERENCES.md` — skills/MCP ecosystems and example products. |
 
