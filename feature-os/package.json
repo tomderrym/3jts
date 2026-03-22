@@ -1,0 +1,19 @@
+{
+  "name": "feature-os",
+  "private": true,
+  "description": "Validated feature vault + blueprint + diff + learning (stability-first)",
+  "scripts": {
+    "db:sql": "echo Run: psql $DATABASE_URL -f schema/001_init.sql",
+    "db:generate": "prisma generate --schema prisma/schema.prisma",
+    "db:push": "prisma db push --schema prisma/schema.prisma",
+    "db:studio": "prisma studio --schema prisma/schema.prisma",
+    "typecheck": "tsc -b packages/types"
+  },
+  "devDependencies": {
+    "prisma": "^6.3.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.3.0"
+  }
+}

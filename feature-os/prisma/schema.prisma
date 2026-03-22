@@ -1,0 +1,306 @@
+// Feature Operating System — Prisma mirror of schema/001_init.sql
+// Vector column lives in SQL only; use $queryRaw for similarity search.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ImportanceLevel {
+  critical
+  high
+  medium
+  optional
+}
+
+enum FeatureCategory {
+  ui
+  state
+  api
+  ai
+  system
+  routing
+  auth
+  builder
+  runtime
+  learning
+  reporting
+  other
+}
+
+enum SnippetType {
+  hook
+  component
+  util
+  flow
+  config
+  other
+}
+
+enum ValidationStatus {
+  pending
+  pass
+  fail
+  skipped
+}
+
+enum VaultStatus {
+  draft
+  candidate
+  proven
+  deprecated
+  rejected
+}
+
+enum DiffKind {
+  content_change
+  formatting_change
+  type_change
+  structure_change
+  semantic_change
+  unknown
+}
+
+model Feature {
+  id                String           @id @default(uuid()) @db.Uuid
+  slug              String           @unique
+  name              String
+  category          FeatureCategory  @default(other)
+  description       String?
+  importance        ImportanceLevel  @default(medium)
+  vaultStatus       VaultStatus      @default(draft) @map("vault_status")
+  reactVersionMin   String?          @map("react_version_min")
+  reactVersionMax   String?          @map("react_version_max")
+  usageFrequency    Int              @default(0) @map("usage_frequency")
+  successRate       Decimal?         @map("success_rate") @db.Decimal(5, 4)
+  lastUsedAt        DateTime?        @map("last_used_at")
+  promotedAt        DateTime?        @map("promoted_at")
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @default(now()) @updatedAt @map("updated_at")
+
+  snippets          Snippet[]
+  testCases         TestCase[]
+  failureConditions FailureCondition[]
+  checklistItems    ChecklistItem[]
+  performanceNotes  PerformanceNote[]
+  validationRuns    ValidationRun[]
+  depsOut           FeatureDependency[] @relation("FeatureDeps")
+  depsIn            FeatureDependency[] @relation("DependsOn")
+
+  blueprintLinks    BlueprintFeature[]
+  learningSignals   LearningSignal[]
+  diffRunsLeft      DiffRun[] @relation("DiffLeftFeature")
+  diffRunsRight     DiffRun[] @relation("DiffRightFeature")
+
+  @@map("features")
+}
+
+model FeatureDependency {
+  featureId           String @map("feature_id") @db.Uuid
+  dependsOnFeatureId  String @map("depends_on_feature_id") @db.Uuid
+
+  feature          Feature @relation("FeatureDeps", fields: [featureId], references: [id], onDelete: Cascade)
+  dependsOnFeature Feature @relation("DependsOn", fields: [dependsOnFeatureId], references: [id], onDelete: Cascade)
+
+  @@id([featureId, dependsOnFeatureId])
+  @@map("feature_dependencies")
+}
+
+model Snippet {
+  id                 String      @id @default(uuid()) @db.Uuid
+  featureId          String      @map("feature_id") @db.Uuid
+  name               String
+  snippetType        SnippetType @default(other) @map("snippet_type")
+  code               String
+  tested             Boolean     @default(false)
+  testCoveragePct    Decimal?    @map("test_coverage_pct") @db.Decimal(5, 2)
+  performanceScore   Int?        @map("performance_score")
+  lastVerifiedAt     DateTime?   @map("last_verified_at")
+  createdAt          DateTime    @default(now()) @map("created_at")
+
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@unique([featureId, name])
+  @@map("snippets")
+}
+
+model TestCase {
+  id              String             @id @default(uuid()) @db.Uuid
+  featureId       String             @map("feature_id") @db.Uuid
+  scenario        String
+  expectedResult  String?            @map("expected_result")
+  status          ValidationStatus   @default(pending)
+  lastRunAt       DateTime?          @map("last_run_at")
+  createdAt       DateTime           @default(now()) @map("created_at")
+
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@map("test_cases")
+}
+
+model FailureCondition {
+  id        String          @id @default(uuid()) @db.Uuid
+  featureId String          @map("feature_id") @db.Uuid
+  issue     String
+  cause     String?
+  impact    String?
+  severity  ImportanceLevel @default(high)
+  createdAt DateTime        @default(now()) @map("created_at")
+
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@map("failure_conditions")
+}
+
+model ChecklistItem {
+  id        String   @id @default(uuid()) @db.Uuid
+  featureId String   @map("feature_id") @db.Uuid
+  item      String
+  sortOrder Int      @default(0) @map("sort_order")
+  status    String   @default("pending")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@map("checklist_items")
+}
+
+model PerformanceNote {
+  id        String   @id @default(uuid()) @db.Uuid
+  featureId String   @map("feature_id") @db.Uuid
+  note      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@map("performance_notes")
+}
+
+model Blueprint {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique
+  name        String
+  version     String   @default("1.0.0")
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+
+  features BlueprintFeature[]
+
+  @@map("blueprints")
+}
+
+model BlueprintFeature {
+  blueprintId String  @map("blueprint_id") @db.Uuid
+  featureId   String  @map("feature_id") @db.Uuid
+  required    Boolean @default(true)
+  notes       String?
+
+  blueprint Blueprint @relation(fields: [blueprintId], references: [id], onDelete: Cascade)
+  feature   Feature   @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@id([blueprintId, featureId])
+  @@map("blueprint_features")
+}
+
+model Report {
+  id              String    @id @default(uuid()) @db.Uuid
+  externalId      String?   @map("external_id")
+  sourceFilename  String?   @map("source_filename")
+  inspectionDate  DateTime? @map("inspection_date") @db.Date
+  propertyAddress String?   @map("property_address")
+  rawSchema       Json      @default("{}") @map("raw_schema")
+  author          String?
+  wordCount       Int?      @map("word_count")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  sections        ReportSection[]
+  diffRunsLeft    DiffRun[] @relation("DiffLeftReport")
+  diffRunsRight   DiffRun[] @relation("DiffRightReport")
+  learningSignals LearningSignal[]
+
+  @@map("reports")
+}
+
+model ReportSection {
+  id          String   @id @default(uuid()) @db.Uuid
+  reportId    String   @map("report_id") @db.Uuid
+  sectionName String   @map("section_name")
+  sectionType String   @map("section_type")
+  content     String?
+  formatting  Json     @default("{}")
+  sortOrder   Int      @default(0) @map("sort_order")
+
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@map("report_sections")
+}
+
+model DiffRun {
+  id                 String   @id @default(uuid()) @db.Uuid
+  runType            String   @map("run_type")
+  leftReportId       String?  @map("left_report_id") @db.Uuid
+  rightReportId      String?  @map("right_report_id") @db.Uuid
+  leftFeatureId      String?  @map("left_feature_id") @db.Uuid
+  rightFeatureId     String?  @map("right_feature_id") @db.Uuid
+  scoreCompleteness  Decimal? @map("score_completeness") @db.Decimal(5, 2)
+  scoreTone          Decimal? @map("score_tone") @db.Decimal(5, 2)
+  scoreFormat        Decimal? @map("score_format") @db.Decimal(5, 2)
+  summary            Json     @default("[]")
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  leftReport   Report?  @relation("DiffLeftReport", fields: [leftReportId], references: [id], onDelete: SetNull)
+  rightReport  Report?  @relation("DiffRightReport", fields: [rightReportId], references: [id], onDelete: SetNull)
+  leftFeature  Feature? @relation("DiffLeftFeature", fields: [leftFeatureId], references: [id], onDelete: SetNull)
+  rightFeature Feature? @relation("DiffRightFeature", fields: [rightFeatureId], references: [id], onDelete: SetNull)
+
+  items DiffItem[]
+
+  @@map("diff_runs")
+}
+
+model DiffItem {
+  id            String   @id @default(uuid()) @db.Uuid
+  diffRunId     String   @map("diff_run_id") @db.Uuid
+  kind          DiffKind
+  path          String?
+  payload       Json     @default("{}")
+  weightedScore Decimal? @map("weighted_score") @db.Decimal(6, 3)
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  diffRun DiffRun @relation(fields: [diffRunId], references: [id], onDelete: Cascade)
+
+  @@map("diff_items")
+}
+
+model LearningSignal {
+  id         String   @id @default(uuid()) @db.Uuid
+  featureId  String?  @map("feature_id") @db.Uuid
+  reportId   String?  @map("report_id") @db.Uuid
+  signalType String   @map("signal_type")
+  payload    Json     @default("{}")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  feature Feature? @relation(fields: [featureId], references: [id], onDelete: SetNull)
+  report  Report?  @relation(fields: [reportId], references: [id], onDelete: SetNull)
+
+  @@map("learning_signals")
+}
+
+model ValidationRun {
+  id        String             @id @default(uuid()) @db.Uuid
+  featureId String             @map("feature_id") @db.Uuid
+  pipeline  String             @default("default")
+  status    ValidationStatus   @default(pending)
+  scores    Json               @default("{}")
+  logUri    String?            @map("log_uri")
+  createdAt DateTime           @default(now()) @map("created_at")
+
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@map("validation_runs")
+}
